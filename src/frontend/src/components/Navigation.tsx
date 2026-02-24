@@ -23,13 +23,13 @@ export default function Navigation() {
   return (
     <nav className="bg-white border-b border-border sticky top-0 z-50 shadow-xs">
       <div className="section-container">
-        <div className="flex items-center justify-between h-20">
+        <div className="flex items-center justify-between h-40">
           {/* Logo */}
           <Link to="/" className="flex-shrink-0">
             <img
-              src="/assets/generated/farmsiddhi-logo.dim_400x120.png"
+              src="/assets/image_8a526262-3a20-4994-9dc2-1df6b5d6410e-1.png"
               alt="FarmSiddhi"
-              className="h-10 w-auto"
+              className="h-32 w-auto"
             />
           </Link>
 

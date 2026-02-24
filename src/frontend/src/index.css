@@ -94,14 +94,14 @@
 
     .watermark-container {
         @apply fixed inset-0 z-0 pointer-events-none;
-        background-image: url('/assets/generated/farmsiddhi-watermark.dim_1200x800.png');
+        background-image: url('/assets/generated/farmsiddhi-watermark.dim_1200x600.png');
         background-repeat: no-repeat;
         background-position: center center;
         background-size: 60%;
-        opacity: 0.12;
+        opacity: 0.18;
     }
 
     .dark .watermark-container {
-        opacity: 0.075;
+        opacity: 0.1125;
     }
 }

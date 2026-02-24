@@ -1,21 +1,39 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Darken watermark by 50 percent",
+  "title": "Double logo size in Navigation and Footer components",
   "requirements": [
     {
-      "id": "REQ-44",
-      "summary": "Reduce the watermark opacity by an additional 50 percent from the current level in frontend/src/index.css to make it significantly darker and more visible",
+      "id": "REQ-51",
+      "summary": "Increase logo size in Navigation component by 100 percent",
       "acceptanceCriteria": [
-        "The watermark opacity in frontend/src/index.css is reduced by 50 percent from its current value",
-        "The watermark is visibly darker across all pages (Home, About Us, Products, ProductDetail, Farmer Network, Exports, Contact Us, and Admin)",
-        "The watermark remains properly positioned and does not obstruct page content"
+        "Logo image in Navigation.tsx uses h-32 height class (doubled from h-16)",
+        "Navigation container height is adjusted proportionally to h-40 (doubled from h-24)",
+        "Logo displays correctly in both desktop and mobile views without layout breaks",
+        "Logo remains properly aligned with navigation menu items"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/index.css",
+          "path": "frontend/src/components/Navigation.tsx",
           "operation": "modify",
-          "description": "Update the watermark background styling to reduce the opacity by 50 percent from its current value (e.g., if current opacity is 0.1, change it to 0.15; if 0.2, change to 0.3). Locate the watermark background rule and modify only the opacity value while preserving the image source, positioning, size, and all other styling properties."
+          "description": "Double the logo size by changing the height class from h-16 to h-32, and adjust the navigation container height from h-24 to h-40 to maintain proportional spacing. Ensure the logo remains properly aligned with navigation menu items in both desktop and mobile views."
+        }
+      ]
+    },
+    {
+      "id": "REQ-52",
+      "summary": "Increase logo size in Footer component by 100 percent",
+      "acceptanceCriteria": [
+        "Logo image in Footer.tsx uses h-28 height class (doubled from h-14)",
+        "Logo displays correctly in the footer layout without overflow or distortion",
+        "Footer layout remains balanced with the larger logo size",
+        "Logo maintains aspect ratio and clarity at the increased size"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/Footer.tsx",
+          "operation": "modify",
+          "description": "Double the logo size by changing the height class from h-14 to h-28 to match the proportional increase applied in Navigation. Ensure the footer layout remains balanced and the logo displays correctly without overflow or distortion."
         }
       ]
     }

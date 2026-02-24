@@ -2,10 +2,10 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-update-the-watermark-styling-in-frontend-src-index-css-to-reduce-the-opacity-by-an-additional-50-percent-from-the-current-level-making-it-significantly-darker-and-more-visible",
-      "featureTitle": "Update the watermark styling in frontend/src/index.css to reduce the opacity by an additional 50 percent from the current level (making it significantly darker and more visible)",
+      "featureId": "feature-increase-the-logo-size-in-the-navigation-component-frontend-src-components-navigation-tsx-by-100-percent-from-the-current-h-16-size-by-changing-the-height-class-to-h-32-and-adjusting-the-container-height-from-h-24-to-h-40-proportionally",
+      "featureTitle": "Increase the logo size in the Navigation component (frontend/src/components/Navigation.tsx) by 100 percent from the current h-16 size by changing the height class to h-32 and adjusting the container height from h-24 to h-40 proportionally",
       "files": [
-        "frontend/src/index.css"
+        "frontend/src/components/Navigation.tsx"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -15,7 +15,25 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-44"
+        "REQ-51"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-increase-the-logo-size-in-the-footer-component-frontend-src-components-footer-tsx-by-100-percent-from-the-current-h-14-size-by-changing-the-height-class-to-h-28-to-match-the-proportional-increase-applied-in-navigation",
+      "featureTitle": "Increase the logo size in the Footer component (frontend/src/components/Footer.tsx) by 100 percent from the current h-14 size by changing the height class to h-28 to match the proportional increase applied in Navigation",
+      "files": [
+        "frontend/src/components/Footer.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-52"
       ],
       "confidence": "high"
     }

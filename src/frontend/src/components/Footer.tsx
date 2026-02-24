@@ -14,9 +14,9 @@ export default function Footer() {
           {/* Logo and Description */}
           <div className="lg:col-span-2">
             <img
-              src="/assets/generated/farmsiddhi-logo.dim_400x120.png"
+              src="/assets/image_8a526262-3a20-4994-9dc2-1df6b5d6410e-1.png"
               alt="FarmSiddhi"
-              className="h-10 w-auto mb-4"
+              className="h-28 w-auto mb-4"
             />
             <p className="text-sm text-muted-foreground max-w-md">
               Empowering farmers and enabling global markets through transparent digital aggregation

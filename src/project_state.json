@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 25,
+  "projectStateVersion": 33,
   "summary": "Premium corporate website for FarmSiddhi - an Indian agriculture and processed food export company. Multi-page site with modern, professional design featuring Home, About Us, Products, Farmer Network, Exports, and Contact pages. Silver green and silver brown color palette on white background. B2B export-oriented tone.",
   "architectural_notes": [
     "Multi-page corporate website structure with 6 main pages",
@@ -264,7 +264,64 @@
       "id": "feature-update-the-watermark-styling-in-frontend-src-index-css-to-reduce-the-opacity-by-an-additional-50-percent-from-the-current-level-making-it-significantly-darker-and-more-visible",
       "title": "Update the watermark styling in frontend/src/index.css to reduce the opacity by an additional 50 percent from the current level (making it significantly darker and more visible)",
       "reqIds": [
-        "REQ-44"
+        "REQ-44",
+        "REQ-45"
+      ],
+      "version": 2
+    },
+    {
+      "id": "feature-replace-the-current-watermark-logo-image-with-the-new-uploaded-farmsiddhi-logo-image-image-8a526262-3a20-4994-9dc2-1df6b5d6410e-png-in-frontend-src-index-css-ensuring-the-new-logo-is-used-as-the-watermark-background-across-all-pages",
+      "title": "Replace the current watermark logo image with the new uploaded FarmSiddhi logo image (image_8a526262-3a20-4994-9dc2-1df6b5d6410e.png) in frontend/src/index.css, ensuring the new logo is used as the watermark background across all pages",
+      "reqIds": [
+        "REQ-46"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-replace-the-existing-farmsiddhi-logo-in-the-navigation-component-frontend-src-components-navigation-tsx-with-the-uploaded-logo-image-image-8a526262-3a20-4994-9dc2-1df6b5d6410e-1-png-ensuring-it-displays-correctly-in-both-desktop-and-mobile-navigation-views",
+      "title": "Replace the existing FarmSiddhi logo in the Navigation component (frontend/src/components/Navigation.tsx) with the uploaded logo image (image_8a526262-3a20-4994-9dc2-1df6b5d6410e-1.png), ensuring it displays correctly in both desktop and mobile navigation views",
+      "reqIds": [
+        "REQ-47"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-replace-the-existing-farmsiddhi-logo-in-the-footer-component-frontend-src-components-footer-tsx-with-the-uploaded-logo-image-image-8a526262-3a20-4994-9dc2-1df6b5d6410e-1-png-ensuring-consistent-branding-across-the-site",
+      "title": "Replace the existing FarmSiddhi logo in the Footer component (frontend/src/components/Footer.tsx) with the uploaded logo image (image_8a526262-3a20-4994-9dc2-1df6b5d6410e-1.png), ensuring consistent branding across the site",
+      "reqIds": [
+        "REQ-48"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-increase-the-logo-size-in-the-navigation-component-frontend-src-components-navigation-tsx-by-adjusting-the-width-and-height-attributes-or-css-classes-applied-to-the-logo-image-element-image-8a526262-3a20-4994-9dc2-1df6b5d6410e-1-png",
+      "title": "Increase the logo size in the Navigation component (frontend/src/components/Navigation.tsx) by adjusting the width and height attributes or CSS classes applied to the logo image element (image_8a526262-3a20-4994-9dc2-1df6b5d6410e-1.png)",
+      "reqIds": [
+        "REQ-49"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-increase-the-logo-size-in-the-footer-component-frontend-src-components-footer-tsx-by-adjusting-the-width-and-height-attributes-or-css-classes-applied-to-the-logo-image-element-image-8a526262-3a20-4994-9dc2-1df6b5d6410e-1-png-to-match-the-proportional-increase-applied-in-navigation",
+      "title": "Increase the logo size in the Footer component (frontend/src/components/Footer.tsx) by adjusting the width and height attributes or CSS classes applied to the logo image element (image_8a526262-3a20-4994-9dc2-1df6b5d6410e-1.png) to match the proportional increase applied in Navigation",
+      "reqIds": [
+        "REQ-50"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-increase-the-logo-size-in-the-navigation-component-frontend-src-components-navigation-tsx-by-100-percent-from-the-current-h-16-size-by-changing-the-height-class-to-h-32-and-adjusting-the-container-height-from-h-24-to-h-40-proportionally",
+      "title": "Increase the logo size in the Navigation component (frontend/src/components/Navigation.tsx) by 100 percent from the current h-16 size by changing the height class to h-32 and adjusting the container height from h-24 to h-40 proportionally",
+      "reqIds": [
+        "REQ-51"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-increase-the-logo-size-in-the-footer-component-frontend-src-components-footer-tsx-by-100-percent-from-the-current-h-14-size-by-changing-the-height-class-to-h-28-to-match-the-proportional-increase-applied-in-navigation",
+      "title": "Increase the logo size in the Footer component (frontend/src/components/Footer.tsx) by 100 percent from the current h-14 size by changing the height class to h-28 to match the proportional increase applied in Navigation",
+      "reqIds": [
+        "REQ-52"
       ],
       "version": 1
     }
@@ -479,6 +536,18 @@
     {
       "id": "AR-45",
       "summary": "Make the watermark 50 percent darker (reduce opacity by 50 percent from current level)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-46",
+      "summary": "Replace the current company logo with the newly attached logo image in Navigation and Footer components",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-48",
+      "summary": "Increase the logo size in Navigation and Footer components by an additional 100 percent from the current size",
       "reqIds": [],
       "status": "pending"
     }

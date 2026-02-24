@@ -1,35 +1,57 @@
 {
   "kind": "build_request",
-  "title": "Darken watermark by 50 percent",
+  "title": "Double logo size in Navigation and Footer components",
   "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-44",
-      "text": "Update the watermark styling in frontend/src/index.css to reduce the opacity by an additional 50 percent from the current level (making it significantly darker and more visible)",
+      "id": "REQ-51",
+      "text": "Increase the logo size in the Navigation component (frontend/src/components/Navigation.tsx) by 100 percent from the current h-16 size by changing the height class to h-32 and adjusting the container height from h-24 to h-40 proportionally",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-latest"
         ],
         "quotes": [
-          "Make the watermark 50 percent darker"
+          "No increase the size my 100 percent"
         ]
       },
       "acceptanceCriteria": [
-        "The watermark opacity in frontend/src/index.css is reduced by 50 percent from its current value",
-        "The watermark is visibly darker across all pages (Home, About Us, Products, ProductDetail, Farmer Network, Exports, Contact Us, and Admin)",
-        "The watermark remains properly positioned and does not obstruct page content"
+        "Logo image in Navigation.tsx uses h-32 height class (doubled from h-16)",
+        "Navigation container height is adjusted proportionally to h-40 (doubled from h-24)",
+        "Logo displays correctly in both desktop and mobile views without layout breaks",
+        "Logo remains properly aligned with navigation menu items"
+      ]
+    },
+    {
+      "id": "REQ-52",
+      "text": "Increase the logo size in the Footer component (frontend/src/components/Footer.tsx) by 100 percent from the current h-14 size by changing the height class to h-28 to match the proportional increase applied in Navigation",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-latest"
+        ],
+        "quotes": [
+          "No increase the size my 100 percent"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Logo image in Footer.tsx uses h-28 height class (doubled from h-14)",
+        "Logo displays correctly in the footer layout without overflow or distortion",
+        "Footer layout remains balanced with the larger logo size",
+        "Logo maintains aspect ratio and clarity at the increased size"
       ]
     }
   ],
   "constraints": [
-    "Do not change the watermark image source or positioning",
-    "Preserve the existing watermark background implementation in frontend/src/index.css"
+    "Do not modify the logo image file itself (image_8a526262-3a20-4994-9dc2-1df6b5d6410e-1.png)",
+    "Maintain responsive design for both mobile and desktop views",
+    "Do not change Navigation or Footer component structure beyond size adjustments"
   ],
   "nonGoals": [
-    "Changing the watermark image itself",
-    "Modifying watermark placement or size",
-    "Adding new watermarks or visual elements"
+    "Changing the logo image source or file",
+    "Modifying other navigation or footer styling beyond logo size",
+    "Adding new navigation items or footer sections",
+    "Adjusting logo sizes on other pages or components"
   ],
   "imageRequirements": {
     "required": [],

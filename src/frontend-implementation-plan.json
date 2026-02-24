@@ -1,0 +1,157 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Fix deployment error and redeploy application",
+  "requirements": [
+    {
+      "id": "REQ-39",
+      "summary": "Diagnose and fix deployment errors by reviewing frontend build configuration, dependencies, and static asset references",
+      "acceptanceCriteria": [
+        "Deployment error is identified and resolved",
+        "Application builds successfully without errors",
+        "All canisters deploy to the network without failures"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/package.json",
+          "operation": "modify",
+          "description": "Verify all dependencies are correctly specified with compatible versions. Ensure React, TanStack Router, React Query, Tailwind CSS, and Internet Identity packages have no version conflicts. Check for any missing peer dependencies that could cause build failures."
+        },
+        {
+          "path": "frontend/vite.config.ts",
+          "operation": "modify",
+          "description": "Review Vite build configuration to ensure proper handling of static assets, correct base path for deployment, and appropriate build optimizations. Verify that the build output directory aligns with dfx.json expectations."
+        },
+        {
+          "path": "frontend/tsconfig.json",
+          "operation": "modify",
+          "description": "Verify TypeScript compiler options are compatible with the build process. Ensure path mappings, module resolution settings, and type declaration files are correctly configured to prevent compilation errors during deployment."
+        }
+      ]
+    },
+    {
+      "id": "REQ-41",
+      "summary": "Verify frontend build completes successfully with all dependencies, imports, and static assets resolved correctly",
+      "acceptanceCriteria": [
+        "Frontend builds without compilation errors",
+        "All imports resolve correctly",
+        "Static assets (images, CSS) are bundled properly"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Review all route configurations and component imports to ensure no circular dependencies or missing imports exist. Verify the watermark container element references valid assets and that all route lazy loading is properly configured."
+        },
+        {
+          "path": "frontend/src/main.tsx",
+          "operation": "modify",
+          "description": "Verify the application entry point correctly initializes QueryClientProvider and InternetIdentityProvider with proper error boundaries. Ensure all top-level imports resolve and no initialization errors occur during build."
+        },
+        {
+          "path": "frontend/src/hooks/useActor.ts",
+          "operation": "modify",
+          "description": "Review backend actor creation logic to ensure type definitions match backend interface. Verify that the actor initialization handles both authenticated and anonymous states correctly without runtime errors."
+        },
+        {
+          "path": "frontend/src/hooks/useInternetIdentity.ts",
+          "operation": "modify",
+          "description": "Verify Internet Identity integration code handles authentication flows correctly. Check that AuthClient configuration is valid and delegation chain management doesn't introduce runtime errors during deployment."
+        },
+        {
+          "path": "frontend/src/hooks/useQueries.ts",
+          "operation": "modify",
+          "description": "Review all React Query hooks to ensure they correctly reference backend interface types. Verify query keys are unique, error handling is present, and no type mismatches exist between frontend expectations and backend responses."
+        },
+        {
+          "path": "frontend/index.css",
+          "operation": "modify",
+          "description": "Verify Tailwind CSS directives and custom CSS variable definitions are syntactically correct. Ensure the watermark background utility class references valid asset paths that will be available after build."
+        },
+        {
+          "path": "frontend/tailwind.config.js",
+          "operation": "modify",
+          "description": "Review Tailwind configuration to ensure all custom colors, plugins, and theme extensions are properly defined. Verify that content paths correctly capture all files using Tailwind classes to prevent missing styles in production build."
+        }
+      ]
+    },
+    {
+      "id": "REQ-42",
+      "summary": "Ensure all generated images referenced in frontend components exist in frontend/public/assets/generated directory to prevent missing resource errors",
+      "acceptanceCriteria": [
+        "All image paths referenced in components resolve to actual files",
+        "No 404 errors for static assets during runtime",
+        "Watermark image is accessible"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Verify the watermark container references the correct path for frontend/public/assets/generated/farmsiddhi-watermark.dim_1200x800.png or frontend/public/assets/generated/tractor-field-watermark.dim_800x600.png. Ensure the image path is relative to the public directory and will resolve correctly after deployment."
+        },
+        {
+          "path": "frontend/src/pages/Home.tsx",
+          "operation": "modify",
+          "description": "Review all image references including hero background (frontend/public/assets/generated/hero-bg.dim_1920x800.png), product showcase images (makhana-home.dim_800x600.png), and category icons (icon-rice.dim_128x128.png, icon-wheat.dim_128x128.png, icon-pulses.dim_128x128.png, icon-spices.dim_128x128.png, icon-processed.dim_128x128.png). Verify all paths use the correct workspace file paths under frontend/public/assets/generated/."
+        },
+        {
+          "path": "frontend/src/pages/Products.tsx",
+          "operation": "modify",
+          "description": "Verify product category card images reference correct paths: frontend/public/assets/generated/rice.dim_400x300.png, frontend/public/assets/generated/wheat.dim_400x300.png, frontend/public/assets/generated/pulses.dim_400x300.png, frontend/public/assets/generated/spices.dim_400x300.png, frontend/public/assets/generated/processed-foods.dim_400x300.png, frontend/public/assets/generated/makhana.dim_400x300.png. Ensure paths are relative to public directory."
+        },
+        {
+          "path": "frontend/src/pages/ProductDetail.tsx",
+          "operation": "modify",
+          "description": "Review dynamic product detail rendering to ensure images loaded from backend match available generated assets. Verify detail page images (rice-detail.dim_800x600.png, wheat-detail.dim_800x600.png, pulses-detail.dim_800x600.png, spices-detail.dim_800x600.png, processed-detail.dim_800x600.png, makhana-detail.dim_800x600.png) and variant images (basmati-regular.dim_400x300.png, basmati-premium.dim_400x300.png, basmati-organic.dim_400x300.png, wheat-whole.dim_400x300.png, wheat-refined.dim_400x300.png, moong-green.dim_400x300.png, moong-yellow.dim_400x300.png, turmeric-powder.dim_400x300.png, chili-powder.dim_400x300.png, makhana-roasted.dim_400x300.png, makhana-flavored.dim_400x300.png) exist under frontend/public/assets/generated/."
+        },
+        {
+          "path": "frontend/src/components/Navigation.tsx",
+          "operation": "modify",
+          "description": "Verify the FarmSiddhi logo references the correct path frontend/public/assets/generated/farmsiddhi-logo.dim_400x120.png. Ensure the image loads correctly in both desktop and mobile navigation views."
+        },
+        {
+          "path": "frontend/src/components/Footer.tsx",
+          "operation": "modify",
+          "description": "Verify the FarmSiddhi logo in the footer references the correct path frontend/public/assets/generated/farmsiddhi-logo.dim_400x120.png. Ensure consistent logo rendering across all viewport sizes."
+        },
+        {
+          "path": "frontend/src/pages/Exports.tsx",
+          "operation": "modify",
+          "description": "Review the certifications section and any other image references to ensure all assets are present. If supply chain diagrams or certification badges are displayed, verify they reference frontend/public/assets/generated/supply-chain-diagram.dim_800x400.png or other existing generated assets."
+        }
+      ]
+    },
+    {
+      "id": "REQ-43",
+      "summary": "Prepare frontend for successful redeployment after all errors are resolved and verified",
+      "acceptanceCriteria": [
+        "Application successfully deploys to the network",
+        "All pages are accessible via the deployed URL",
+        "Backend canister responds to queries",
+        "Frontend loads without errors"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Final verification that all eight routes (Home, About, Products, ProductDetail, FarmerNetwork, Exports, Contact, Admin) are properly configured with correct path mappings and component references. Ensure navigation state management and shared layout components will function correctly in production environment."
+        },
+        {
+          "path": "frontend/src/hooks/useActor.ts",
+          "operation": "modify",
+          "description": "Verify backend canister ID references and actor initialization will work correctly in deployed environment. Ensure environment-specific configuration (local vs. production) is properly handled and that the actor can successfully communicate with the deployed backend canister."
+        },
+        {
+          "path": "frontend/src/pages/Admin.tsx",
+          "operation": "modify",
+          "description": "Verify the admin dashboard correctly uses useGetAllContactForms hook and properly handles authentication state. Ensure the contact form table renders without errors and that loading and error states display appropriately in production."
+        },
+        {
+          "path": "frontend/index.html",
+          "operation": "modify",
+          "description": "Final review of HTML entry point to ensure correct script references, meta tags, and base configuration for deployed environment. Verify that the root div and module script loading main.tsx are correctly configured for production build."
+        }
+      ]
+    }
+  ]
+}

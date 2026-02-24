@@ -1,0 +1,476 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 23,
+  "summary": "Premium corporate website for FarmSiddhi - an Indian agriculture and processed food export company. Multi-page site with modern, professional design featuring Home, About Us, Products, Farmer Network, Exports, and Contact pages. Silver green and silver brown color palette on white background. B2B export-oriented tone.",
+  "architectural_notes": [
+    "Multi-page corporate website structure with 6 main pages",
+    "Design: Modern, minimal, trustworthy - suitable for B2B/investors/international clients",
+    "Color palette: Silver green and silver brown on white background",
+    "Professional footer with logo, contact placeholders, and social media icons",
+    "Tone: Confident, professional, B2B export-oriented",
+    "Product categories now include Makhana in addition to Rice, Wheat, Pulses, Spices, and Processed Food Products",
+    "Each product category should have an associated image",
+    "Clicking on a product opens a detailed view showing specifications and pricing in INR",
+    "Product detail pages should display nutritional information per gram in addition to specifications and pricing",
+    "Home page product categories section should include Makhana alongside other categories"
+  ],
+  "known_issues": [
+    "Product detail pages not displaying content properly ('not showing up to the mark')",
+    "Deployment error occurred during network deployment"
+  ],
+  "isFixRequest": true,
+  "existing_features": [
+    {
+      "id": "feature-create-a-home-page-with-a-hero-section-displaying-the-tagline-empowering-farmers-enabling-global-markets-a-short-introduction-about-farmsiddhi-an-our-services-section-listing-aggregation-quality-control-processing-packaging-and-logistics-a-product-categories-overview-section-a-farm-to-export-supply-chain-model-visualization-or-explanation-and-a-partner-with-us-call-to-action-button",
+      "title": "Create a Home page with a hero section displaying the tagline 'Empowering Farmers. Enabling Global Markets.', a short introduction about FarmSiddhi, an 'Our Services' section listing Aggregation, Quality Control, Processing, Packaging, and Logistics, a Product Categories Overview section, a Farm to Export Supply Chain Model visualization or explanation, and a 'Partner With Us' call-to-action button",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-an-about-us-page-with-three-sections-vision-building-a-transparent-farm-to-global-market-ecosystem-mission-enable-farmers-to-access-fair-pricing-and-global-demand-and-business-model-digital-aggregation-and-supply-chain-enablement",
+      "title": "Create an About Us page with three sections: Vision ('Building a transparent farm-to-global-market ecosystem'), Mission ('Enable farmers to access fair pricing and global demand'), and Business Model ('Digital aggregation and supply chain enablement')",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-products-page-displaying-five-product-categories-rice-wheat-pulses-spices-and-processed-food-products-each-presented-as-a-distinct-card-or-section",
+      "title": "Create a Products page displaying five product categories: Rice, Wheat, Pulses, Spices, and Processed Food Products, each presented as a distinct card or section",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-farmer-network-page-with-five-content-sections-direct-procurement-fair-pricing-aggregation-platform-quality-standardization-and-supply-chain-digitization",
+      "title": "Create a Farmer Network page with five content sections: Direct Procurement, Fair Pricing, Aggregation Platform, Quality Standardization, and Supply Chain Digitization",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-an-exports-page-with-five-content-sections-quality-assurance-packaging-standards-logistics-management-global-trade-support-and-compliance-ready-operations",
+      "title": "Create an Exports page with five content sections: Quality Assurance, Packaging Standards, Logistics Management, Global Trade Support, and Compliance Ready Operations",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-contact-us-page-with-a-form-containing-the-following-fields-name-text-input-email-email-input-phone-number-tel-input-message-textarea-and-user-type-dropdown-or-radio-with-options-farmer-buyer-distributor",
+      "title": "Create a Contact Us page with a form containing the following fields: Name (text input), Email (email input), Phone Number (tel input), Message (textarea), and User Type (dropdown or radio with options: Farmer, Buyer, Distributor)",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-navigation-allowing-users-to-move-between-all-six-pages-home-about-us-products-farmer-network-exports-and-contact-us",
+      "title": "Implement navigation allowing users to move between all six pages: Home, About Us, Products, Farmer Network, Exports, and Contact Us",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-professional-footer-component-appearing-on-all-pages-with-placeholders-for-farmsiddhi-logo-business-email-phone-number-office-address-and-social-media-icons",
+      "title": "Create a professional footer component appearing on all pages with placeholders for: FarmSiddhi Logo, Business Email, Phone Number, Office Address, and Social Media Icons",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-a-modern-trustworthy-and-minimal-design-aesthetic-across-all-pages-using-a-color-palette-of-silver-green-and-silver-brown-on-a-white-background-avoiding-overly-rustic-or-cartoonish-farm-styles-to-present-a-professional-supply-chain-and-export-brand-suitable-for-international-b2b-clients-and-investors",
+      "title": "Apply a modern, trustworthy, and minimal design aesthetic across all pages using a color palette of silver green and silver brown on a white background, avoiding overly rustic or cartoonish farm styles to present a professional supply chain and export brand suitable for international B2B clients and investors",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-frontend-contactus-page-to-display-a-success-message-after-form-submission-confirming-that-the-data-has-been-saved-to-the-backend",
+      "title": "Update the frontend ContactUs page to display a success message after form submission confirming that the data has been saved to the backend",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-an-admin-page-that-displays-all-contact-form-submissions-in-a-table-or-list-format-showing-name-email-phone-number-message-and-user-type-fields-for-each-submission",
+      "title": "Create an Admin page that displays all contact form submissions in a table or list format, showing Name, Email, Phone Number, Message, and User Type fields for each submission",
+      "reqIds": [
+        "REQ-14"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-makhana-as-a-new-product-category-to-the-products-page-alongside-rice-wheat-pulses-spices-and-processed-food-products",
+      "title": "Add Makhana as a new product category to the Products page alongside Rice, Wheat, Pulses, Spices, and Processed Food Products",
+      "reqIds": [
+        "REQ-15"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-representative-images-to-all-product-category-cards-on-the-products-page-rice-wheat-pulses-spices-processed-food-products-and-makhana",
+      "title": "Add representative images to all product category cards on the Products page (Rice, Wheat, Pulses, Spices, Processed Food Products, and Makhana)",
+      "reqIds": [
+        "REQ-16"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-make-product-category-cards-on-the-products-page-clickable-navigating-to-a-detailed-product-specification-page-that-displays-the-product-name-full-specifications-and-price-in-rupees",
+      "title": "Make product category cards on the Products page clickable, navigating to a detailed product specification page that displays the product name, full specifications, and price in rupees (₹)",
+      "reqIds": [
+        "REQ-19"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-frontend-react-query-hooks-to-fetch-product-details-from-the-backend-enabling-data-retrieval-for-the-product-detail-pages",
+      "title": "Create frontend React Query hooks to fetch product details from the backend, enabling data retrieval for the product detail pages",
+      "reqIds": [
+        "REQ-20"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-productdetail-frontend-page-frontend-src-pages-productdetail-tsx-to-display-nutritional-information-per-gram-in-a-dedicated-section-below-or-alongside-the-specifications-table",
+      "title": "Update the ProductDetail frontend page (frontend/src/pages/ProductDetail.tsx) to display nutritional information per gram in a dedicated section below or alongside the specifications table",
+      "reqIds": [
+        "REQ-22"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-productdetail-frontend-page-frontend-src-pages-productdetail-tsx-to-display-the-product-s-individual-image-at-the-top-of-the-page-or-in-a-prominent-position-alongside-the-product-information",
+      "title": "Update the ProductDetail frontend page (frontend/src/pages/ProductDetail.tsx) to display the product's individual image at the top of the page or in a prominent position alongside the product information",
+      "reqIds": [
+        "REQ-24"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-home-page-frontend-src-pages-home-tsx-product-categories-section-to-include-a-makhana-card-with-image-matching-the-existing-card-layout-for-rice-wheat-pulses-spices-and-processed-food-products",
+      "title": "Update the Home page (frontend/src/pages/Home.tsx) Product Categories section to include a Makhana card with image, matching the existing card layout for Rice, Wheat, Pulses, Spices, and Processed Food Products",
+      "reqIds": [
+        "REQ-25"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-productdetail-frontend-page-frontend-src-pages-productdetail-tsx-to-display-all-product-variants-with-their-images-in-a-dedicated-product-variants-section-showing-each-variant-s-name-and-image-in-a-grid-or-card-layout-below-the-main-product-information",
+      "title": "Update the ProductDetail frontend page (frontend/src/pages/ProductDetail.tsx) to display all product variants with their images in a dedicated 'Product Variants' section, showing each variant's name and image in a grid or card layout below the main product information",
+      "reqIds": [
+        "REQ-27"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-the-usegetproductbycategory-query-hook-in-frontend-src-hooks-usequeries-ts-to-correctly-fetch-product-data-using-the-productid-parameter-ensuring-it-matches-the-category-identifiers-used-when-creating-product-links-on-the-products-page",
+      "title": "Fix the useGetProductByCategory query hook in frontend/src/hooks/useQueries.ts to correctly fetch product data using the productId parameter, ensuring it matches the category identifiers used when creating product links on the Products page",
+      "reqIds": [
+        "REQ-29"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-verify-that-product-category-identifiers-used-in-links-on-the-products-page-frontend-src-pages-products-tsx-match-the-category-values-stored-in-the-backend-productdetail-records-ensuring-consistency-between-navigation-and-data-retrieval",
+      "title": "Verify that product category identifiers used in Links on the Products page (frontend/src/pages/Products.tsx) match the category values stored in the backend ProductDetail records, ensuring consistency between navigation and data retrieval",
+      "reqIds": [
+        "REQ-30"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-console-logging-or-error-messages-to-the-productdetail-page-frontend-src-pages-productdetail-tsx-to-help-diagnose-routing-issues-displaying-the-productid-being-requested-and-the-query-response-status",
+      "title": "Add console logging or error messages to the ProductDetail page (frontend/src/pages/ProductDetail.tsx) to help diagnose routing issues, displaying the productId being requested and the query response status",
+      "reqIds": [
+        "REQ-31"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-watermark-image-of-a-tractor-in-a-field-to-all-pages-home-about-us-products-productdetail-farmer-network-exports-contact-us-and-admin-by-rendering-the-generated-tractor-watermark-as-a-semi-transparent-fixed-or-absolute-positioned-element-that-appears-subtly-in-the-background-without-obstructing-content",
+      "title": "Add a watermark image of a tractor in a field to all pages (Home, About Us, Products, ProductDetail, Farmer Network, Exports, Contact Us, and Admin) by rendering the generated tractor watermark as a semi-transparent fixed or absolute positioned element that appears subtly in the background without obstructing content",
+      "reqIds": [
+        "REQ-34"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-remove-the-existing-tractor-watermark-background-image-reference-from-frontend-src-index-css",
+      "title": "Remove the existing tractor watermark background image reference from frontend/src/index.css",
+      "reqIds": [
+        "REQ-35"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-watermark-background-in-frontend-src-index-css-to-use-the-uploaded-farmsiddhi-logo-image-chatgpt-image-feb-22-2026-08-54-14-pm-png-as-the-new-watermark-across-all-pages",
+      "title": "Update the watermark background in frontend/src/index.css to use the uploaded FarmSiddhi logo image (ChatGPT Image Feb 22, 2026, 08_54_14 PM.png) as the new watermark across all pages",
+      "reqIds": [
+        "REQ-36"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-products-page-frontend-src-pages-products-tsx-to-display-product-variants-with-images-for-each-product-category-rice-wheat-pulses-spices-processed-food-products-and-makhana-matching-the-variant-structure-currently-shown-on-the-home-page",
+      "title": "Update the Products page (frontend/src/pages/Products.tsx) to display product variants with images for each product category (Rice, Wheat, Pulses, Spices, Processed Food Products, and Makhana), matching the variant structure currently shown on the Home page",
+      "reqIds": [
+        "REQ-37"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-watermark-styling-in-frontend-src-index-css-to-reduce-opacity-by-30-percent-making-it-darker-and-ensure-the-watermark-fits-properly-within-the-page-dimensions-without-overflow-or-distortion",
+      "title": "Update the watermark styling in frontend/src/index.css to reduce opacity by 30 percent (making it darker) and ensure the watermark fits properly within the page dimensions without overflow or distortion",
+      "reqIds": [
+        "REQ-38"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-verify-that-the-frontend-build-completes-successfully-with-all-dependencies-resolved-including-react-tanstack-router-react-query-tailwind-css-and-internet-identity-integration",
+      "title": "Verify that the frontend build completes successfully with all dependencies resolved, including React, TanStack Router, React Query, Tailwind CSS, and Internet Identity integration",
+      "reqIds": [
+        "REQ-41"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-all-generated-images-referenced-in-the-frontend-code-exist-in-the-frontend-public-assets-generated-directory-to-prevent-missing-resource-errors-during-deployment",
+      "title": "Ensure all generated images referenced in the frontend code exist in the frontend/public/assets/generated directory to prevent missing resource errors during deployment",
+      "reqIds": [
+        "REQ-42"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-redeploy-the-application-to-the-internet-computer-network-after-all-deployment-errors-have-been-resolved-and-verified",
+      "title": "Redeploy the application to the Internet Computer network after all deployment errors have been resolved and verified",
+      "reqIds": [
+        "REQ-43"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Home page with hero section, services overview, product categories, supply chain model, and CTA",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "About Us page with vision, mission, and business model sections",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Products page with categories: Rice, Wheat, Pulses, Spices, Processed Food Products",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Farmer Network page with procurement, pricing, aggregation, quality, and digitization info",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Exports page with quality assurance, packaging, logistics, trade support, and compliance",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Contact Us page with form (Name, Email, Phone, Message, User Type) and professional footer",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-16",
+      "summary": "Store submitted contact form data in the backend, capturing Name, Email, Phone Number, Message, and User Type fields",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-17",
+      "summary": "Update the backend submitContactForm function to persist ContactFormEntry records in stable storage so submitted contact forms are permanently stored across canister upgrades",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-18",
+      "summary": "Add a backend query function to retrieve all stored contact form submissions, returning an array of ContactFormEntry records",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-19",
+      "summary": "Add admin page to view all contact form submissions",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-20",
+      "summary": "Add Makhana to product categories",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-21",
+      "summary": "Add images to all product categories and make them clickable to show detailed specifications with prices in rupees",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-25",
+      "summary": "Create a ProductDetail data model in the backend to store product specifications including product name, category, description, detailed specifications, and price in rupees",
+      "reqIds": [
+        "REQ-17"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-26",
+      "summary": "Add backend functions to store and retrieve product details, including a function to get all products and a function to get a specific product by ID or category",
+      "reqIds": [
+        "REQ-18"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-28",
+      "summary": "Update product detail pages to display nutritional information per gram alongside specifications and pricing",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-29",
+      "summary": "Add individual product images to each product detail page",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-30",
+      "summary": "Update the ProductDetail backend data model to include a nutritional information field that stores nutritional values per gram (e.g., calories, protein, carbohydrates, fat, fiber, vitamins, minerals)",
+      "reqIds": [
+        "REQ-21"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-32",
+      "summary": "Update the ProductDetail backend data model to include an imageUrl field for storing the path to each product's individual image",
+      "reqIds": [
+        "REQ-23"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-33",
+      "summary": "Display images of each product variant on the product detail pages (redirecting pages)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-34",
+      "summary": "Update the ProductDetail backend data model to include a 'variants' field that stores an array of product variant objects, where each variant object contains a name/label string and an imageUrl string for the variant's image",
+      "reqIds": [
+        "REQ-26"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-35",
+      "summary": "Debug and fix the product detail page routing in frontend/src/App.tsx to ensure the productId parameter is correctly captured from the URL when users click on product category cards from the Products page",
+      "reqIds": [
+        "REQ-28"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-36",
+      "summary": "Add company logo to the website from attached image file",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-37",
+      "summary": "Add watermark image of a tractor in field to all pages",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-38",
+      "summary": "Add the company logo from the attached image file to the Navigation component (frontend/src/components/Navigation.tsx), replacing the existing placeholder logo with the uploaded company logo image",
+      "reqIds": [
+        "REQ-32"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-39",
+      "summary": "Add the company logo from the attached image file to the Footer component (frontend/src/components/Footer.tsx), replacing the existing placeholder logo with the uploaded company logo image",
+      "reqIds": [
+        "REQ-33"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-40",
+      "summary": "Replace existing tractor watermark with new uploaded watermark image on all pages",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-41",
+      "summary": "Display product variants with images for each product category on the Products page, matching the variants shown on the Home page",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-42",
+      "summary": "Make the watermark 30 percent darker and ensure it fits properly within the page dimensions",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-43",
+      "summary": "Diagnose and fix the deployment error that occurred during the previous network deployment attempt by reviewing canister configuration, dependencies, and build artifacts",
+      "reqIds": [
+        "REQ-39"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-44",
+      "summary": "Verify that the backend main.mo actor compiles correctly with all existing type definitions (ContactFormEntry, ProductDetail, NutritionData, ProductVariant) and function signatures",
+      "reqIds": [
+        "REQ-40"
+      ],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "FarmSiddhi",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

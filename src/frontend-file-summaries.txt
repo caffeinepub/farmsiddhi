@@ -1,0 +1,16 @@
+{
+  "frontend/src/index.css": "Global styles with OKLCH color system defining silver green (primary) and silver brown (secondary) colors for light and dark modes, custom section utility classes, and watermark styling with subtle opacity for background FarmSiddhi logo image.",
+  "frontend/tailwind.config.js": "Tailwind configuration extending the theme with custom colors, fonts (Inter), border radius, and shadows for a professional B2B aesthetic.",
+  "frontend/src/App.tsx": "Main application component with TanStack Router setup for eight pages, shared Navigation and Footer layout, fixed watermark background element, and Toaster component for toast notifications across all routes.",
+  "frontend/src/components/Navigation.tsx": "Responsive navigation header with FarmSiddhi logo, desktop/mobile menu including Admin link, and active route highlighting using silver green accent colors.",
+  "frontend/src/components/Footer.tsx": "Professional footer with logo, contact placeholders, social media icons, and Caffeine.ai attribution with UTM tracking.",
+  "frontend/src/pages/Home.tsx": "Home page featuring hero section, company introduction, services overview, product categories (now including Makhana with clickable cards linking to product detail pages), supply chain diagram, and partner CTA.",
+  "frontend/src/pages/AboutUs.tsx": "About Us page displaying Vision, Mission, and Business Model in card format with icons, plus additional company information section.",
+  "frontend/src/pages/Products.tsx": "Products page showcasing six product categories with updated category IDs (Rice, Wheat, Pulses, Spices, Processed Food Products, Makhana) using capitalized names to match backend category field values.",
+  "frontend/src/pages/FarmerNetwork.tsx": "Farmer Network page detailing five farmer-focused services (Direct Procurement, Fair Pricing, Aggregation, Quality, Digitization) with benefits section.",
+  "frontend/src/pages/Exports.tsx": "Exports page highlighting five export capabilities (Quality Assurance, Packaging, Logistics, Trade Support, Compliance) with certifications and global market reach.",
+  "frontend/src/pages/ContactUs.tsx": "Contact Us page with form (Name, Email, Phone, Message, User Type) integrated with backend submission using useSubmitContactForm hook, displaying success/error toast notifications, clearing form on success, and showing contact information cards.",
+  "frontend/src/hooks/useQueries.ts": "React Query hooks for backend integration including contact form operations and product-related hooks with added console logging in useGetProductsByCategory for debugging category-based product retrieval.",
+  "frontend/src/pages/ProductDetail.tsx": "Product detail page displaying comprehensive product information with debug console logging for productId, query status, and data retrieval, showing the first product from the category with improved error messaging.",
+  "frontend/src/pages/Admin.tsx": "Admin dashboard page displaying all contact form submissions in a professional table format with icons, badges for user types, and clickable email/phone links, including loading and empty states."
+}

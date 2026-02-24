@@ -98,10 +98,10 @@
         background-repeat: no-repeat;
         background-position: center center;
         background-size: 60%;
-        opacity: 0.08;
+        opacity: 0.12;
     }
 
     .dark .watermark-container {
-        opacity: 0.05;
+        opacity: 0.075;
     }
 }

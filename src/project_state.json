@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 23,
+  "projectStateVersion": 25,
   "summary": "Premium corporate website for FarmSiddhi - an Indian agriculture and processed food export company. Multi-page site with modern, professional design featuring Home, About Us, Products, Farmer Network, Exports, and Contact pages. Silver green and silver brown color palette on white background. B2B export-oriented tone.",
   "architectural_notes": [
     "Multi-page corporate website structure with 6 main pages",
@@ -259,6 +259,14 @@
         "REQ-43"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-update-the-watermark-styling-in-frontend-src-index-css-to-reduce-the-opacity-by-an-additional-50-percent-from-the-current-level-making-it-significantly-darker-and-more-visible",
+      "title": "Update the watermark styling in frontend/src/index.css to reduce the opacity by an additional 50 percent from the current level (making it significantly darker and more visible)",
+      "reqIds": [
+        "REQ-44"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -466,6 +474,12 @@
       "reqIds": [
         "REQ-40"
       ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-45",
+      "summary": "Make the watermark 50 percent darker (reduce opacity by 50 percent from current level)",
+      "reqIds": [],
       "status": "pending"
     }
   ],

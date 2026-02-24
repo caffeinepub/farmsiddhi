@@ -1,13 +1,9 @@
 # Specification
 
 ## Summary
-**Goal:** Diagnose and fix deployment errors, then successfully redeploy the FarmSiddhi application to the Internet Computer network.
+**Goal:** Make the watermark 50 percent darker to improve visibility across all pages.
 
 **Planned changes:**
-- Review and fix canister configuration and build artifacts causing deployment failure
-- Verify backend Motoko code compiles correctly with all type definitions and functions
-- Verify frontend build completes with all dependencies and imports resolved
-- Ensure all referenced image assets exist in the correct directory
-- Redeploy application to the network after resolving all errors
+- Reduce the watermark opacity in frontend/src/index.css by 50 percent from its current value
 
-**User-visible outcome:** The FarmSiddhi application is successfully deployed and accessible on the Internet Computer network with all pages loading correctly and backend responding to queries.
+**User-visible outcome:** The watermark will be significantly darker and more visible on all pages while maintaining its current position and not obstructing content.

@@ -1,103 +1,35 @@
 {
   "kind": "build_request",
-  "title": "Fix deployment error and redeploy application",
-  "projectName": "FarmSiddhi",
-  "priority": "high",
+  "title": "Darken watermark by 50 percent",
+  "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-39",
-      "text": "Diagnose and fix the deployment error that occurred during the previous network deployment attempt by reviewing canister configuration, dependencies, and build artifacts",
-      "target": "both",
-      "source": {
-        "messageIds": [
-          "msg-4"
-        ],
-        "quotes": [
-          "Fix the deployment error and deploy it again"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Deployment error is identified and resolved",
-        "Application builds successfully without errors",
-        "All canisters deploy to the network without failures"
-      ]
-    },
-    {
-      "id": "REQ-40",
-      "text": "Verify that the backend main.mo actor compiles correctly with all existing type definitions (ContactFormEntry, ProductDetail, NutritionData, ProductVariant) and function signatures",
-      "target": "backend",
-      "source": {
-        "messageIds": [
-          "msg-4"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Backend Motoko code compiles without syntax or type errors",
-        "All query and update functions are accessible",
-        "Stable storage declarations are valid"
-      ]
-    },
-    {
-      "id": "REQ-41",
-      "text": "Verify that the frontend build completes successfully with all dependencies resolved, including React, TanStack Router, React Query, Tailwind CSS, and Internet Identity integration",
+      "id": "REQ-44",
+      "text": "Update the watermark styling in frontend/src/index.css to reduce the opacity by an additional 50 percent from the current level (making it significantly darker and more visible)",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-4"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Frontend builds without compilation errors",
-        "All imports resolve correctly",
-        "Static assets (images, CSS) are bundled properly"
-      ]
-    },
-    {
-      "id": "REQ-42",
-      "text": "Ensure all generated images referenced in the frontend code exist in the frontend/public/assets/generated directory to prevent missing resource errors during deployment",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-4"
-        ]
-      },
-      "acceptanceCriteria": [
-        "All image paths referenced in components resolve to actual files",
-        "No 404 errors for static assets during runtime",
-        "Watermark image is accessible"
-      ]
-    },
-    {
-      "id": "REQ-43",
-      "text": "Redeploy the application to the Internet Computer network after all deployment errors have been resolved and verified",
-      "target": "both",
-      "source": {
-        "messageIds": [
-          "msg-4"
+          "msg-latest"
         ],
         "quotes": [
-          "deploy it again"
+          "Make the watermark 50 percent darker"
         ]
       },
       "acceptanceCriteria": [
-        "Application successfully deploys to the network",
-        "All pages are accessible via the deployed URL",
-        "Backend canister responds to queries",
-        "Frontend loads without errors"
+        "The watermark opacity in frontend/src/index.css is reduced by 50 percent from its current value",
+        "The watermark is visibly darker across all pages (Home, About Us, Products, ProductDetail, Farmer Network, Exports, Contact Us, and Admin)",
+        "The watermark remains properly positioned and does not obstruct page content"
       ]
     }
   ],
   "constraints": [
-    "Do not modify the single-actor backend architecture",
-    "Preserve all existing features and functionality during deployment fixes",
-    "Do not change Internet Identity integration or authentication hooks",
-    "Maintain the existing color scheme and design aesthetic"
+    "Do not change the watermark image source or positioning",
+    "Preserve the existing watermark background implementation in frontend/src/index.css"
   ],
   "nonGoals": [
-    "Adding new features or pages",
-    "Redesigning existing UI components",
-    "Modifying product data or categories",
-    "Changing the navigation structure"
+    "Changing the watermark image itself",
+    "Modifying watermark placement or size",
+    "Adding new watermarks or visual elements"
   ],
   "imageRequirements": {
     "required": [],

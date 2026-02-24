@@ -1,0 +1,895 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 49,
+  "summary": "Premium corporate website for FarmSiddhi - an Indian agriculture and processed food export company. Multi-page site with modern, professional design featuring Home, About Us, Products, Farmer Network, Exports, and Contact pages. Silver green and silver brown color palette on white background. B2B export-oriented tone. E-commerce features being added to the existing site.",
+  "architectural_notes": [
+    "Multi-page corporate website structure with 6 main pages",
+    "Design: Modern, minimal, trustworthy - suitable for B2B/investors/international clients",
+    "Color palette: Silver green and silver brown on white background",
+    "Professional footer with logo, contact placeholders, and social media icons",
+    "Tone: Confident, professional, B2B export-oriented",
+    "Product categories now include Makhana in addition to Rice, Wheat, Pulses, Spices, and Processed Food Products",
+    "Each product category should have an associated image",
+    "Clicking on a product opens a detailed view showing specifications and pricing in INR",
+    "Product detail pages should display nutritional information per gram in addition to specifications and pricing",
+    "Home page product categories section should include Makhana alongside other categories"
+  ],
+  "known_issues": [
+    "Product detail pages not displaying content properly ('not showing up to the mark')",
+    "Deployment error occurred during network deployment",
+    "Product page has no products available to add to cart - e-commerce cart integration with product data is broken",
+    "Logo image not loading correctly in the Navigation and/or Footer components",
+    "E-commerce features (cart, checkout, order confirmation, add-to-cart) appear to have been removed in a recent deployment and need to be restored",
+    "Admin page not loading after recent deployment"
+  ],
+  "isFixRequest": true,
+  "existing_features": [
+    {
+      "id": "feature-create-a-home-page-with-a-hero-section-displaying-the-tagline-empowering-farmers-enabling-global-markets-a-short-introduction-about-farmsiddhi-an-our-services-section-listing-aggregation-quality-control-processing-packaging-and-logistics-a-product-categories-overview-section-a-farm-to-export-supply-chain-model-visualization-or-explanation-and-a-partner-with-us-call-to-action-button",
+      "title": "Create a Home page with a hero section displaying the tagline 'Empowering Farmers. Enabling Global Markets.', a short introduction about FarmSiddhi, an 'Our Services' section listing Aggregation, Quality Control, Processing, Packaging, and Logistics, a Product Categories Overview section, a Farm to Export Supply Chain Model visualization or explanation, and a 'Partner With Us' call-to-action button",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-an-about-us-page-with-three-sections-vision-building-a-transparent-farm-to-global-market-ecosystem-mission-enable-farmers-to-access-fair-pricing-and-global-demand-and-business-model-digital-aggregation-and-supply-chain-enablement",
+      "title": "Create an About Us page with three sections: Vision ('Building a transparent farm-to-global-market ecosystem'), Mission ('Enable farmers to access fair pricing and global demand'), and Business Model ('Digital aggregation and supply chain enablement')",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-products-page-displaying-five-product-categories-rice-wheat-pulses-spices-and-processed-food-products-each-presented-as-a-distinct-card-or-section",
+      "title": "Create a Products page displaying five product categories: Rice, Wheat, Pulses, Spices, and Processed Food Products, each presented as a distinct card or section",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-farmer-network-page-with-five-content-sections-direct-procurement-fair-pricing-aggregation-platform-quality-standardization-and-supply-chain-digitization",
+      "title": "Create a Farmer Network page with five content sections: Direct Procurement, Fair Pricing, Aggregation Platform, Quality Standardization, and Supply Chain Digitization",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-an-exports-page-with-five-content-sections-quality-assurance-packaging-standards-logistics-management-global-trade-support-and-compliance-ready-operations",
+      "title": "Create an Exports page with five content sections: Quality Assurance, Packaging Standards, Logistics Management, Global Trade Support, and Compliance Ready Operations",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-contact-us-page-with-a-form-containing-the-following-fields-name-text-input-email-email-input-phone-number-tel-input-message-textarea-and-user-type-dropdown-or-radio-with-options-farmer-buyer-distributor",
+      "title": "Create a Contact Us page with a form containing the following fields: Name (text input), Email (email input), Phone Number (tel input), Message (textarea), and User Type (dropdown or radio with options: Farmer, Buyer, Distributor)",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-navigation-allowing-users-to-move-between-all-six-pages-home-about-us-products-farmer-network-exports-and-contact-us",
+      "title": "Implement navigation allowing users to move between all six pages: Home, About Us, Products, Farmer Network, Exports, and Contact Us",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-professional-footer-component-appearing-on-all-pages-with-placeholders-for-farmsiddhi-logo-business-email-phone-number-office-address-and-social-media-icons",
+      "title": "Create a professional footer component appearing on all pages with placeholders for: FarmSiddhi Logo, Business Email, Phone Number, Office Address, and Social Media Icons",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-a-modern-trustworthy-and-minimal-design-aesthetic-across-all-pages-using-a-color-palette-of-silver-green-and-silver-brown-on-a-white-background-avoiding-overly-rustic-or-cartoonish-farm-styles-to-present-a-professional-supply-chain-and-export-brand-suitable-for-international-b2b-clients-and-investors",
+      "title": "Apply a modern, trustworthy, and minimal design aesthetic across all pages using a color palette of silver green and silver brown on a white background, avoiding overly rustic or cartoonish farm styles to present a professional supply chain and export brand suitable for international B2B clients and investors",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-frontend-contactus-page-to-display-a-success-message-after-form-submission-confirming-that-the-data-has-been-saved-to-the-backend",
+      "title": "Update the frontend ContactUs page to display a success message after form submission confirming that the data has been saved to the backend",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-an-admin-page-that-displays-all-contact-form-submissions-in-a-table-or-list-format-showing-name-email-phone-number-message-and-user-type-fields-for-each-submission",
+      "title": "Create an Admin page that displays all contact form submissions in a table or list format, showing Name, Email, Phone Number, Message, and User Type fields for each submission",
+      "reqIds": [
+        "REQ-14"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-makhana-as-a-new-product-category-to-the-products-page-alongside-rice-wheat-pulses-spices-and-processed-food-products",
+      "title": "Add Makhana as a new product category to the Products page alongside Rice, Wheat, Pulses, Spices, and Processed Food Products",
+      "reqIds": [
+        "REQ-15"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-representative-images-to-all-product-category-cards-on-the-products-page-rice-wheat-pulses-spices-processed-food-products-and-makhana",
+      "title": "Add representative images to all product category cards on the Products page (Rice, Wheat, Pulses, Spices, Processed Food Products, and Makhana)",
+      "reqIds": [
+        "REQ-16"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-make-product-category-cards-on-the-products-page-clickable-navigating-to-a-detailed-product-specification-page-that-displays-the-product-name-full-specifications-and-price-in-rupees",
+      "title": "Make product category cards on the Products page clickable, navigating to a detailed product specification page that displays the product name, full specifications, and price in rupees (₹)",
+      "reqIds": [
+        "REQ-19"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-frontend-react-query-hooks-to-fetch-product-details-from-the-backend-enabling-data-retrieval-for-the-product-detail-pages",
+      "title": "Create frontend React Query hooks to fetch product details from the backend, enabling data retrieval for the product detail pages",
+      "reqIds": [
+        "REQ-20"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-productdetail-frontend-page-frontend-src-pages-productdetail-tsx-to-display-nutritional-information-per-gram-in-a-dedicated-section-below-or-alongside-the-specifications-table",
+      "title": "Update the ProductDetail frontend page (frontend/src/pages/ProductDetail.tsx) to display nutritional information per gram in a dedicated section below or alongside the specifications table",
+      "reqIds": [
+        "REQ-22"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-productdetail-frontend-page-frontend-src-pages-productdetail-tsx-to-display-the-product-s-individual-image-at-the-top-of-the-page-or-in-a-prominent-position-alongside-the-product-information",
+      "title": "Update the ProductDetail frontend page (frontend/src/pages/ProductDetail.tsx) to display the product's individual image at the top of the page or in a prominent position alongside the product information",
+      "reqIds": [
+        "REQ-24"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-home-page-frontend-src-pages-home-tsx-product-categories-section-to-include-a-makhana-card-with-image-matching-the-existing-card-layout-for-rice-wheat-pulses-spices-and-processed-food-products",
+      "title": "Update the Home page (frontend/src/pages/Home.tsx) Product Categories section to include a Makhana card with image, matching the existing card layout for Rice, Wheat, Pulses, Spices, and Processed Food Products",
+      "reqIds": [
+        "REQ-25"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-productdetail-frontend-page-frontend-src-pages-productdetail-tsx-to-display-all-product-variants-with-their-images-in-a-dedicated-product-variants-section-showing-each-variant-s-name-and-image-in-a-grid-or-card-layout-below-the-main-product-information",
+      "title": "Update the ProductDetail frontend page (frontend/src/pages/ProductDetail.tsx) to display all product variants with their images in a dedicated 'Product Variants' section, showing each variant's name and image in a grid or card layout below the main product information",
+      "reqIds": [
+        "REQ-27"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-the-usegetproductbycategory-query-hook-in-frontend-src-hooks-usequeries-ts-to-correctly-fetch-product-data-using-the-productid-parameter-ensuring-it-matches-the-category-identifiers-used-when-creating-product-links-on-the-products-page",
+      "title": "Fix the useGetProductByCategory query hook in frontend/src/hooks/useQueries.ts to correctly fetch product data using the productId parameter, ensuring it matches the category identifiers used when creating product links on the Products page",
+      "reqIds": [
+        "REQ-29"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-verify-that-product-category-identifiers-used-in-links-on-the-products-page-frontend-src-pages-products-tsx-match-the-category-values-stored-in-the-backend-productdetail-records-ensuring-consistency-between-navigation-and-data-retrieval",
+      "title": "Verify that product category identifiers used in Links on the Products page (frontend/src/pages/Products.tsx) match the category values stored in the backend ProductDetail records, ensuring consistency between navigation and data retrieval",
+      "reqIds": [
+        "REQ-30"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-console-logging-or-error-messages-to-the-productdetail-page-frontend-src-pages-productdetail-tsx-to-help-diagnose-routing-issues-displaying-the-productid-being-requested-and-the-query-response-status",
+      "title": "Add console logging or error messages to the ProductDetail page (frontend/src/pages/ProductDetail.tsx) to help diagnose routing issues, displaying the productId being requested and the query response status",
+      "reqIds": [
+        "REQ-31"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-watermark-image-of-a-tractor-in-a-field-to-all-pages-home-about-us-products-productdetail-farmer-network-exports-contact-us-and-admin-by-rendering-the-generated-tractor-watermark-as-a-semi-transparent-fixed-or-absolute-positioned-element-that-appears-subtly-in-the-background-without-obstructing-content",
+      "title": "Add a watermark image of a tractor in a field to all pages (Home, About Us, Products, ProductDetail, Farmer Network, Exports, Contact Us, and Admin) by rendering the generated tractor watermark as a semi-transparent fixed or absolute positioned element that appears subtly in the background without obstructing content",
+      "reqIds": [
+        "REQ-34"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-remove-the-existing-tractor-watermark-background-image-reference-from-frontend-src-index-css",
+      "title": "Remove the existing tractor watermark background image reference from frontend/src/index.css",
+      "reqIds": [
+        "REQ-35"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-watermark-background-in-frontend-src-index-css-to-use-the-uploaded-farmsiddhi-logo-image-chatgpt-image-feb-22-2026-08-54-14-pm-png-as-the-new-watermark-across-all-pages",
+      "title": "Update the watermark background in frontend/src/index.css to use the uploaded FarmSiddhi logo image (ChatGPT Image Feb 22, 2026, 08_54_14 PM.png) as the new watermark across all pages",
+      "reqIds": [
+        "REQ-36"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-products-page-frontend-src-pages-products-tsx-to-display-product-variants-with-images-for-each-product-category-rice-wheat-pulses-spices-processed-food-products-and-makhana-matching-the-variant-structure-currently-shown-on-the-home-page",
+      "title": "Update the Products page (frontend/src/pages/Products.tsx) to display product variants with images for each product category (Rice, Wheat, Pulses, Spices, Processed Food Products, and Makhana), matching the variant structure currently shown on the Home page",
+      "reqIds": [
+        "REQ-37"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-watermark-styling-in-frontend-src-index-css-to-reduce-opacity-by-30-percent-making-it-darker-and-ensure-the-watermark-fits-properly-within-the-page-dimensions-without-overflow-or-distortion",
+      "title": "Update the watermark styling in frontend/src/index.css to reduce opacity by 30 percent (making it darker) and ensure the watermark fits properly within the page dimensions without overflow or distortion",
+      "reqIds": [
+        "REQ-38"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-verify-that-the-frontend-build-completes-successfully-with-all-dependencies-resolved-including-react-tanstack-router-react-query-tailwind-css-and-internet-identity-integration",
+      "title": "Verify that the frontend build completes successfully with all dependencies resolved, including React, TanStack Router, React Query, Tailwind CSS, and Internet Identity integration",
+      "reqIds": [
+        "REQ-41"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-all-generated-images-referenced-in-the-frontend-code-exist-in-the-frontend-public-assets-generated-directory-to-prevent-missing-resource-errors-during-deployment",
+      "title": "Ensure all generated images referenced in the frontend code exist in the frontend/public/assets/generated directory to prevent missing resource errors during deployment",
+      "reqIds": [
+        "REQ-42"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-redeploy-the-application-to-the-internet-computer-network-after-all-deployment-errors-have-been-resolved-and-verified",
+      "title": "Redeploy the application to the Internet Computer network after all deployment errors have been resolved and verified",
+      "reqIds": [
+        "REQ-43"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-watermark-styling-in-frontend-src-index-css-to-reduce-the-opacity-by-an-additional-50-percent-from-the-current-level-making-it-significantly-darker-and-more-visible",
+      "title": "Update the watermark styling in frontend/src/index.css to reduce the opacity by an additional 50 percent from the current level (making it significantly darker and more visible)",
+      "reqIds": [
+        "REQ-44",
+        "REQ-45"
+      ],
+      "version": 2
+    },
+    {
+      "id": "feature-replace-the-current-watermark-logo-image-with-the-new-uploaded-farmsiddhi-logo-image-image-8a526262-3a20-4994-9dc2-1df6b5d6410e-png-in-frontend-src-index-css-ensuring-the-new-logo-is-used-as-the-watermark-background-across-all-pages",
+      "title": "Replace the current watermark logo image with the new uploaded FarmSiddhi logo image (image_8a526262-3a20-4994-9dc2-1df6b5d6410e.png) in frontend/src/index.css, ensuring the new logo is used as the watermark background across all pages",
+      "reqIds": [
+        "REQ-46"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-replace-the-existing-farmsiddhi-logo-in-the-navigation-component-frontend-src-components-navigation-tsx-with-the-uploaded-logo-image-image-8a526262-3a20-4994-9dc2-1df6b5d6410e-1-png-ensuring-it-displays-correctly-in-both-desktop-and-mobile-navigation-views",
+      "title": "Replace the existing FarmSiddhi logo in the Navigation component (frontend/src/components/Navigation.tsx) with the uploaded logo image (image_8a526262-3a20-4994-9dc2-1df6b5d6410e-1.png), ensuring it displays correctly in both desktop and mobile navigation views",
+      "reqIds": [
+        "REQ-47"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-replace-the-existing-farmsiddhi-logo-in-the-footer-component-frontend-src-components-footer-tsx-with-the-uploaded-logo-image-image-8a526262-3a20-4994-9dc2-1df6b5d6410e-1-png-ensuring-consistent-branding-across-the-site",
+      "title": "Replace the existing FarmSiddhi logo in the Footer component (frontend/src/components/Footer.tsx) with the uploaded logo image (image_8a526262-3a20-4994-9dc2-1df6b5d6410e-1.png), ensuring consistent branding across the site",
+      "reqIds": [
+        "REQ-48"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-increase-the-logo-size-in-the-navigation-component-frontend-src-components-navigation-tsx-by-adjusting-the-width-and-height-attributes-or-css-classes-applied-to-the-logo-image-element-image-8a526262-3a20-4994-9dc2-1df6b5d6410e-1-png",
+      "title": "Increase the logo size in the Navigation component (frontend/src/components/Navigation.tsx) by adjusting the width and height attributes or CSS classes applied to the logo image element (image_8a526262-3a20-4994-9dc2-1df6b5d6410e-1.png)",
+      "reqIds": [
+        "REQ-49"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-increase-the-logo-size-in-the-footer-component-frontend-src-components-footer-tsx-by-adjusting-the-width-and-height-attributes-or-css-classes-applied-to-the-logo-image-element-image-8a526262-3a20-4994-9dc2-1df6b5d6410e-1-png-to-match-the-proportional-increase-applied-in-navigation",
+      "title": "Increase the logo size in the Footer component (frontend/src/components/Footer.tsx) by adjusting the width and height attributes or CSS classes applied to the logo image element (image_8a526262-3a20-4994-9dc2-1df6b5d6410e-1.png) to match the proportional increase applied in Navigation",
+      "reqIds": [
+        "REQ-50"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-increase-the-logo-size-in-the-navigation-component-frontend-src-components-navigation-tsx-by-100-percent-from-the-current-h-16-size-by-changing-the-height-class-to-h-32-and-adjusting-the-container-height-from-h-24-to-h-40-proportionally",
+      "title": "Increase the logo size in the Navigation component (frontend/src/components/Navigation.tsx) by 100 percent from the current h-16 size by changing the height class to h-32 and adjusting the container height from h-24 to h-40 proportionally",
+      "reqIds": [
+        "REQ-51"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-increase-the-logo-size-in-the-footer-component-frontend-src-components-footer-tsx-by-100-percent-from-the-current-h-14-size-by-changing-the-height-class-to-h-28-to-match-the-proportional-increase-applied-in-navigation",
+      "title": "Increase the logo size in the Footer component (frontend/src/components/Footer.tsx) by 100 percent from the current h-14 size by changing the height class to h-28 to match the proportional increase applied in Navigation",
+      "reqIds": [
+        "REQ-52"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-reduce-the-height-of-white-space-at-the-top-of-the-home-page-frontend-src-pages-home-tsx-by-50-percent-by-adjusting-the-padding-or-margin-classes-on-the-hero-section-or-main-container-element",
+      "title": "Reduce the height of white space at the top of the Home page (frontend/src/pages/Home.tsx) by 50 percent by adjusting the padding or margin classes on the hero section or main container element",
+      "reqIds": [
+        "REQ-53"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-react-query-hooks-in-frontend-src-hooks-usequeries-ts-for-the-new-e-commerce-backend-functions-useplaceorder-mutation-hook-calling-placeorder-usegetallorders-query-hook-calling-getallorders-for-the-admin-page-usegetorderbyid-query-hook-calling-getorderbyid-and-useupdateorderstatus-mutation-hook-calling-updateorderstatus",
+      "title": "Add React Query hooks in frontend/src/hooks/useQueries.ts for the new e-commerce backend functions: usePlaceOrder (mutation hook calling placeOrder), useGetAllOrders (query hook calling getAllOrders for the admin page), useGetOrderById (query hook calling getOrderById), and useUpdateOrderStatus (mutation hook calling updateOrderStatus).",
+      "reqIds": [
+        "REQ-55"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-global-shopping-cart-context-state-in-the-frontend-e-g-frontend-src-context-cartcontext-tsx-that-stores-the-list-of-cart-items-each-with-productid-productname-variantname-quantity-unitprice-exposes-addtocart-removefromcart-updatequantity-clearcart-and-carttotal-computed-value-wrap-the-app-in-this-cartcontext-provider-in-frontend-src-app-tsx-without-modifying-any-immutable-paths",
+      "title": "Create a global shopping cart context/state in the frontend (e.g., frontend/src/context/CartContext.tsx) that stores the list of cart items (each with productId, productName, variantName, quantity, unitPrice), exposes addToCart, removeFromCart, updateQuantity, clearCart, and cartTotal computed value. Wrap the App in this CartContext provider in frontend/src/App.tsx without modifying any immutable paths.",
+      "reqIds": [
+        "REQ-56"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-an-add-to-cart-button-on-the-productdetail-page-frontend-src-pages-productdetail-tsx-that-allows-users-to-select-a-product-variant-and-specify-a-quantity-before-adding-the-item-to-the-cart-show-a-quantity-selector-numeric-input-with-increment-decrement-controls-and-a-variant-selector-if-variants-exist-display-a-success-toast-notification-when-an-item-is-added-to-the-cart-do-not-alter-the-existing-product-image-specifications-nutritional-information-or-product-variants-display-sections",
+      "title": "Add an 'Add to Cart' button on the ProductDetail page (frontend/src/pages/ProductDetail.tsx) that allows users to select a product variant and specify a quantity before adding the item to the cart. Show a quantity selector (numeric input with increment/decrement controls) and a variant selector if variants exist. Display a success toast notification when an item is added to the cart. Do not alter the existing product image, specifications, nutritional information, or product variants display sections.",
+      "reqIds": [
+        "REQ-57"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-cart-page-frontend-src-pages-cart-tsx-accessible-at-the-route-cart-it-should-list-all-cart-items-with-product-name-variant-name-unit-price-in-quantity-editable-line-total-and-a-remove-button-per-item-display-the-cart-subtotal-include-a-proceed-to-checkout-button-that-navigates-to-checkout-and-an-continue-shopping-link-back-to-products-show-an-empty-cart-message-with-a-link-to-products-when-the-cart-is-empty",
+      "title": "Create a Cart page (frontend/src/pages/Cart.tsx) accessible at the route '/cart'. It should list all cart items with product name, variant name, unit price (in ₹), quantity (editable), line total, and a remove button per item. Display the cart subtotal. Include a 'Proceed to Checkout' button that navigates to '/checkout', and an 'Continue Shopping' link back to '/products'. Show an empty cart message with a link to Products when the cart is empty.",
+      "reqIds": [
+        "REQ-58"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-checkout-page-frontend-src-pages-checkout-tsx-accessible-at-the-route-checkout-it-should-display-a-form-for-buyer-details-name-email-phone-number-and-a-shipping-address-street-city-state-pincode-country-show-an-order-summary-sidebar-listing-cart-items-quantities-and-total-amount-in-on-form-submission-call-the-useplaceorder-mutation-hook-to-submit-the-order-to-the-backend-on-success-clear-the-cart-and-navigate-to-an-order-confirmation-page-at-order-confirmation-orderid-displaying-the-order-id-and-a-thank-you-message",
+      "title": "Create a Checkout page (frontend/src/pages/Checkout.tsx) accessible at the route '/checkout'. It should display a form for buyer details (Name, Email, Phone Number) and a Shipping Address (Street, City, State, Pincode, Country). Show an order summary sidebar listing cart items, quantities, and total amount in ₹. On form submission, call the usePlaceOrder mutation hook to submit the order to the backend. On success, clear the cart and navigate to an order confirmation page at '/order-confirmation/:orderId' displaying the order ID and a thank-you message.",
+      "reqIds": [
+        "REQ-59"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-cart-icon-button-in-the-navigation-component-header-area-that-displays-the-current-number-of-items-in-the-cart-as-a-badge-clicking-it-navigates-to-cart-do-not-alter-the-existing-logo-size-navigation-links-or-mobile-menu-structure-in-frontend-src-components-navigation-tsx",
+      "title": "Add a cart icon button in the Navigation component header area that displays the current number of items in the cart as a badge. Clicking it navigates to '/cart'. Do not alter the existing logo size, navigation links, or mobile menu structure in frontend/src/components/Navigation.tsx.",
+      "reqIds": [
+        "REQ-60"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-admin-page-frontend-src-pages-admin-tsx-to-include-a-second-tab-or-section-labelled-orders-alongside-the-existing-contact-submissions-section-the-orders-section-should-display-all-orders-fetched-via-usegetallorders-in-a-table-showing-order-id-buyer-name-email-phone-total-amount-status-and-date-include-a-status-update-control-per-row-dropdown-with-pending-confirmed-processing-shipped-delivered-cancelled-that-calls-useupdateorderstatus-when-changed-do-not-modify-the-existing-contact-submissions-display",
+      "title": "Update the Admin page (frontend/src/pages/Admin.tsx) to include a second tab or section labelled 'Orders' alongside the existing 'Contact Submissions' section. The Orders section should display all orders fetched via useGetAllOrders in a table showing Order ID, Buyer Name, Email, Phone, Total Amount (₹), Status, and Date. Include a status update control per row (dropdown with pending/confirmed/processing/shipped/delivered/cancelled) that calls useUpdateOrderStatus when changed. Do not modify the existing contact submissions display.",
+      "reqIds": [
+        "REQ-61"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-register-the-new-cart-cart-checkout-checkout-and-order-confirmation-order-confirmation-orderid-routes-in-frontend-src-app-tsx-by-adding-the-corresponding-route-definitions-and-lazy-loading-the-new-page-components-do-not-alter-any-existing-routes-or-layout-structure",
+      "title": "Register the new Cart ('/cart'), Checkout ('/checkout'), and Order Confirmation ('/order-confirmation/$orderId') routes in frontend/src/App.tsx by adding the corresponding route definitions and lazy-loading the new page components. Do not alter any existing routes or layout structure.",
+      "reqIds": [
+        "REQ-62"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-the-usegetproductbycategory-hook-in-frontend-src-hooks-usequeries-ts-to-ensure-it-calls-the-backend-getproductbycategory-function-with-the-correct-category-slug-derived-from-the-url-productid-parameter-handles-loading-and-error-states-gracefully-and-returns-the-product-data-to-the-productdetail-page",
+      "title": "Fix the useGetProductByCategory hook in frontend/src/hooks/useQueries.ts to ensure it calls the backend getProductByCategory function with the correct category slug derived from the URL productId parameter, handles loading and error states gracefully, and returns the product data to the ProductDetail page.",
+      "reqIds": [
+        "REQ-64"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-the-productdetail-page-frontend-src-pages-productdetail-tsx-so-that-the-variant-selector-is-pre-populated-with-the-product-s-variants-fetched-from-the-backend-the-quantity-selector-defaults-to-1-and-allows-increment-decrement-and-the-add-to-cart-button-correctly-calls-addtocart-from-cartcontext-using-the-selected-variant-s-name-unitprice-from-the-product-s-price-field-and-the-current-quantity-ensure-no-regression-to-the-existing-product-image-specifications-nutritional-information-or-product-variants-display-sections",
+      "title": "Fix the ProductDetail page (frontend/src/pages/ProductDetail.tsx) so that the variant selector is pre-populated with the product's variants fetched from the backend, the quantity selector defaults to 1 and allows increment/decrement, and the 'Add to Cart' button correctly calls addToCart from CartContext using the selected variant's name, unitPrice from the product's price field, and the current quantity. Ensure no regression to the existing product image, specifications, nutritional information, or product variants display sections.",
+      "reqIds": [
+        "REQ-65"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-verify-that-product-category-card-links-on-the-products-page-frontend-src-pages-products-tsx-use-url-slugs-rice-wheat-pulses-spices-processed-food-products-makhana-that-exactly-match-the-category-values-stored-in-backend-productdetail-records-and-the-productid-parameter-extracted-in-the-productdetail-page-and-usegetproductbycategory-hook",
+      "title": "Verify that product category card links on the Products page (frontend/src/pages/Products.tsx) use URL slugs ('rice', 'wheat', 'pulses', 'spices', 'processed-food-products', 'makhana') that exactly match the category values stored in backend ProductDetail records and the productId parameter extracted in the ProductDetail page and useGetProductByCategory hook.",
+      "reqIds": [
+        "REQ-66"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-all-product-variant-image-filenames-referenced-in-backend-productdetail-records-exist-as-static-files-under-frontend-public-assets-generated-so-that-variant-images-render-correctly-on-both-the-products-page-and-productdetail-page-without-404-errors",
+      "title": "Ensure all product variant image filenames referenced in backend ProductDetail records exist as static files under frontend/public/assets/generated/ so that variant images render correctly on both the Products page and ProductDetail page without 404 errors.",
+      "reqIds": [
+        "REQ-67"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-save-the-uploaded-logo-image-as-logo-png-in-frontend-public-assets-generated-and-replace-the-existing-logo-image-image-8a526262-3a20-4994-9dc2-1df6b5d6410e-1-png-in-the-navigation-component-frontend-src-components-navigation-tsx-with-this-new-logo-png-ensuring-it-displays-correctly-in-both-desktop-and-mobile-navigation-views-at-the-current-h-32-size",
+      "title": "Save the uploaded logo image as 'Logo.png' in frontend/public/assets/generated/ and replace the existing logo image (image_8a526262-3a20-4994-9dc2-1df6b5d6410e-1.png) in the Navigation component (frontend/src/components/Navigation.tsx) with this new Logo.png, ensuring it displays correctly in both desktop and mobile navigation views at the current h-32 size.",
+      "reqIds": [
+        "REQ-68"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-replace-the-existing-logo-image-image-8a526262-3a20-4994-9dc2-1df6b5d6410e-1-png-in-the-footer-component-frontend-src-components-footer-tsx-with-the-newly-uploaded-logo-png-ensuring-consistent-branding-at-the-current-h-28-size",
+      "title": "Replace the existing logo image (image_8a526262-3a20-4994-9dc2-1df6b5d6410e-1.png) in the Footer component (frontend/src/components/Footer.tsx) with the newly uploaded Logo.png, ensuring consistent branding at the current h-28 size.",
+      "reqIds": [
+        "REQ-69"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-replace-the-existing-watermark-logo-image-image-8a526262-3a20-4994-9dc2-1df6b5d6410e-png-referenced-in-frontend-src-index-css-with-the-newly-uploaded-logo-png-so-the-watermark-background-across-all-pages-uses-the-new-logo",
+      "title": "Replace the existing watermark logo image (image_8a526262-3a20-4994-9dc2-1df6b5d6410e.png) referenced in frontend/src/index.css with the newly uploaded Logo.png, so the watermark background across all pages uses the new logo.",
+      "reqIds": [
+        "REQ-70"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-reduce-the-logo-size-in-the-navigation-component-frontend-src-components-navigation-tsx-by-25-percent-from-the-current-h-32-size-by-changing-the-height-class-to-h-24-and-adjusting-the-container-height-proportionally",
+      "title": "Reduce the logo size in the Navigation component (frontend/src/components/Navigation.tsx) by 25 percent from the current h-32 size by changing the height class to h-24 and adjusting the container height proportionally.",
+      "reqIds": [
+        "REQ-71"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-reduce-the-logo-size-in-the-footer-component-frontend-src-components-footer-tsx-by-25-percent-from-the-current-h-28-size-by-changing-the-height-class-to-h-21-or-the-nearest-tailwind-equivalent-such-as-h-20-to-match-the-proportional-reduction-applied-in-navigation",
+      "title": "Reduce the logo size in the Footer component (frontend/src/components/Footer.tsx) by 25 percent from the current h-28 size by changing the height class to h-21 (or the nearest Tailwind equivalent such as h-20) to match the proportional reduction applied in Navigation.",
+      "reqIds": [
+        "REQ-72"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-navigation-component-frontend-src-components-navigation-tsx-to-use-the-new-logo-png-from-assets-generated-logo-png-maintaining-the-current-h-24-height-class-and-container-height-ensuring-the-logo-displays-correctly-in-both-desktop-and-mobile-navigation-views-without-distortion",
+      "title": "Update the Navigation component (frontend/src/components/Navigation.tsx) to use the new Logo.png from /assets/generated/Logo.png, maintaining the current h-24 height class and container height, ensuring the logo displays correctly in both desktop and mobile navigation views without distortion.",
+      "reqIds": [
+        "REQ-74"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-footer-component-frontend-src-components-footer-tsx-to-use-the-new-logo-png-from-assets-generated-logo-png-maintaining-the-current-h-20-height-class-ensuring-consistent-branding-without-distortion",
+      "title": "Update the Footer component (frontend/src/components/Footer.tsx) to use the new Logo.png from /assets/generated/Logo.png, maintaining the current h-20 height class, ensuring consistent branding without distortion.",
+      "reqIds": [
+        "REQ-75"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-watermark-background-reference-in-frontend-src-index-css-to-use-the-new-logo-png-assets-generated-logo-png-so-the-watermark-background-across-all-pages-uses-the-newly-uploaded-logo",
+      "title": "Update the watermark background reference in frontend/src/index.css to use the new Logo.png (/assets/generated/Logo.png) so the watermark background across all pages uses the newly uploaded logo.",
+      "reqIds": [
+        "REQ-76"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-audit-the-navigation-component-frontend-src-components-navigation-tsx-to-determine-why-logo-png-is-not-loading-verify-the-image-src-path-resolves-correctly-to-assets-generated-logo-png-confirm-the-file-exists-at-frontend-public-assets-generated-logo-png-and-fix-any-broken-path-references-incorrect-relative-paths-or-missing-file-issues-so-the-logo-displays-correctly-in-both-desktop-and-mobile-navigation-views-at-the-current-h-24-height-class",
+      "title": "Audit the Navigation component (frontend/src/components/Navigation.tsx) to determine why Logo.png is not loading. Verify the image src path resolves correctly to /assets/generated/Logo.png, confirm the file exists at frontend/public/assets/generated/Logo.png, and fix any broken path references, incorrect relative paths, or missing file issues so the logo displays correctly in both desktop and mobile navigation views at the current h-24 height class.",
+      "reqIds": [
+        "REQ-77"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-audit-the-footer-component-frontend-src-components-footer-tsx-to-determine-why-logo-png-is-not-loading-verify-the-image-src-path-resolves-correctly-to-assets-generated-logo-png-confirm-the-file-exists-at-frontend-public-assets-generated-logo-png-and-fix-any-broken-path-references-or-missing-file-issues-so-the-logo-displays-correctly-in-the-footer-at-the-current-h-20-height-class",
+      "title": "Audit the Footer component (frontend/src/components/Footer.tsx) to determine why Logo.png is not loading. Verify the image src path resolves correctly to /assets/generated/Logo.png, confirm the file exists at frontend/public/assets/generated/Logo.png, and fix any broken path references or missing file issues so the logo displays correctly in the footer at the current h-20 height class.",
+      "reqIds": [
+        "REQ-78"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-file-logo-png-exists-at-frontend-public-assets-generated-logo-png-if-it-is-missing-or-named-incorrectly-e-g-with-spaces-or-different-casing-regenerate-or-rename-it-to-exactly-logo-png-so-both-the-navigation-and-footer-components-can-resolve-the-asset-correctly",
+      "title": "Ensure the file Logo.png exists at frontend/public/assets/generated/Logo.png. If it is missing or named incorrectly (e.g., with spaces or different casing), regenerate or rename it to exactly Logo.png so both the Navigation and Footer components can resolve the asset correctly.",
+      "reqIds": [
+        "REQ-79"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-restore-the-cartcontext-provider-in-frontend-src-context-cartcontext-tsx-with-full-cart-state-management-addtocart-removefromcart-updatequantity-clearcart-carttotal-ensure-the-cartcontext-provider-wraps-the-entire-app-in-frontend-src-app-tsx-so-all-pages-have-access-to-cart-state",
+      "title": "Restore the CartContext provider in frontend/src/context/CartContext.tsx with full cart state management (addToCart, removeFromCart, updateQuantity, clearCart, cartTotal). Ensure the CartContext provider wraps the entire app in frontend/src/App.tsx so all pages have access to cart state.",
+      "reqIds": [
+        "REQ-80"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-restore-the-cart-page-at-frontend-src-pages-cart-tsx-accessible-at-the-route-cart-it-must-list-all-cart-items-with-product-name-variant-name-unit-price-in-editable-quantity-with-increment-decrement-controls-line-total-and-a-remove-button-per-item-display-the-cart-subtotal-include-a-proceed-to-checkout-button-navigating-to-checkout-and-a-continue-shopping-link-to-products-show-an-empty-cart-message-with-a-link-to-products-when-the-cart-is-empty",
+      "title": "Restore the Cart page at frontend/src/pages/Cart.tsx accessible at the route '/cart'. It must list all cart items with product name, variant name, unit price (in ₹), editable quantity with increment/decrement controls, line total, and a remove button per item. Display the cart subtotal. Include a 'Proceed to Checkout' button navigating to '/checkout' and a 'Continue Shopping' link to '/products'. Show an empty cart message with a link to Products when the cart is empty.",
+      "reqIds": [
+        "REQ-81"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-restore-the-checkout-page-at-frontend-src-pages-checkout-tsx-accessible-at-the-route-checkout-it-must-display-a-form-for-buyer-details-name-email-phone-number-and-a-shipping-address-street-city-state-pincode-country-an-order-summary-sidebar-with-cart-items-quantities-and-total-amount-in-on-form-submission-call-the-useplaceorder-mutation-hook-to-submit-the-order-to-the-backend-on-success-clear-the-cart-and-navigate-to-order-confirmation-orderid",
+      "title": "Restore the Checkout page at frontend/src/pages/Checkout.tsx accessible at the route '/checkout'. It must display a form for buyer details (Name, Email, Phone Number) and a Shipping Address (Street, City, State, Pincode, Country), an order summary sidebar with cart items, quantities, and total amount in ₹. On form submission, call the usePlaceOrder mutation hook to submit the order to the backend. On success, clear the cart and navigate to '/order-confirmation/:orderId'.",
+      "reqIds": [
+        "REQ-82"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-restore-the-order-confirmation-page-at-frontend-src-pages-orderconfirmation-tsx-accessible-at-the-route-order-confirmation-orderid-it-must-fetch-and-display-order-details-order-id-buyer-info-status-shipping-address-items-using-usegetorderbyid-and-display-a-thank-you-message",
+      "title": "Restore the Order Confirmation page at frontend/src/pages/OrderConfirmation.tsx accessible at the route '/order-confirmation/:orderId'. It must fetch and display order details (order ID, buyer info, status, shipping address, items) using useGetOrderById, and display a thank-you message.",
+      "reqIds": [
+        "REQ-83"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-restore-the-add-to-cart-functionality-on-the-productdetail-page-frontend-src-pages-productdetail-tsx-ensure-a-variant-selector-pre-populated-with-the-product-s-variants-a-quantity-selector-defaulting-to-1-with-increment-decrement-controls-and-an-add-to-cart-button-that-calls-addtocart-from-cartcontext-using-the-selected-variant-s-name-unitprice-from-the-product-s-price-field-and-the-current-quantity-display-a-success-toast-notification-when-an-item-is-added-do-not-alter-existing-product-image-specifications-nutritional-information-or-product-variants-display-sections",
+      "title": "Restore the 'Add to Cart' functionality on the ProductDetail page (frontend/src/pages/ProductDetail.tsx). Ensure a variant selector pre-populated with the product's variants, a quantity selector defaulting to 1 with increment/decrement controls, and an 'Add to Cart' button that calls addToCart from CartContext using the selected variant's name, unitPrice from the product's price field, and the current quantity. Display a success toast notification when an item is added. Do not alter existing product image, specifications, nutritional information, or product variants display sections.",
+      "reqIds": [
+        "REQ-84"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-restore-the-cart-icon-button-in-the-navigation-component-frontend-src-components-navigation-tsx-that-displays-the-current-number-of-items-in-the-cart-as-a-badge-clicking-it-must-navigate-to-cart-do-not-alter-the-existing-logo-size-h-24-navigation-links-or-mobile-menu-structure",
+      "title": "Restore the cart icon button in the Navigation component (frontend/src/components/Navigation.tsx) that displays the current number of items in the cart as a badge. Clicking it must navigate to '/cart'. Do not alter the existing logo size (h-24), navigation links, or mobile menu structure.",
+      "reqIds": [
+        "REQ-85"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-react-query-hooks-for-e-commerce-are-present-and-correct-in-frontend-src-hooks-usequeries-ts-useplaceorder-mutation-calling-placeorder-usegetallorders-query-calling-getallorders-usegetorderbyid-query-calling-getorderbyid-and-useupdateorderstatus-mutation-calling-updateorderstatus-verify-each-hook-correctly-interfaces-with-the-backend-actor-methods",
+      "title": "Ensure the React Query hooks for e-commerce are present and correct in frontend/src/hooks/useQueries.ts: usePlaceOrder (mutation calling placeOrder), useGetAllOrders (query calling getAllOrders), useGetOrderById (query calling getOrderById), and useUpdateOrderStatus (mutation calling updateOrderStatus). Verify each hook correctly interfaces with the backend actor methods.",
+      "reqIds": [
+        "REQ-86"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-register-the-cart-checkout-and-order-confirmation-orderid-routes-in-frontend-src-app-tsx-by-adding-the-corresponding-route-definitions-and-lazy-loading-the-cart-checkout-and-orderconfirmation-page-components-do-not-alter-any-existing-routes-or-layout-structure",
+      "title": "Register the '/cart', '/checkout', and '/order-confirmation/$orderId' routes in frontend/src/App.tsx by adding the corresponding route definitions and lazy-loading the Cart, Checkout, and OrderConfirmation page components. Do not alter any existing routes or layout structure.",
+      "reqIds": [
+        "REQ-87"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-diagnose-and-fix-the-admin-page-frontend-src-pages-admin-tsx-not-loading-investigate-likely-causes-including-missing-or-broken-imports-cartcontext-usegetallorders-useupdateorderstatus-typescript-type-errors-or-missing-route-registration-ensure-the-admin-page-renders-both-the-contact-submissions-tab-and-the-orders-tab-correctly-with-the-orders-tab-fetching-data-via-usegetallorders-and-status-updates-via-useupdateorderstatus",
+      "title": "Diagnose and fix the Admin page (frontend/src/pages/Admin.tsx) not loading. Investigate likely causes including missing or broken imports (CartContext, useGetAllOrders, useUpdateOrderStatus), TypeScript type errors, or missing route registration. Ensure the Admin page renders both the 'Contact Submissions' tab and the 'Orders' tab correctly, with the Orders tab fetching data via useGetAllOrders and status updates via useUpdateOrderStatus.",
+      "reqIds": [
+        "REQ-89"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Home page with hero section, services overview, product categories, supply chain model, and CTA",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "About Us page with vision, mission, and business model sections",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Products page with categories: Rice, Wheat, Pulses, Spices, Processed Food Products",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Farmer Network page with procurement, pricing, aggregation, quality, and digitization info",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Exports page with quality assurance, packaging, logistics, trade support, and compliance",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Contact Us page with form (Name, Email, Phone, Message, User Type) and professional footer",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-16",
+      "summary": "Store submitted contact form data in the backend, capturing Name, Email, Phone Number, Message, and User Type fields",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-17",
+      "summary": "Update the backend submitContactForm function to persist ContactFormEntry records in stable storage so submitted contact forms are permanently stored across canister upgrades",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-18",
+      "summary": "Add a backend query function to retrieve all stored contact form submissions, returning an array of ContactFormEntry records",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-19",
+      "summary": "Add admin page to view all contact form submissions",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-20",
+      "summary": "Add Makhana to product categories",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-21",
+      "summary": "Add images to all product categories and make them clickable to show detailed specifications with prices in rupees",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-25",
+      "summary": "Create a ProductDetail data model in the backend to store product specifications including product name, category, description, detailed specifications, and price in rupees",
+      "reqIds": [
+        "REQ-17"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-26",
+      "summary": "Add backend functions to store and retrieve product details, including a function to get all products and a function to get a specific product by ID or category",
+      "reqIds": [
+        "REQ-18"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-28",
+      "summary": "Update product detail pages to display nutritional information per gram alongside specifications and pricing",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-29",
+      "summary": "Add individual product images to each product detail page",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-30",
+      "summary": "Update the ProductDetail backend data model to include a nutritional information field that stores nutritional values per gram (e.g., calories, protein, carbohydrates, fat, fiber, vitamins, minerals)",
+      "reqIds": [
+        "REQ-21"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-32",
+      "summary": "Update the ProductDetail backend data model to include an imageUrl field for storing the path to each product's individual image",
+      "reqIds": [
+        "REQ-23"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-33",
+      "summary": "Display images of each product variant on the product detail pages (redirecting pages)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-34",
+      "summary": "Update the ProductDetail backend data model to include a 'variants' field that stores an array of product variant objects, where each variant object contains a name/label string and an imageUrl string for the variant's image",
+      "reqIds": [
+        "REQ-26"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-35",
+      "summary": "Debug and fix the product detail page routing in frontend/src/App.tsx to ensure the productId parameter is correctly captured from the URL when users click on product category cards from the Products page",
+      "reqIds": [
+        "REQ-28"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-36",
+      "summary": "Add company logo to the website from attached image file",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-37",
+      "summary": "Add watermark image of a tractor in field to all pages",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-38",
+      "summary": "Add the company logo from the attached image file to the Navigation component (frontend/src/components/Navigation.tsx), replacing the existing placeholder logo with the uploaded company logo image",
+      "reqIds": [
+        "REQ-32"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-39",
+      "summary": "Add the company logo from the attached image file to the Footer component (frontend/src/components/Footer.tsx), replacing the existing placeholder logo with the uploaded company logo image",
+      "reqIds": [
+        "REQ-33"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-40",
+      "summary": "Replace existing tractor watermark with new uploaded watermark image on all pages",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-41",
+      "summary": "Display product variants with images for each product category on the Products page, matching the variants shown on the Home page",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-42",
+      "summary": "Make the watermark 30 percent darker and ensure it fits properly within the page dimensions",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-43",
+      "summary": "Diagnose and fix the deployment error that occurred during the previous network deployment attempt by reviewing canister configuration, dependencies, and build artifacts",
+      "reqIds": [
+        "REQ-39"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-44",
+      "summary": "Verify that the backend main.mo actor compiles correctly with all existing type definitions (ContactFormEntry, ProductDetail, NutritionData, ProductVariant) and function signatures",
+      "reqIds": [
+        "REQ-40"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-45",
+      "summary": "Make the watermark 50 percent darker (reduce opacity by 50 percent from current level)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-46",
+      "summary": "Replace the current company logo with the newly attached logo image in Navigation and Footer components",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-48",
+      "summary": "Increase the logo size in Navigation and Footer components by an additional 100 percent from the current size",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-49",
+      "summary": "Reduce the height of white space at the top of the Home page by 50 percent",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-50",
+      "summary": "Add e-commerce functionality to the existing website including shopping cart, product ordering/purchasing capability, and checkout flow",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-51",
+      "summary": "Fill white space areas on all pages with a rice and wheat field background image",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-52",
+      "summary": "Extend the backend Motoko actor (backend/main.mo) with e-commerce data models and functions: add an Order type containing orderId, buyerName, buyerEmail, buyerPhone, shippingAddress, items (array of OrderItem with productId, productName, variantName, quantity, unitPrice), totalAmount, status (pending/confirmed/processing/shipped/delivered/cancelled), and createdAt timestamp. Add stable storage for orders, and public functions: placeOrder (accepts buyer info, shipping address, and cart items; returns the created order), getOrderById (returns a specific order), getAllOrders (admin function to return all orders), and updateOrderStatus (updates the order status by orderId).",
+      "reqIds": [
+        "REQ-54"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-53",
+      "summary": "Audit the backend main.mo actor to ensure all six product categories (Rice, Wheat, Pulses, Spices, Processed Food Products, Makhana) have fully populated ProductDetail records with name, category slug, description, specifications, price, imageUrl, nutritionData, and variants (each with name and imageUrl). If any records are missing or incomplete, seed them with realistic representative data so every category returns valid data from getProductByCategory queries.",
+      "reqIds": [
+        "REQ-63"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-54",
+      "summary": "Reduce the logo size in Navigation and Footer components by 25 percent from the current size",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-55",
+      "summary": "Save the uploaded FarmSiddhi logo image (ChatGPT Image Feb 25, 2026, 12_31_54 AM.png) as 'Logo.png' in frontend/public/assets/generated/, replacing any existing Logo.png file.",
+      "reqIds": [
+        "REQ-73"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-56",
+      "summary": "Restore missing e-commerce features (shopping cart, checkout, order confirmation, cart icon in nav, product add-to-cart) that were removed in a recent deployment",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-57",
+      "summary": "Fix the Admin page not loading - diagnose and resolve the issue preventing the Admin page from rendering correctly",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-66",
+      "summary": "Ensure the backend Motoko actor (backend/main.mo) contains the complete e-commerce data model and all required functions: Order type with orderId, buyerName, buyerEmail, buyerPhone, shippingAddress, items (array of OrderItem with productId, productName, variantName, quantity, unitPrice), totalAmount, status (pending/confirmed/processing/shipped/delivered/cancelled), and createdAt. Stable storage for orders. Public functions: placeOrder, getOrderById, getAllOrders, and updateOrderStatus. If any of these are missing or broken, restore them fully.",
+      "reqIds": [
+        "REQ-88"
+      ],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "FarmSiddhi",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

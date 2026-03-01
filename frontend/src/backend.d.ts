@@ -23,17 +23,26 @@ export interface NutritionData {
     fiber: number;
     carbohydrates: number;
     calories: number;
+    iron: number;
+    zinc: number;
     minerals: string;
     vitamins: string;
     protein: number;
 }
-export type Time = bigint;
 export interface ContactFormEntry {
     userType: string;
     name: string;
     email: string;
     message: string;
     phoneNumber: string;
+}
+export type Time = bigint;
+export interface Address {
+    street: string;
+    country: string;
+    city: string;
+    state: string;
+    pincode: string;
 }
 export interface OrderItem {
     variantName: string;
@@ -45,21 +54,9 @@ export interface OrderItem {
 export interface NewOrderInput {
     buyerEmail: string;
     buyerPhone: string;
-    shippingAddress: string;
+    shippingAddress: Address;
     items: Array<OrderItem>;
     buyerName: string;
-}
-export interface Specification {
-    key: string;
-    value: string;
-}
-export interface ProductVariant {
-    name: string;
-    imageUrl: string;
-}
-export interface UserProfile {
-    name: string;
-    email: string;
 }
 export interface Order {
     status: OrderStatus;
@@ -68,9 +65,21 @@ export interface Order {
     buyerPhone: string;
     orderId: bigint;
     totalAmount: bigint;
-    shippingAddress: string;
+    shippingAddress: Address;
     items: Array<OrderItem>;
     buyerName: string;
+}
+export interface ProductVariant {
+    name: string;
+    imageUrl: string;
+}
+export interface Specification {
+    key: string;
+    value: string;
+}
+export interface UserProfile {
+    name: string;
+    email: string;
 }
 export enum OrderStatus {
     shipped = "shipped",

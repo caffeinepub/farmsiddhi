@@ -1,11 +1,10 @@
-import React, { Suspense, lazy } from 'react';
+import React, { lazy, Suspense } from 'react';
 import { createRouter, createRoute, createRootRoute, RouterProvider, Outlet } from '@tanstack/react-router';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ThemeProvider } from 'next-themes';
-import { Toaster } from '@/components/ui/sonner';
+import { CartProvider } from './context/CartContext';
 import Navigation from './components/Navigation';
 import Footer from './components/Footer';
-import { CartProvider } from './context/CartContext';
+import { Toaster } from '@/components/ui/sonner';
 
 const Home = lazy(() => import('./pages/Home'));
 const AboutUs = lazy(() => import('./pages/AboutUs'));
@@ -30,7 +29,7 @@ const queryClient = new QueryClient({
 
 function Layout() {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-background text-foreground">
       <Navigation />
       <main className="flex-1">
         <Suspense fallback={
@@ -46,22 +45,78 @@ function Layout() {
   );
 }
 
-const rootRoute = createRootRoute({ component: Layout });
+const rootRoute = createRootRoute({
+  component: Layout,
+});
 
-const indexRoute = createRoute({ getParentRoute: () => rootRoute, path: '/', component: Home });
-const aboutRoute = createRoute({ getParentRoute: () => rootRoute, path: '/about', component: AboutUs });
-const productsRoute = createRoute({ getParentRoute: () => rootRoute, path: '/products', component: Products });
-const productDetailRoute = createRoute({ getParentRoute: () => rootRoute, path: '/products/$category', component: ProductDetail });
-const farmerNetworkRoute = createRoute({ getParentRoute: () => rootRoute, path: '/farmer-network', component: FarmerNetwork });
-const exportsRoute = createRoute({ getParentRoute: () => rootRoute, path: '/exports', component: Exports });
-const contactRoute = createRoute({ getParentRoute: () => rootRoute, path: '/contact', component: ContactUs });
-const adminRoute = createRoute({ getParentRoute: () => rootRoute, path: '/admin', component: Admin });
-const cartRoute = createRoute({ getParentRoute: () => rootRoute, path: '/cart', component: Cart });
-const checkoutRoute = createRoute({ getParentRoute: () => rootRoute, path: '/checkout', component: Checkout });
-const orderConfirmationRoute = createRoute({ getParentRoute: () => rootRoute, path: '/order-confirmation/$orderId', component: OrderConfirmation });
+const homeRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/',
+  component: Home,
+});
+
+const aboutRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/about',
+  component: AboutUs,
+});
+
+const productsRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/products',
+  component: Products,
+});
+
+const productDetailRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/products/$category',
+  component: ProductDetail,
+});
+
+const farmerNetworkRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/farmer-network',
+  component: FarmerNetwork,
+});
+
+const exportsRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/exports',
+  component: Exports,
+});
+
+const contactRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/contact',
+  component: ContactUs,
+});
+
+const adminRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/admin',
+  component: Admin,
+});
+
+const cartRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/cart',
+  component: Cart,
+});
+
+const checkoutRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/checkout',
+  component: Checkout,
+});
+
+const orderConfirmationRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/order-confirmation/$orderId',
+  component: OrderConfirmation,
+});
 
 const routeTree = rootRoute.addChildren([
-  indexRoute,
+  homeRoute,
   aboutRoute,
   productsRoute,
   productDetailRoute,
@@ -84,13 +139,11 @@ declare module '@tanstack/react-router' {
 
 export default function App() {
   return (
-    <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
-      <QueryClientProvider client={queryClient}>
-        <CartProvider>
-          <RouterProvider router={router} />
-          <Toaster richColors position="top-right" />
-        </CartProvider>
-      </QueryClientProvider>
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <CartProvider>
+        <RouterProvider router={router} />
+        <Toaster richColors position="top-right" />
+      </CartProvider>
+    </QueryClientProvider>
   );
 }

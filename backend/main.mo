@@ -1,28 +1,29 @@
-import List "mo:core/List";
 import Map "mo:core/Map";
-import Iter "mo:core/Iter";
-import Runtime "mo:core/Runtime";
-import Nat "mo:core/Nat";
+import List "mo:core/List";
 import Text "mo:core/Text";
 import Time "mo:core/Time";
+import Iter "mo:core/Iter";
+import Nat "mo:core/Nat";
 import Float "mo:core/Float";
+import Runtime "mo:core/Runtime";
+import Migration "migration";
 import Principal "mo:core/Principal";
-
-
 import AccessControl "authorization/access-control";
 import MixinAuthorization "authorization/MixinAuthorization";
+import MixinStorage "blob-storage/Mixin";
 
-
+(with migration = Migration.run)
 actor {
   let accessControlState = AccessControl.initState();
   include MixinAuthorization(accessControlState);
+  include MixinStorage();
 
-  type UserProfile = {
+  public type UserProfile = {
     name : Text;
     email : Text;
   };
 
-  type ContactFormEntry = {
+  public type ContactFormEntry = {
     name : Text;
     userType : Text;
     email : Text;
@@ -30,27 +31,29 @@ actor {
     message : Text;
   };
 
-  type Specification = {
+  public type Specification = {
     key : Text;
     value : Text;
   };
 
-  type NutritionData = {
+  public type NutritionData = {
     calories : Float;
     protein : Float;
     carbohydrates : Float;
     fat : Float;
     fiber : Float;
+    iron : Float;
+    zinc : Float;
     vitamins : Text;
     minerals : Text;
   };
 
-  type ProductVariant = {
+  public type ProductVariant = {
     name : Text;
     imageUrl : Text;
   };
 
-  type ProductDetail = {
+  public type ProductDetail = {
     productId : Nat;
     productName : Text;
     category : Text;
@@ -62,7 +65,7 @@ actor {
     variants : [ProductVariant];
   };
 
-  type OrderItem = {
+  public type OrderItem = {
     productId : Nat;
     productName : Text;
     variantName : Text;
@@ -70,7 +73,15 @@ actor {
     unitPrice : Nat;
   };
 
-  type OrderStatus = {
+  public type Address = {
+    street : Text;
+    city : Text;
+    state : Text;
+    pincode : Text;
+    country : Text;
+  };
+
+  public type OrderStatus = {
     #pending;
     #confirmed;
     #processing;
@@ -79,23 +90,23 @@ actor {
     #cancelled;
   };
 
-  type Order = {
+  public type Order = {
     orderId : Nat;
     buyerName : Text;
     buyerEmail : Text;
     buyerPhone : Text;
-    shippingAddress : Text;
+    shippingAddress : Address;
     items : [OrderItem];
     totalAmount : Nat;
     status : OrderStatus;
     createdAt : Time.Time;
   };
 
-  type NewOrderInput = {
+  public type NewOrderInput = {
     buyerName : Text;
     buyerEmail : Text;
     buyerPhone : Text;
-    shippingAddress : Text;
+    shippingAddress : Address;
     items : [OrderItem];
   };
 
@@ -106,11 +117,14 @@ actor {
 
   // User Profile Functions (required by frontend)
   public query ({ caller }) func getCallerUserProfile() : async ?UserProfile {
+    if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
+      Runtime.trap("Unauthorized: Only users can view their profile");
+    };
     userProfiles.get(caller);
   };
 
   public query ({ caller }) func getUserProfile(user : Principal) : async ?UserProfile {
-    if (caller != user and not AccessControl.isAdmin(accessControlState, caller)) {
+    if (caller != user and not (AccessControl.isAdmin(accessControlState, caller))) {
       Runtime.trap("Unauthorized: Can only view your own profile");
     };
     userProfiles.get(user);
@@ -123,7 +137,7 @@ actor {
     userProfiles.add(caller, profile);
   };
 
-  // Contact Form Functions
+  // Contact Form Functions — open to all (including guests/anonymous)
   public shared ({ caller }) func submitContactForm(name : Text, email : Text, phoneNumber : Text, message : Text, userType : Text) : async () {
     let newEntry : ContactFormEntry = {
       name;
@@ -153,7 +167,7 @@ actor {
     contactFormEntries.toArray();
   };
 
-  // Product Functions
+  // Product Functions — read access open to all
   public shared ({ caller }) func addProductDetail(
     productName : Text,
     category : Text,
@@ -164,7 +178,7 @@ actor {
     imageUrl : Text,
     variants : [ProductVariant],
   ) : async Nat {
-    if (not (AccessControl.isAdmin(accessControlState, caller))) {
+    if (not (AccessControl.hasPermission(accessControlState, caller, #admin))) {
       Runtime.trap("Unauthorized: Only admins can add product details");
     };
 
@@ -185,15 +199,15 @@ actor {
     newProductId;
   };
 
-  public query ({ caller }) func getProductDetail(productId : Nat) : async ?ProductDetail {
+  public query func getProductDetail(productId : Nat) : async ?ProductDetail {
     productDetails.get(productId);
   };
 
-  public query ({ caller }) func getAllProductDetails() : async [ProductDetail] {
+  public query func getAllProductDetails() : async [ProductDetail] {
     productDetails.values().toArray();
   };
 
-  public query ({ caller }) func getProductsByCategory(category : Text) : async [ProductDetail] {
+  public query func getProductsByCategory(category : Text) : async [ProductDetail] {
     let iter = productDetails.values();
     let filtered = iter.filter(
       func(product) {
@@ -203,7 +217,7 @@ actor {
     filtered.toArray();
   };
 
-  // Order Management
+  // Order Management — placing orders open to all (guests can place orders)
   public shared ({ caller }) func placeOrder(input : NewOrderInput) : async Order {
     let totalAmount = input.items.foldLeft(
       0,

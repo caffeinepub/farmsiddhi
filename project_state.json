@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 49,
+  "projectStateVersion": 61,
   "summary": "Premium corporate website for FarmSiddhi - an Indian agriculture and processed food export company. Multi-page site with modern, professional design featuring Home, About Us, Products, Farmer Network, Exports, and Contact pages. Silver green and silver brown color palette on white background. B2B export-oriented tone. E-commerce features being added to the existing site.",
   "architectural_notes": [
     "Multi-page corporate website structure with 6 main pages",
@@ -20,7 +20,8 @@
     "Product page has no products available to add to cart - e-commerce cart integration with product data is broken",
     "Logo image not loading correctly in the Navigation and/or Footer components",
     "E-commerce features (cart, checkout, order confirmation, add-to-cart) appear to have been removed in a recent deployment and need to be restored",
-    "Admin page not loading after recent deployment"
+    "Admin page not loading after recent deployment",
+    "Product not found error when selecting a product from the Products page"
   ],
   "isFixRequest": true,
   "existing_features": [
@@ -592,6 +593,196 @@
         "REQ-89"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-reduce-the-logo-size-in-the-navigation-component-frontend-src-components-navigation-tsx-by-10-percent-from-the-current-h-24-height-class-by-changing-the-height-class-to-h-86px-or-the-nearest-tailwind-equivalent-such-as-h-20-and-adjusting-the-container-height-proportionally",
+      "title": "Reduce the logo size in the Navigation component (frontend/src/components/Navigation.tsx) by 10 percent from the current h-24 height class by changing the height class to h-[86px] (or the nearest Tailwind equivalent such as h-20) and adjusting the container height proportionally.",
+      "reqIds": [
+        "REQ-90"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-reduce-the-logo-size-in-the-footer-component-frontend-src-components-footer-tsx-by-10-percent-from-the-current-h-20-height-class-by-changing-the-height-class-to-h-72px-or-the-nearest-tailwind-equivalent-such-as-h-16-or-h-72px-to-match-the-proportional-reduction-applied-in-navigation",
+      "title": "Reduce the logo size in the Footer component (frontend/src/components/Footer.tsx) by 10 percent from the current h-20 height class by changing the height class to h-[72px] (or the nearest Tailwind equivalent such as h-16 or h-[72px]) to match the proportional reduction applied in Navigation.",
+      "reqIds": [
+        "REQ-91"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-reduce-the-logo-size-in-the-navigation-component-frontend-src-components-navigation-tsx-by-10-percent-from-the-current-h-86px-height-class-by-changing-the-height-class-to-h-77px-and-adjusting-the-container-height-proportionally",
+      "title": "Reduce the logo size in the Navigation component (frontend/src/components/Navigation.tsx) by 10 percent from the current h-[86px] height class by changing the height class to h-[77px] and adjusting the container height proportionally.",
+      "reqIds": [
+        "REQ-92"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-reduce-the-logo-size-in-the-footer-component-frontend-src-components-footer-tsx-by-10-percent-from-the-current-h-72px-height-class-by-changing-the-height-class-to-h-65px-to-match-the-proportional-reduction-applied-in-navigation",
+      "title": "Reduce the logo size in the Footer component (frontend/src/components/Footer.tsx) by 10 percent from the current h-[72px] height class by changing the height class to h-[65px] to match the proportional reduction applied in Navigation.",
+      "reqIds": [
+        "REQ-93"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-cartcontext-provider-in-frontend-src-context-cartcontext-tsx-is-fully-implemented-with-cart-state-management-addtocart-removefromcart-updatequantity-clearcart-carttotal-itemcount-and-that-it-wraps-the-entire-app-in-frontend-src-app-tsx-each-cart-item-must-contain-productid-productname-variantname-quantity-and-unitprice",
+      "title": "Ensure the CartContext provider in frontend/src/context/CartContext.tsx is fully implemented with cart state management (addToCart, removeFromCart, updateQuantity, clearCart, cartTotal, itemCount) and that it wraps the entire app in frontend/src/App.tsx. Each cart item must contain productId, productName, variantName, quantity, and unitPrice.",
+      "reqIds": [
+        "REQ-95"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-all-four-e-commerce-react-query-hooks-are-present-and-correctly-implemented-in-frontend-src-hooks-usequeries-ts-useplaceorder-mutation-calling-actor-placeorder-usegetallorders-query-calling-actor-getallorders-usegetorderbyid-query-calling-actor-getorderbyid-with-orderid-parameter-and-useupdateorderstatus-mutation-calling-actor-updateorderstatus-each-hook-must-correctly-interface-with-the-backend-actor-and-handle-loading-error-states",
+      "title": "Ensure all four e-commerce React Query hooks are present and correctly implemented in frontend/src/hooks/useQueries.ts: usePlaceOrder (mutation calling actor.placeOrder), useGetAllOrders (query calling actor.getAllOrders), useGetOrderById (query calling actor.getOrderById with orderId parameter), and useUpdateOrderStatus (mutation calling actor.updateOrderStatus). Each hook must correctly interface with the backend actor and handle loading/error states.",
+      "reqIds": [
+        "REQ-119",
+        "REQ-96"
+      ],
+      "version": 2
+    },
+    {
+      "id": "feature-restore-the-cart-page-at-frontend-src-pages-cart-tsx-accessible-at-route-cart-it-must-list-all-cart-items-with-product-name-variant-name-unit-price-in-editable-quantity-with-increment-decrement-controls-line-total-and-a-remove-button-per-item-display-the-cart-subtotal-include-a-proceed-to-checkout-button-navigating-to-checkout-and-a-continue-shopping-link-to-products-show-an-empty-cart-message-with-a-link-to-products-when-the-cart-is-empty",
+      "title": "Restore the Cart page at frontend/src/pages/Cart.tsx accessible at route '/cart'. It must list all cart items with product name, variant name, unit price (in ₹), editable quantity with increment/decrement controls, line total, and a remove button per item. Display the cart subtotal. Include a 'Proceed to Checkout' button navigating to '/checkout' and a 'Continue Shopping' link to '/products'. Show an empty cart message with a link to Products when the cart is empty.",
+      "reqIds": [
+        "REQ-121",
+        "REQ-97"
+      ],
+      "version": 2
+    },
+    {
+      "id": "feature-restore-the-checkout-page-at-frontend-src-pages-checkout-tsx-accessible-at-route-checkout-it-must-display-a-form-for-buyer-details-name-email-phone-number-and-a-shipping-address-street-city-state-pincode-country-and-an-order-summary-sidebar-listing-cart-items-quantities-and-total-amount-in-on-form-submission-call-the-useplaceorder-mutation-to-submit-the-order-to-the-backend-on-success-clear-the-cart-and-navigate-to-order-confirmation-orderid",
+      "title": "Restore the Checkout page at frontend/src/pages/Checkout.tsx accessible at route '/checkout'. It must display a form for buyer details (Name, Email, Phone Number) and a Shipping Address (Street, City, State, Pincode, Country), and an order summary sidebar listing cart items, quantities, and total amount in ₹. On form submission, call the usePlaceOrder mutation to submit the order to the backend. On success, clear the cart and navigate to '/order-confirmation/$orderId'.",
+      "reqIds": [
+        "REQ-122",
+        "REQ-98"
+      ],
+      "version": 2
+    },
+    {
+      "id": "feature-restore-the-order-confirmation-page-at-frontend-src-pages-orderconfirmation-tsx-accessible-at-route-order-confirmation-orderid-it-must-use-usegetorderbyid-to-fetch-and-display-order-details-including-order-id-buyer-name-email-phone-status-with-color-coded-badge-shipping-address-and-itemized-order-items-with-quantities-and-prices-display-a-prominent-thank-you-message-handle-loading-and-error-states",
+      "title": "Restore the Order Confirmation page at frontend/src/pages/OrderConfirmation.tsx accessible at route '/order-confirmation/$orderId'. It must use useGetOrderById to fetch and display order details including order ID, buyer name, email, phone, status (with color-coded badge), shipping address, and itemized order items with quantities and prices. Display a prominent thank-you message. Handle loading and error states.",
+      "reqIds": [
+        "REQ-99"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-restore-the-add-to-cart-functionality-on-the-productdetail-page-frontend-src-pages-productdetail-tsx-ensure-a-variant-selector-pre-populated-with-the-product-s-variants-fetched-from-the-backend-a-quantity-selector-defaulting-to-1-with-increment-decrement-controls-and-an-add-to-cart-button-that-calls-addtocart-from-cartcontext-using-the-selected-variant-s-name-unitprice-from-the-product-s-price-field-and-the-current-quantity-display-a-success-toast-notification-when-an-item-is-added-do-not-alter-existing-product-image-specifications-nutritional-information-or-product-variants-display-sections",
+      "title": "Restore the 'Add to Cart' functionality on the ProductDetail page (frontend/src/pages/ProductDetail.tsx). Ensure a variant selector pre-populated with the product's variants fetched from the backend, a quantity selector defaulting to 1 with increment/decrement controls, and an 'Add to Cart' button that calls addToCart from CartContext using the selected variant's name, unitPrice from the product's price field, and the current quantity. Display a success toast notification when an item is added. Do not alter existing product image, specifications, nutritional information, or product variants display sections.",
+      "reqIds": [
+        "REQ-100",
+        "REQ-120"
+      ],
+      "version": 2
+    },
+    {
+      "id": "feature-restore-the-cart-icon-button-in-the-navigation-component-frontend-src-components-navigation-tsx-that-displays-the-current-item-count-from-cartcontext-as-a-badge-clicking-the-cart-icon-must-navigate-to-cart-do-not-alter-the-existing-logo-size-h-77px-navigation-links-or-mobile-menu-structure",
+      "title": "Restore the cart icon button in the Navigation component (frontend/src/components/Navigation.tsx) that displays the current item count from CartContext as a badge. Clicking the cart icon must navigate to '/cart'. Do not alter the existing logo size (h-[77px]), navigation links, or mobile menu structure.",
+      "reqIds": [
+        "REQ-101",
+        "REQ-124"
+      ],
+      "version": 2
+    },
+    {
+      "id": "feature-ensure-the-cart-checkout-and-order-confirmation-orderid-routes-are-registered-in-frontend-src-app-tsx-with-lazy-loaded-cart-checkout-and-orderconfirmation-page-components-do-not-alter-any-existing-routes-or-layout-structure",
+      "title": "Ensure the '/cart', '/checkout', and '/order-confirmation/$orderId' routes are registered in frontend/src/App.tsx with lazy-loaded Cart, Checkout, and OrderConfirmation page components. Do not alter any existing routes or layout structure.",
+      "reqIds": [
+        "REQ-102",
+        "REQ-125"
+      ],
+      "version": 2
+    },
+    {
+      "id": "feature-fix-and-fully-restore-the-admin-page-at-frontend-src-pages-admin-tsx-it-must-render-two-tabs-1-contact-submissions-displaying-all-contact-form-submissions-fetched-via-usegetcontactsubmissions-or-equivalent-hook-in-a-table-showing-name-email-phone-number-message-and-user-type-2-orders-displaying-all-orders-fetched-via-usegetallorders-in-a-table-showing-order-id-buyer-name-email-phone-total-amount-status-and-date-with-a-per-row-status-update-dropdown-pending-confirmed-processing-shipped-delivered-cancelled-calling-useupdateorderstatus-when-changed-resolve-any-import-errors-typescript-type-errors-or-missing-hook-issues-that-prevent-the-page-from-loading",
+      "title": "Fix and fully restore the Admin page at frontend/src/pages/Admin.tsx. It must render two tabs: (1) 'Contact Submissions' — displaying all contact form submissions fetched via useGetContactSubmissions (or equivalent hook) in a table showing Name, Email, Phone Number, Message, and User Type; (2) 'Orders' — displaying all orders fetched via useGetAllOrders in a table showing Order ID, Buyer Name, Email, Phone, Total Amount (₹), Status, and Date, with a per-row status update dropdown (pending/confirmed/processing/shipped/delivered/cancelled) calling useUpdateOrderStatus when changed. Resolve any import errors, TypeScript type errors, or missing hook issues that prevent the page from loading.",
+      "reqIds": [
+        "REQ-103"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-representative-static-images-for-the-three-wheat-variants-durum-wheat-whole-wheat-semolina-as-generated-assets-under-frontend-public-assets-generated-and-ensure-the-imageurl-values-stored-in-the-backend-variants-reference-these-correct-paths-e-g-assets-generated-wheat-durum-png-assets-generated-wheat-whole-png-assets-generated-wheat-semolina-png",
+      "title": "Add representative static images for the three wheat variants (Durum Wheat, Whole Wheat, Semolina) as generated assets under frontend/public/assets/generated/, and ensure the imageUrl values stored in the backend variants reference these correct paths (e.g., /assets/generated/wheat-durum.png, /assets/generated/wheat-whole.png, /assets/generated/wheat-semolina.png).",
+      "reqIds": [
+        "REQ-105"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-productdetail-page-frontend-src-pages-productdetail-tsx-to-ensure-that-when-viewing-the-wheat-category-products-wheat-the-three-variants-durum-wheat-whole-wheat-semolina-are-displayed-in-the-existing-product-variants-grid-section-with-their-names-and-images-and-the-nutritional-information-section-correctly-renders-all-per-gram-nutritional-values-returned-by-the-backend-for-wheat-do-not-alter-any-existing-layout-sections-product-image-specifications-table-add-to-cart-controls",
+      "title": "Update the ProductDetail page (frontend/src/pages/ProductDetail.tsx) to ensure that when viewing the wheat category (/products/wheat), the three variants (Durum Wheat, Whole Wheat, Semolina) are displayed in the existing Product Variants grid section with their names and images, and the nutritional information section correctly renders all per-gram nutritional values returned by the backend for wheat. Do not alter any existing layout sections (product image, specifications table, add-to-cart controls).",
+      "reqIds": [
+        "REQ-106"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-the-usegetproductbycategory-hook-in-frontend-src-hooks-usequeries-ts-to-ensure-it-correctly-passes-the-productid-url-parameter-the-category-slug-as-is-to-the-backend-getproductbycategory-call-enables-the-query-only-when-productid-is-defined-and-handles-null-undefined-responses-from-the-backend-by-treating-them-as-a-not-found-state-rather-than-a-crash",
+      "title": "Fix the useGetProductByCategory hook in frontend/src/hooks/useQueries.ts to ensure it correctly passes the productId URL parameter (the category slug) as-is to the backend getProductByCategory call, enables the query only when productId is defined, and handles null/undefined responses from the backend by treating them as a 'not found' state rather than a crash.",
+      "reqIds": [
+        "REQ-108"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-verify-that-every-product-category-card-link-on-the-products-page-frontend-src-pages-products-tsx-uses-the-url-slugs-rice-wheat-pulses-spices-processed-food-products-and-makhana-exactly-matching-what-is-stored-in-backend-productdetail-category-fields-and-fix-any-mismatches-found",
+      "title": "Verify that every product category card link on the Products page (frontend/src/pages/Products.tsx) uses the URL slugs 'rice', 'wheat', 'pulses', 'spices', 'processed-food-products', and 'makhana' — exactly matching what is stored in backend ProductDetail category fields — and fix any mismatches found.",
+      "reqIds": [
+        "REQ-109"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-generate-static-representative-images-for-the-three-wheat-variants-as-assets-under-frontend-public-assets-generated-wheat-durum-png-durum-wheat-grain-close-up-wheat-whole-png-whole-wheat-grain-close-up-and-wheat-semolina-png-semolina-flour-texture-ensuring-these-filenames-exactly-match-the-imageurl-values-stored-in-the-backend-wheat-variants",
+      "title": "Generate static representative images for the three wheat variants as assets under frontend/public/assets/generated/: wheat-durum.png (Durum Wheat grain close-up), wheat-whole.png (Whole Wheat grain close-up), and wheat-semolina.png (Semolina flour texture), ensuring these filenames exactly match the imageUrl values stored in the backend wheat variants.",
+      "reqIds": [
+        "REQ-111"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-productdetail-page-frontend-src-pages-productdetail-tsx-to-ensure-that-when-viewing-products-wheat-the-three-variants-durum-wheat-whole-wheat-semolina-are-displayed-in-the-product-variants-grid-section-with-their-names-and-images-and-the-nutritional-information-section-correctly-renders-all-per-gram-nutritional-values-calories-protein-carbohydrates-fat-fiber-minerals-returned-by-the-backend-for-wheat-do-not-alter-any-existing-layout-sections-product-image-specifications-table-add-to-cart-controls",
+      "title": "Update the ProductDetail page (frontend/src/pages/ProductDetail.tsx) to ensure that when viewing /products/wheat, the three variants (Durum Wheat, Whole Wheat, Semolina) are displayed in the Product Variants grid section with their names and images, and the nutritional information section correctly renders all per-gram nutritional values (calories, protein, carbohydrates, fat, fiber, minerals) returned by the backend for wheat. Do not alter any existing layout sections (product image, specifications table, add-to-cart controls).",
+      "reqIds": [
+        "REQ-112"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-the-usegetproductbycategory-hook-in-frontend-src-hooks-usequeries-ts-to-correctly-pass-the-productid-url-parameter-the-category-slug-as-is-to-the-backend-getproductbycategory-call-enable-the-query-only-when-productid-is-defined-and-treat-null-undefined-empty-responses-from-the-backend-as-a-not-found-state-without-crashing",
+      "title": "Fix the useGetProductByCategory hook in frontend/src/hooks/useQueries.ts to correctly pass the productId URL parameter (the category slug) as-is to the backend getProductByCategory call, enable the query only when productId is defined, and treat null/undefined/empty responses from the backend as a 'not found' state without crashing.",
+      "reqIds": [
+        "REQ-116"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-cartcontext-provider-in-frontend-src-context-cartcontext-tsx-is-fully-implemented-with-cart-state-management-addtocart-removefromcart-updatequantity-clearcart-carttotal-itemcount-each-cart-item-must-contain-productid-productname-variantname-quantity-and-unitprice-the-cartcontext-provider-must-wrap-the-entire-app-in-frontend-src-app-tsx",
+      "title": "Ensure the CartContext provider in frontend/src/context/CartContext.tsx is fully implemented with cart state management (addToCart, removeFromCart, updateQuantity, clearCart, cartTotal, itemCount). Each cart item must contain productId, productName, variantName, quantity, and unitPrice. The CartContext provider must wrap the entire app in frontend/src/App.tsx.",
+      "reqIds": [
+        "REQ-118"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-restore-the-order-confirmation-page-at-frontend-src-pages-orderconfirmation-tsx-accessible-at-route-order-confirmation-orderid-it-must-display-order-details-order-id-buyer-name-email-phone-status-with-color-coded-badge-shipping-address-and-itemized-order-items-with-quantities-and-prices-retrieved-from-sessionstorage-or-via-usegetorderbyid-display-a-prominent-thank-you-message-handle-loading-and-error-states",
+      "title": "Restore the Order Confirmation page at frontend/src/pages/OrderConfirmation.tsx accessible at route '/order-confirmation/$orderId'. It must display order details (order ID, buyer name, email, phone, status with color-coded badge, shipping address, and itemized order items with quantities and prices) retrieved from sessionStorage or via useGetOrderById. Display a prominent thank-you message. Handle loading and error states.",
+      "reqIds": [
+        "REQ-123"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-and-fully-restore-the-admin-page-at-frontend-src-pages-admin-tsx-it-must-render-two-tabs-1-contact-submissions-displaying-all-contact-form-submissions-in-a-table-showing-name-email-phone-number-message-and-user-type-2-orders-displaying-all-orders-fetched-via-usegetallorders-in-a-table-showing-order-id-buyer-name-email-phone-total-amount-status-and-date-with-a-per-row-status-update-dropdown-pending-confirmed-processing-shipped-delivered-cancelled-calling-useupdateorderstatus-when-changed-resolve-any-import-errors-typescript-type-errors-or-missing-hook-issues-that-prevent-the-page-from-loading",
+      "title": "Fix and fully restore the Admin page at frontend/src/pages/Admin.tsx. It must render two tabs: (1) 'Contact Submissions' displaying all contact form submissions in a table showing Name, Email, Phone Number, Message, and User Type; (2) 'Orders' displaying all orders fetched via useGetAllOrders in a table showing Order ID, Buyer Name, Email, Phone, Total Amount (₹), Status, and Date, with a per-row status update dropdown (pending/confirmed/processing/shipped/delivered/cancelled) calling useUpdateOrderStatus when changed. Resolve any import errors, TypeScript type errors, or missing hook issues that prevent the page from loading.",
+      "reqIds": [
+        "REQ-126"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -814,12 +1005,6 @@
       "status": "pending"
     },
     {
-      "id": "AR-48",
-      "summary": "Increase the logo size in Navigation and Footer components by an additional 100 percent from the current size",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
       "id": "AR-49",
       "summary": "Reduce the height of white space at the top of the Home page by 50 percent",
       "reqIds": [],
@@ -854,12 +1039,6 @@
       "status": "pending"
     },
     {
-      "id": "AR-54",
-      "summary": "Reduce the logo size in Navigation and Footer components by 25 percent from the current size",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
       "id": "AR-55",
       "summary": "Save the uploaded FarmSiddhi logo image (ChatGPT Image Feb 25, 2026, 12_31_54 AM.png) as 'Logo.png' in frontend/public/assets/generated/, replacing any existing Logo.png file.",
       "reqIds": [
@@ -884,6 +1063,76 @@
       "summary": "Ensure the backend Motoko actor (backend/main.mo) contains the complete e-commerce data model and all required functions: Order type with orderId, buyerName, buyerEmail, buyerPhone, shippingAddress, items (array of OrderItem with productId, productName, variantName, quantity, unitPrice), totalAmount, status (pending/confirmed/processing/shipped/delivered/cancelled), and createdAt. Stable storage for orders. Public functions: placeOrder, getOrderById, getAllOrders, and updateOrderStatus. If any of these are missing or broken, restore them fully.",
       "reqIds": [
         "REQ-88"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-67",
+      "summary": "Audit and fix the backend Motoko actor (backend/main.mo) to ensure all e-commerce types and functions are fully present and correct: Order type with orderId, buyerName, buyerEmail, buyerPhone, shippingAddress (street, city, state, pincode, country), items (array of OrderItem with productId, productName, variantName, quantity, unitPrice), totalAmount, status (pending/confirmed/processing/shipped/delivered/cancelled), and createdAt timestamp. Stable storage for orders. Public functions: placeOrder (accepts buyer info, shipping address, cart items; returns created order), getOrderById (returns a specific order by orderId), getAllOrders (returns all orders for admin), and updateOrderStatus (updates order status by orderId). If any of these are missing, broken, or have type mismatches, restore them fully.",
+      "reqIds": [
+        "REQ-94"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-68",
+      "summary": "Add Wheat available varieties (Durum Wheat, Whole Wheat, Semolina) with nutritional details to the /products/wheat product detail page",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-69",
+      "summary": "Update the backend Motoko actor (backend/main.mo) to enrich the 'wheat' ProductDetail record with three product variants: Durum Wheat, Whole Wheat, and Semolina. Each variant must have a name and an imageUrl. The top-level ProductDetail record for the wheat category must also include a fully populated nutritionData field containing realistic per-gram nutritional values (calories, protein, carbohydrates, fat, fiber, and at least two minerals/vitamins). If a wheat ProductDetail record already exists in stable storage, update it in place; otherwise seed it.",
+      "reqIds": [
+        "REQ-104"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-70",
+      "summary": "Audit and fix the backend Motoko actor (backend/main.mo) to ensure the wheat ProductDetail record has the category slug exactly matching 'wheat', and that all six product categories (rice, wheat, pulses, spices, processed-food-products, makhana) have their category slugs stored exactly as those lowercase hyphenated strings so getProductByCategory lookups succeed.",
+      "reqIds": [
+        "REQ-107"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-73",
+      "summary": "Update the backend Motoko actor (backend/main.mo) to ensure the wheat ProductDetail record includes three product variants — Durum Wheat, Whole Wheat, and Semolina — each with a name and an imageUrl pointing to /assets/generated/wheat-durum.png, /assets/generated/wheat-whole.png, and /assets/generated/wheat-semolina.png respectively. The wheat ProductDetail must also include a fully populated nutritionData field with realistic per-gram values for calories, protein, carbohydrates, fat, fiber, iron, and zinc. If the wheat record already exists in stable storage, update it in place; otherwise seed it.",
+      "reqIds": [
+        "REQ-110"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-76",
+      "summary": "Write a migration module (backend/migration.mo) or use the actor's postupgrade hook to update the existing wheat ProductDetail record in stable storage with the three new variants and updated nutritionData, ensuring data persists across canister upgrades without losing existing product records for other categories.",
+      "reqIds": [
+        "REQ-113"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-77",
+      "summary": "Audit the backend main.mo actor to ensure all six ProductDetail records (rice, wheat, pulses, spices, processed-food-products, makhana) are seeded in stable storage with their category slugs stored exactly as lowercase hyphenated strings ('rice', 'wheat', 'pulses', 'spices', 'processed-food-products', 'makhana'). The getProductByCategory function must look up records by these exact slugs. If any records are missing or have mismatched category values, seed or correct them so every category returns valid data.",
+      "reqIds": [
+        "REQ-114"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-78",
+      "summary": "Update backend/migration.mo (or the actor's postupgrade hook in backend/main.mo) to re-seed or update all six ProductDetail records in stable storage if they are missing or have incorrect category slugs, ensuring the migration runs on upgrade without losing existing contact form or order data.",
+      "reqIds": [
+        "REQ-115"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-80",
+      "summary": "Verify and fix all product category card links on the Products page (frontend/src/pages/Products.tsx) to use URL slugs that exactly match the backend category values: 'rice', 'wheat', 'pulses', 'spices', 'processed-food-products', and 'makhana'. Fix any mismatches found.",
+      "reqIds": [
+        "REQ-117"
       ],
       "status": "pending"
     }

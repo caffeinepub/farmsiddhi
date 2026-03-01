@@ -1,115 +1,142 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-24T19:41:48.827Z",
+  "generatedAt": "2026-03-01T17:53:40.417Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 10,
-    "implemented": 9,
+    "total": 13,
+    "implemented": 10,
     "items": [
       {
-        "id": "REQ-80",
-        "summary": "Restore the CartContext provider in frontend/src/context/CartContext.tsx with full cart state management (addToCart, removeFromCart, updateQuantity, clearCart, cartTotal). Ensure the CartContext provider wraps the entire app in frontend/src/App.tsx so all pages have access to cart state.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/context/CartContext.tsx",
-          "frontend/src/App.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/context/CartContext.tsx",
-          "frontend/src/App.tsx"
-        ]
-      },
-      {
-        "id": "REQ-81",
-        "summary": "Restore the Cart page at frontend/src/pages/Cart.tsx accessible at the route '/cart'. It must list all cart items with product name, variant name, unit price (in ₹), editable quantity with increment/decrement controls, line total, and a remove button per item. Display the cart subtotal. Include a 'Proceed to Checkout' button navigating to '/checkout' and a 'Continue Shopping' link to '/products'. Show an empty cart message with a link to Products when the cart is empty.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/pages/Cart.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/pages/Cart.tsx"
-        ]
-      },
-      {
-        "id": "REQ-82",
-        "summary": "Restore the Checkout page at frontend/src/pages/Checkout.tsx accessible at the route '/checkout'. It must display a form for buyer details (Name, Email, Phone Number) and a Shipping Address (Street, City, State, Pincode, Country), an order summary sidebar with cart items, quantities, and total amount in ₹. On form submission, call the usePlaceOrder mutation hook to submit the order to the backend. On success, clear the cart and navigate to '/order-confirmation/:orderId'.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/pages/Checkout.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/pages/Checkout.tsx"
-        ]
-      },
-      {
-        "id": "REQ-83",
-        "summary": "Restore the Order Confirmation page at frontend/src/pages/OrderConfirmation.tsx accessible at the route '/order-confirmation/:orderId'. It must fetch and display order details (order ID, buyer info, status, shipping address, items) using useGetOrderById, and display a thank-you message.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/pages/OrderConfirmation.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/pages/OrderConfirmation.tsx"
-        ]
-      },
-      {
-        "id": "REQ-84",
-        "summary": "Restore the 'Add to Cart' functionality on the ProductDetail page (frontend/src/pages/ProductDetail.tsx). Ensure a variant selector pre-populated with the product's variants, a quantity selector defaulting to 1 with increment/decrement controls, and an 'Add to Cart' button that calls addToCart from CartContext using the selected variant's name, unitPrice from the product's price field, and the current quantity. Display a success toast notification when an item is added. Do not alter existing product image, specifications, nutritional information, or product variants display sections.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/pages/ProductDetail.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/pages/ProductDetail.tsx"
-        ]
-      },
-      {
-        "id": "REQ-85",
-        "summary": "Restore the cart icon button in the Navigation component (frontend/src/components/Navigation.tsx) that displays the current number of items in the cart as a badge. Clicking it must navigate to '/cart'. Do not alter the existing logo size (h-24), navigation links, or mobile menu structure.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/components/Navigation.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/components/Navigation.tsx"
-        ]
-      },
-      {
-        "id": "REQ-86",
-        "summary": "Ensure the React Query hooks for e-commerce are present and correct in frontend/src/hooks/useQueries.ts: usePlaceOrder (mutation calling placeOrder), useGetAllOrders (query calling getAllOrders), useGetOrderById (query calling getOrderById), and useUpdateOrderStatus (mutation calling updateOrderStatus). Verify each hook correctly interfaces with the backend actor methods.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/hooks/useQueries.ts"
-        ],
-        "matchedFiles": [
-          "frontend/src/hooks/useQueries.ts"
-        ]
-      },
-      {
-        "id": "REQ-87",
-        "summary": "Register the '/cart', '/checkout', and '/order-confirmation/$orderId' routes in frontend/src/App.tsx by adding the corresponding route definitions and lazy-loading the Cart, Checkout, and OrderConfirmation page components. Do not alter any existing routes or layout structure.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/App.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/App.tsx"
-        ]
-      },
-      {
-        "id": "REQ-88",
-        "summary": "Ensure the backend Motoko actor (backend/main.mo) contains the complete e-commerce data model and all required functions: Order type with orderId, buyerName, buyerEmail, buyerPhone, shippingAddress, items (array of OrderItem with productId, productName, variantName, quantity, unitPrice), totalAmount, status (pending/confirmed/processing/shipped/delivered/cancelled), and createdAt. Stable storage for orders. Public functions: placeOrder, getOrderById, getAllOrders, and updateOrderStatus. If any of these are missing or broken, restore them fully.",
+        "id": "REQ-114",
+        "summary": "Audit the backend main.mo actor to ensure all six ProductDetail records (rice, wheat, pulses, spices, processed-food-products, makhana) are seeded in stable storage with their category slugs stored exactly as lowercase hyphenated strings ('rice', 'wheat', 'pulses', 'spices', 'processed-food-products', 'makhana'). The getProductByCategory function must look up records by these exact slugs. If any records are missing or have mismatched category values, seed or correct them so every category returns valid data.",
         "status": "unknown",
         "plannedFiles": [],
         "matchedFiles": []
       },
       {
-        "id": "REQ-89",
-        "summary": "Diagnose and fix the Admin page (frontend/src/pages/Admin.tsx) not loading. Investigate likely causes including missing or broken imports (CartContext, useGetAllOrders, useUpdateOrderStatus), TypeScript type errors, or missing route registration. Ensure the Admin page renders both the 'Contact Submissions' tab and the 'Orders' tab correctly, with the Orders tab fetching data via useGetAllOrders and status updates via useUpdateOrderStatus.",
+        "id": "REQ-115",
+        "summary": "Update backend/migration.mo (or the actor's postupgrade hook in backend/main.mo) to re-seed or update all six ProductDetail records in stable storage if they are missing or have incorrect category slugs, ensuring the migration runs on upgrade without losing existing contact form or order data.",
+        "status": "unknown",
+        "plannedFiles": [],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-116",
+        "summary": "Fix the useGetProductByCategory hook in frontend/src/hooks/useQueries.ts to correctly pass the productId URL parameter (the category slug) as-is to the backend getProductByCategory call, enable the query only when productId is defined, and treat null/undefined/empty responses from the backend as a 'not found' state without crashing.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/hooks/useQueries.ts"
+        ],
+        "matchedFiles": [
+          "frontend/src/hooks/useQueries.ts"
+        ]
+      },
+      {
+        "id": "REQ-117",
+        "summary": "Verify and fix all product category card links on the Products page (frontend/src/pages/Products.tsx) to use URL slugs that exactly match the backend category values: 'rice', 'wheat', 'pulses', 'spices', 'processed-food-products', and 'makhana'. Fix any mismatches found.",
+        "status": "missing",
+        "plannedFiles": [
+          "frontend/src/pages/Products.tsx"
+        ],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-118",
+        "summary": "Ensure the CartContext provider in frontend/src/context/CartContext.tsx is fully implemented with cart state management (addToCart, removeFromCart, updateQuantity, clearCart, cartTotal, itemCount). Each cart item must contain productId, productName, variantName, quantity, and unitPrice. The CartContext provider must wrap the entire app in frontend/src/App.tsx.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/context/CartContext.tsx",
+          "frontend/src/App.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/context/CartContext.tsx",
+          "frontend/src/App.tsx"
+        ]
+      },
+      {
+        "id": "REQ-119",
+        "summary": "Ensure all four e-commerce React Query hooks are present and correctly implemented in frontend/src/hooks/useQueries.ts: usePlaceOrder (mutation calling actor.placeOrder), useGetAllOrders (query calling actor.getAllOrders), useGetOrderById (query calling actor.getOrderById with orderId parameter), and useUpdateOrderStatus (mutation calling actor.updateOrderStatus). Each hook must correctly interface with the backend actor and handle loading/error states.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/hooks/useQueries.ts"
+        ],
+        "matchedFiles": [
+          "frontend/src/hooks/useQueries.ts"
+        ]
+      },
+      {
+        "id": "REQ-120",
+        "summary": "Restore the 'Add to Cart' functionality on the ProductDetail page (frontend/src/pages/ProductDetail.tsx). Ensure a variant selector pre-populated with the product's variants fetched from the backend, a quantity selector defaulting to 1 with increment/decrement controls, and an 'Add to Cart' button that calls addToCart from CartContext using the selected variant's name, unitPrice from the product's price field, and the current quantity. Display a success toast notification when an item is added. Do not alter existing product image, specifications, nutritional information, or product variants display sections.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/pages/ProductDetail.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/ProductDetail.tsx"
+        ]
+      },
+      {
+        "id": "REQ-121",
+        "summary": "Restore the Cart page at frontend/src/pages/Cart.tsx accessible at route '/cart'. It must list all cart items with product name, variant name, unit price (in ₹), editable quantity with increment/decrement controls, line total, and a remove button per item. Display the cart subtotal. Include a 'Proceed to Checkout' button navigating to '/checkout' and a 'Continue Shopping' link to '/products'. Show an empty cart message with a link to Products when the cart is empty.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/pages/Cart.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/Cart.tsx"
+        ]
+      },
+      {
+        "id": "REQ-122",
+        "summary": "Restore the Checkout page at frontend/src/pages/Checkout.tsx accessible at route '/checkout'. It must display a form for buyer details (Name, Email, Phone Number) and a Shipping Address (Street, City, State, Pincode, Country), and an order summary sidebar listing cart items, quantities, and total amount in ₹. On form submission, call the usePlaceOrder mutation to submit the order to the backend. On success, clear the cart and navigate to '/order-confirmation/$orderId'.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/pages/Checkout.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/Checkout.tsx"
+        ]
+      },
+      {
+        "id": "REQ-123",
+        "summary": "Restore the Order Confirmation page at frontend/src/pages/OrderConfirmation.tsx accessible at route '/order-confirmation/$orderId'. It must display order details (order ID, buyer name, email, phone, status with color-coded badge, shipping address, and itemized order items with quantities and prices) retrieved from sessionStorage or via useGetOrderById. Display a prominent thank-you message. Handle loading and error states.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/pages/OrderConfirmation.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/OrderConfirmation.tsx"
+        ]
+      },
+      {
+        "id": "REQ-124",
+        "summary": "Restore the cart icon button in the Navigation component (frontend/src/components/Navigation.tsx) that displays the current item count from CartContext as a badge. Clicking the cart icon must navigate to '/cart'. Do not alter the existing logo size (h-[77px]), navigation links, or mobile menu structure.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/Navigation.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/Navigation.tsx"
+        ]
+      },
+      {
+        "id": "REQ-125",
+        "summary": "Ensure the '/cart', '/checkout', and '/order-confirmation/$orderId' routes are registered in frontend/src/App.tsx with lazy-loaded Cart, Checkout, and OrderConfirmation page components. Do not alter any existing routes or layout structure.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/App.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/App.tsx"
+        ]
+      },
+      {
+        "id": "REQ-126",
+        "summary": "Fix and fully restore the Admin page at frontend/src/pages/Admin.tsx. It must render two tabs: (1) 'Contact Submissions' displaying all contact form submissions in a table showing Name, Email, Phone Number, Message, and User Type; (2) 'Orders' displaying all orders fetched via useGetAllOrders in a table showing Order ID, Buyer Name, Email, Phone, Total Amount (₹), Status, and Date, with a per-row status update dropdown (pending/confirmed/processing/shipped/delivered/cancelled) calling useUpdateOrderStatus when changed. Resolve any import errors, TypeScript type errors, or missing hook issues that prevent the page from loading.",
         "status": "implemented",
         "plannedFiles": [
           "frontend/src/pages/Admin.tsx"
@@ -122,6 +149,7 @@
   },
   "changedFiles": [
     "backend/main.mo",
+    "backend/migration.mo",
     "build-request.json",
     "feature_evidence.json",
     "frontend-file-summaries.txt",
@@ -135,7 +163,6 @@
     "frontend/src/pages/Checkout.tsx",
     "frontend/src/pages/OrderConfirmation.tsx",
     "frontend/src/pages/ProductDetail.tsx",
-    "frontend/src/pages/Products.tsx",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

@@ -1,171 +1,207 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Restore e-commerce features and fix Admin page loading",
+  "title": "Fix Product Not Found error and restore e-commerce features",
   "requirements": [
     {
-      "id": "REQ-80",
-      "summary": "Restore CartContext provider with full cart state management and wrap the app in App.tsx",
+      "id": "REQ-116",
+      "summary": "Fix the useGetProductByCategory hook to correctly pass the productId URL parameter as-is to the backend getProductByCategory call, enable the query only when productId is defined, and handle null/undefined/empty responses without crashing",
       "acceptanceCriteria": [
-        "CartContext.tsx exists at frontend/src/context/CartContext.tsx and exports CartContext and CartProvider",
-        "CartProvider wraps the app in App.tsx",
-        "addToCart, removeFromCart, updateQuantity, clearCart, and cartTotal are accessible via useCart hook",
-        "Cart state persists across page navigation within the session"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/context/CartContext.tsx",
-          "operation": "modify",
-          "description": "Verify and restore the CartContext implementation with CartProvider, useCart hook, and state management functions (addToCart, removeFromCart, updateQuantity, clearCart, cartTotal). Ensure cart state is stored in React state with proper TypeScript types for CartItem including productId, productName, variantName, quantity, and unitPrice. Include session persistence if needed."
-        },
-        {
-          "path": "frontend/src/App.tsx",
-          "operation": "modify",
-          "description": "Verify that CartProvider wraps the entire app component tree (inside QueryClientProvider and InternetIdentityProvider, wrapping the RouterProvider). Ensure all routes have access to cart context."
-        }
-      ]
-    },
-    {
-      "id": "REQ-81",
-      "summary": "Restore Cart page with item listing, quantity controls, and navigation to checkout",
-      "acceptanceCriteria": [
-        "Cart page renders at route '/cart'",
-        "Cart items show product name, variant name, unit price in ₹, quantity selector, line total, and remove button",
-        "Cart subtotal is displayed",
-        "'Proceed to Checkout' navigates to '/checkout'",
-        "'Continue Shopping' navigates to '/products'",
-        "Empty cart state shows a message and link to Products"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/Cart.tsx",
-          "operation": "modify",
-          "description": "Verify and restore the Cart page component that uses useCart hook to access cart state. Display cart items in a table or list with product name, variant name, unit price (formatted in ₹), editable quantity with increment/decrement buttons, line total calculation, and a remove button per item. Show cart subtotal. Include 'Proceed to Checkout' button navigating to '/checkout' using Link or useNavigate. Add 'Continue Shopping' link to '/products'. Display empty cart message with link to Products when cart is empty."
-        }
-      ]
-    },
-    {
-      "id": "REQ-82",
-      "summary": "Restore Checkout page with buyer details form, order summary, and order placement",
-      "acceptanceCriteria": [
-        "Checkout page renders at route '/checkout'",
-        "Buyer details form includes Name, Email, Phone Number fields",
-        "Shipping Address form includes Street, City, State, Pincode, Country fields",
-        "Order summary sidebar lists cart items with quantities and total in ₹",
-        "Form submission calls usePlaceOrder mutation",
-        "On success, cart is cleared and user is redirected to '/order-confirmation/:orderId'"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/Checkout.tsx",
-          "operation": "modify",
-          "description": "Verify and restore the Checkout page with a form for buyer details (Name, Email, Phone Number) and shipping address (Street, City, State, Pincode, Country). Display order summary sidebar showing cart items with quantities and total amount in ₹ using useCart hook. On form submission, use usePlaceOrder mutation hook to submit order with NewOrderInput structure (buyerName, buyerEmail, buyerPhone, shippingAddress as formatted string, items array from cart). On success, call clearCart from useCart and navigate to '/order-confirmation/:orderId' using the returned order's orderId. Handle loading and error states."
-        }
-      ]
-    },
-    {
-      "id": "REQ-83",
-      "summary": "Restore Order Confirmation page displaying order details and thank-you message",
-      "acceptanceCriteria": [
-        "Order Confirmation page renders at route '/order-confirmation/:orderId'",
-        "Page fetches order by ID from the backend via useGetOrderById",
-        "Displays order ID, buyer name, status, shipping address, and order items",
-        "Thank-you message is shown prominently"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/OrderConfirmation.tsx",
-          "operation": "modify",
-          "description": "Verify and restore the OrderConfirmation page that extracts orderId from route params using useParams. Fetch order details using useGetOrderById(orderId) hook. Display a thank-you message prominently. Show order details including order ID, buyer name, buyer email, buyer phone, order status, shipping address, and a list of order items with product names, variant names, quantities, and unit prices. Handle loading and error states appropriately."
-        }
-      ]
-    },
-    {
-      "id": "REQ-84",
-      "summary": "Restore Add to Cart functionality on ProductDetail page with variant and quantity selection",
-      "acceptanceCriteria": [
-        "Variant selector is populated from backend product data",
-        "Quantity selector defaults to 1 and allows increment/decrement",
-        "'Add to Cart' button calls addToCart with correct productId, productName, variantName, unitPrice, and quantity",
-        "Success toast notification is displayed after adding to cart",
-        "Existing product image, specifications, nutritional information, and variant display sections are unchanged"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/ProductDetail.tsx",
-          "operation": "modify",
-          "description": "Verify and restore the add-to-cart functionality in ProductDetail page. Ensure variant selector is populated from product.variants array. Add quantity selector state defaulting to 1 with increment/decrement controls. Add 'Add to Cart' button that calls addToCart from useCart with productId (from product), productName (from product), variantName (from selected variant), unitPrice (from product.price), and current quantity. Display success toast notification after adding. Do not modify existing sections for product image, specifications, nutritional information, or variant display."
-        }
-      ]
-    },
-    {
-      "id": "REQ-85",
-      "summary": "Restore cart icon button in Navigation with item count badge and navigation to cart page",
-      "acceptanceCriteria": [
-        "Cart icon is visible in the navigation header on both desktop and mobile layouts",
-        "Cart icon badge shows the current number of items in the cart",
-        "Clicking the cart icon navigates to '/cart'",
-        "Logo size (h-24), navigation links, and mobile menu structure are unchanged"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/Navigation.tsx",
-          "operation": "modify",
-          "description": "Verify and restore the cart icon button in Navigation component. Use useCart hook to access cart state and calculate total item count. Display a shopping cart icon (from lucide-react or similar) with a badge showing the item count. Make the icon clickable, navigating to '/cart' using Link component. Ensure the cart icon is visible in both desktop navigation and mobile menu. Do not alter existing logo size (h-24), navigation links structure, or mobile menu layout."
-        }
-      ]
-    },
-    {
-      "id": "REQ-86",
-      "summary": "Ensure e-commerce React Query hooks are present and correctly interface with backend",
-      "acceptanceCriteria": [
-        "usePlaceOrder mutation hook exists and calls backend placeOrder",
-        "useGetAllOrders query hook exists and calls backend getAllOrders",
-        "useGetOrderById query hook exists and calls backend getOrderById with an orderId parameter",
-        "useUpdateOrderStatus mutation hook exists and calls backend updateOrderStatus",
-        "All hooks handle loading and error states"
+        "Navigating to /products/wheat calls getProductByCategory with the string 'wheat' and renders the product detail page.",
+        "Navigating to /products/rice calls getProductByCategory with the string 'rice' and renders the product detail page.",
+        "When the backend returns null/undefined, the page shows a 'Product Not Found' message without a JavaScript error.",
+        "The query is disabled (not called) when productId is undefined."
       ],
       "file_operations": [
         {
           "path": "frontend/src/hooks/useQueries.ts",
           "operation": "modify",
-          "description": "Verify and restore the e-commerce React Query hooks: usePlaceOrder mutation calling actor.placeOrder(input) with NewOrderInput; useGetAllOrders query calling actor.getAllOrders(); useGetOrderById query accepting orderId parameter and calling actor.getOrderById(orderId); useUpdateOrderStatus mutation calling actor.updateOrderStatus(orderId, status). Ensure all hooks use useActor to access the backend actor, handle enabled state based on actor availability, and return standard React Query properties including loading, error, and data states."
+          "description": "Fix the useGetProductByCategory hook to accept a category slug parameter, pass it directly to actor.getProductsByCategory (note: backend interface shows getProductsByCategory, not getProductByCategory), enable the query only when the category parameter is truthy, and return the first product from the array or null if empty. Handle loading and error states gracefully."
         }
       ]
     },
     {
-      "id": "REQ-87",
-      "summary": "Register Cart, Checkout, and OrderConfirmation routes in App.tsx",
+      "id": "REQ-117",
+      "summary": "Verify and fix all product category card links on the Products page to use URL slugs that exactly match the backend category values",
       "acceptanceCriteria": [
-        "Route '/cart' renders the Cart page component",
-        "Route '/checkout' renders the Checkout page component",
-        "Route '/order-confirmation/$orderId' renders the OrderConfirmation page component",
-        "All existing routes remain unchanged",
-        "New page components are lazy-loaded"
+        "Clicking the Rice card navigates to /products/rice.",
+        "Clicking the Wheat card navigates to /products/wheat.",
+        "Clicking the Pulses card navigates to /products/pulses.",
+        "Clicking the Spices card navigates to /products/spices.",
+        "Clicking the Processed Food Products card navigates to /products/processed-food-products.",
+        "Clicking the Makhana card navigates to /products/makhana."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/Products.tsx",
+          "operation": "modify",
+          "description": "Review all six product category card Link components and ensure their 'to' props use the exact lowercase hyphenated category slugs: 'rice', 'wheat', 'pulses', 'spices', 'processed-food-products', and 'makhana'. Fix any mismatches found (e.g., if any card uses 'processed-foods' instead of 'processed-food-products')."
+        }
+      ]
+    },
+    {
+      "id": "REQ-118",
+      "summary": "Ensure the CartContext provider is fully implemented with cart state management and wraps the entire app",
+      "acceptanceCriteria": [
+        "CartContext exports useCart hook returning addToCart, removeFromCart, updateQuantity, clearCart, cartTotal, itemCount, and items.",
+        "addToCart adds an item with productId, productName, variantName, quantity, and unitPrice.",
+        "cartTotal correctly sums up quantity * unitPrice for all items.",
+        "itemCount returns the total number of items across all cart entries.",
+        "CartProvider wraps the router/app in App.tsx so all pages can access cart state."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/context/CartContext.tsx",
+          "operation": "modify",
+          "description": "Review the CartContext implementation to ensure all required functions (addToCart, removeFromCart, updateQuantity, clearCart) are present and correctly implemented. Verify that CartItem type includes productId (bigint), productName (string), variantName (string), quantity (number), and unitPrice (bigint). Ensure cartTotal derives by summing (quantity * Number(unitPrice)) for all items, and itemCount returns the total quantity across all cart entries. Confirm the CartProvider exports useCart hook."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Verify that CartProvider wraps the entire router/app structure in the component tree (inside QueryClientProvider and InternetIdentityProvider, wrapping the RouterProvider). If CartProvider is missing or not wrapping the router, add it to ensure all pages can access cart state via useCart."
+        }
+      ]
+    },
+    {
+      "id": "REQ-119",
+      "summary": "Ensure all four e-commerce React Query hooks are present and correctly implemented in useQueries.ts",
+      "acceptanceCriteria": [
+        "usePlaceOrder is a useMutation hook that calls actor.placeOrder and returns the created order.",
+        "useGetAllOrders is a useQuery hook that calls actor.getAllOrders and returns all orders.",
+        "useGetOrderById is a useQuery hook that accepts an orderId parameter and calls actor.getOrderById.",
+        "useUpdateOrderStatus is a useMutation hook that calls actor.updateOrderStatus.",
+        "All hooks handle loading and error states without crashing."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useQueries.ts",
+          "operation": "modify",
+          "description": "Verify that usePlaceOrder, useGetAllOrders, useGetOrderById, and useUpdateOrderStatus hooks are present. usePlaceOrder should be a useMutation calling actor.placeOrder with NewOrderInput. useGetAllOrders should be a useQuery calling actor.getAllOrders. useGetOrderById should be a useQuery accepting an orderId parameter (bigint) and calling actor.getOrderById, enabled only when orderId is defined. useUpdateOrderStatus should be a useMutation calling actor.updateOrderStatus with orderId and status parameters. If any hooks are missing or incorrectly implemented, add or fix them."
+        }
+      ]
+    },
+    {
+      "id": "REQ-120",
+      "summary": "Restore the 'Add to Cart' functionality on the ProductDetail page with variant selector, quantity controls, and success toast notification",
+      "acceptanceCriteria": [
+        "The variant selector is populated with variants returned by the backend for the selected product category.",
+        "The quantity selector defaults to 1 and supports increment/decrement.",
+        "Clicking 'Add to Cart' calls addToCart with the correct productId, productName, variantName, quantity, and unitPrice.",
+        "A success toast notification is displayed after adding to cart.",
+        "The existing product image, specifications table, nutritional information section, and product variants display section are not altered."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/ProductDetail.tsx",
+          "operation": "modify",
+          "description": "Review the ProductDetail page to restore Add to Cart functionality. Ensure a variant selector (dropdown or radio buttons) is populated with product.variants from the fetched product data. Add a quantity selector defaulting to 1 with increment/decrement buttons. Add an 'Add to Cart' button that calls addToCart from useCart with { productId: product.productId, productName: product.productName, variantName: selectedVariant, quantity: selectedQuantity, unitPrice: product.price }. Display a success toast notification (using react-hot-toast or similar) after adding to cart. Do not alter the existing product image, specifications table, nutritional information section, or product variants display section."
+        }
+      ]
+    },
+    {
+      "id": "REQ-121",
+      "summary": "Restore the Cart page listing all cart items with controls, subtotal, checkout navigation, and empty state",
+      "acceptanceCriteria": [
+        "The /cart route renders the Cart page.",
+        "Each cart item row shows product name, variant name, unit price (₹), quantity with +/- controls, line total, and a remove button.",
+        "The cart subtotal is displayed and updates when quantities change.",
+        "'Proceed to Checkout' button navigates to /checkout.",
+        "'Continue Shopping' link navigates to /products.",
+        "When the cart is empty, an empty state message with a link to /products is shown."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/Cart.tsx",
+          "operation": "modify",
+          "description": "Review the Cart page to ensure it displays all cart items from useCart with: product name, variant name, unit price formatted as ₹X, quantity with increment/decrement buttons calling updateQuantity, line total (quantity * unitPrice formatted as ₹X), and a remove button calling removeFromCart. Display the cart subtotal from cartTotal formatted as ₹X. Add a 'Proceed to Checkout' button linking to /checkout and a 'Continue Shopping' link to /products. When items array is empty, show an empty cart message with a link to /products."
+        }
+      ]
+    },
+    {
+      "id": "REQ-122",
+      "summary": "Restore the Checkout page with buyer details form, shipping address, order summary, and order placement logic",
+      "acceptanceCriteria": [
+        "The /checkout route renders the Checkout page.",
+        "The form collects Name, Email, Phone Number, Street, City, State, Pincode, and Country.",
+        "The order summary sidebar lists all cart items with quantities and total amount in ₹.",
+        "On valid form submission, usePlaceOrder mutation is called with buyer details, shipping address, and cart items.",
+        "On success, the cart is cleared and the user is navigated to /order-confirmation/$orderId."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/Checkout.tsx",
+          "operation": "modify",
+          "description": "Review the Checkout page to ensure it displays a form collecting Name, Email, Phone Number, Street, City, State, Pincode, and Country. Display an order summary sidebar listing all cart items with quantities and total amount from cartTotal formatted as ₹X. On form submission, validate inputs, call usePlaceOrder mutation with NewOrderInput containing buyerName, buyerEmail, buyerPhone, shippingAddress (Address object), and items (array of OrderItem mapped from cart items with productId, productName, variantName, quantity as bigint, unitPrice as bigint). On success, store the returned order in sessionStorage as 'lastOrder', call clearCart, and navigate to /order-confirmation/${order.orderId}."
+        }
+      ]
+    },
+    {
+      "id": "REQ-123",
+      "summary": "Restore the Order Confirmation page displaying order details with loading and error states",
+      "acceptanceCriteria": [
+        "The /order-confirmation/$orderId route renders the Order Confirmation page.",
+        "Order ID, buyer name, email, phone, shipping address, and itemized items with quantities and prices are displayed.",
+        "Order status is shown with a color-coded badge.",
+        "A prominent thank-you message is displayed.",
+        "Loading and error/not-found states are handled gracefully."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/OrderConfirmation.tsx",
+          "operation": "modify",
+          "description": "Review the OrderConfirmation page to ensure it retrieves orderId from the route parameter, attempts to load the order from sessionStorage key 'lastOrder', and falls back to calling useGetOrderById(orderId) if not found. Display a thank-you message, order ID, buyer name, email, phone, shipping address (street, city, state, pincode, country), and itemized order items with product name, variant name, quantity, unit price (₹), and line total (₹). Display order status with a color-coded badge (pending/confirmed/processing/shipped/delivered/cancelled). Handle loading state while fetching and error/not-found state if order is null."
+        }
+      ]
+    },
+    {
+      "id": "REQ-124",
+      "summary": "Restore the cart icon button in the Navigation component with item count badge",
+      "acceptanceCriteria": [
+        "A cart icon is visible in the navigation header.",
+        "The badge on the cart icon shows the current itemCount from CartContext.",
+        "Clicking the cart icon navigates to /cart.",
+        "The logo size (h-[77px]), navigation links, and mobile menu structure are unchanged."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/Navigation.tsx",
+          "operation": "modify",
+          "description": "Review the Navigation component to ensure it imports useCart from CartContext and displays a cart icon (use ShoppingCart from lucide-react) as a Link to /cart. Display the itemCount from useCart as a badge (small colored circle with white text) positioned at the top-right of the cart icon. Ensure the cart icon is visible on both desktop and mobile navigation. Do not alter the logo size (h-[77px]), navigation links, or mobile menu structure."
+        }
+      ]
+    },
+    {
+      "id": "REQ-125",
+      "summary": "Ensure the '/cart', '/checkout', and '/order-confirmation/$orderId' routes are registered in App.tsx with lazy-loaded page components",
+      "acceptanceCriteria": [
+        "Navigating to /cart renders the Cart page component.",
+        "Navigating to /checkout renders the Checkout page component.",
+        "Navigating to /order-confirmation/someId renders the OrderConfirmation page component.",
+        "All existing routes (home, about, products, product detail, farmer-network, exports, contact, admin) continue to work."
       ],
       "file_operations": [
         {
           "path": "frontend/src/App.tsx",
           "operation": "modify",
-          "description": "Verify and restore route definitions for '/cart', '/checkout', and '/order-confirmation/$orderId' in the TanStack Router configuration. Lazy-load the Cart, Checkout, and OrderConfirmation page components using React.lazy. Ensure the routes are properly integrated into the existing router structure without altering other routes. The orderId parameter in the order confirmation route should be accessible via useParams."
+          "description": "Verify that the router configuration in App.tsx includes routes for '/cart', '/checkout', and '/order-confirmation/:orderId' with lazy-loaded Cart, Checkout, and OrderConfirmation page components. If any of these routes are missing, add them using the same lazy-loading pattern as existing routes (e.g., const Cart = lazy(() => import('./pages/Cart'))). Ensure all existing routes remain unchanged."
         }
       ]
     },
     {
-      "id": "REQ-89",
-      "summary": "Diagnose and fix Admin page loading issues, ensuring both tabs render correctly",
+      "id": "REQ-126",
+      "summary": "Fix and fully restore the Admin page with Contact Submissions and Orders tabs, including order status management",
       "acceptanceCriteria": [
-        "Admin page renders without errors at its route",
-        "'Contact Submissions' tab displays all contact form submissions with Name, Email, Phone, Message, and User Type",
-        "'Orders' tab displays all orders with Order ID, Buyer Name, Email, Phone, Total Amount (₹), Status, and Date",
-        "Status update dropdown per order row calls useUpdateOrderStatus when changed",
-        "No TypeScript or runtime errors on page load"
+        "The Admin page loads without errors.",
+        "The 'Contact Submissions' tab displays a table with Name, Email, Phone Number, Message, and User Type columns.",
+        "The 'Orders' tab displays a table with Order ID, Buyer Name, Email, Phone, Total Amount (₹), Status, and Date columns.",
+        "Each order row has a status dropdown (pending/confirmed/processing/shipped/delivered/cancelled) that calls useUpdateOrderStatus on change.",
+        "No TypeScript or import errors prevent the page from rendering."
       ],
       "file_operations": [
         {
           "path": "frontend/src/pages/Admin.tsx",
           "operation": "modify",
-          "description": "Diagnose and fix the Admin page loading issues. Check for missing imports (CartContext, useGetAllOrders, useUpdateOrderStatus), TypeScript type errors, or incorrect hook usage. Verify that both tabs render: 'Contact Submissions' tab using useGetAllContactForms to display name, email, phone, message, and userType; 'Orders' tab using useGetAllOrders to display orderId, buyerName, buyerEmail, buyerPhone, totalAmount (formatted in ₹), status, and createdAt (formatted as date). Ensure status update dropdown per order row calls useUpdateOrderStatus mutation when changed. Fix any TypeScript errors related to Order or OrderStatus types. Ensure proper loading and error state handling for both query hooks."
+          "description": "Review the Admin page to ensure it renders two tabs: 'Contact Submissions' and 'Orders'. The Contact Submissions tab should call useGetAllContactForms and display a table with columns: Name, Email, Phone Number, Message, User Type. The Orders tab should call useGetAllOrders and display a table with columns: Order ID, Buyer Name, Email, Phone, Total Amount (formatted as ₹X), Status (color-coded badge), and Date (formatted from createdAt timestamp). Each order row should include a status dropdown (select element) with options: pending, confirmed, processing, shipped, delivered, cancelled. On dropdown change, call useUpdateOrderStatus mutation with the orderId and new status. Resolve any TypeScript type errors, missing import errors, or hook usage issues that prevent the page from rendering."
         }
       ]
     }

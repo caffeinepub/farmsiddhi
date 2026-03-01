@@ -1,12 +1,44 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useActor } from './useActor';
-import type { ContactFormEntry, ProductDetail, Order, NewOrderInput, OrderStatus } from '../backend';
+import type { UserProfile, ContactFormEntry, ProductDetail, Order, NewOrderInput, OrderStatus } from '../backend';
 
-// ── Contact Forms ──────────────────────────────────────────────────────────────
+export function useGetCallerUserProfile() {
+  const { actor, isFetching: actorFetching } = useActor();
+
+  const query = useQuery<UserProfile | null>({
+    queryKey: ['currentUserProfile'],
+    queryFn: async () => {
+      if (!actor) throw new Error('Actor not available');
+      return actor.getCallerUserProfile();
+    },
+    enabled: !!actor && !actorFetching,
+    retry: false,
+  });
+
+  return {
+    ...query,
+    isLoading: actorFetching || query.isLoading,
+    isFetched: !!actor && query.isFetched,
+  };
+}
+
+export function useSaveCallerUserProfile() {
+  const { actor } = useActor();
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (profile: UserProfile) => {
+      if (!actor) throw new Error('Actor not available');
+      return actor.saveCallerUserProfile(profile);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['currentUserProfile'] });
+    },
+  });
+}
 
 export function useSubmitContactForm() {
   const { actor } = useActor();
-  const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: async (data: {
@@ -17,10 +49,13 @@ export function useSubmitContactForm() {
       userType: string;
     }) => {
       if (!actor) throw new Error('Actor not available');
-      return actor.submitContactForm(data.name, data.email, data.phoneNumber, data.message, data.userType);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['contactForms'] });
+      return actor.submitContactForm(
+        data.name,
+        data.email,
+        data.phoneNumber,
+        data.message,
+        data.userType
+      );
     },
   });
 }
@@ -35,17 +70,14 @@ export function useGetAllContactForms() {
       return actor.getAllContactForms();
     },
     enabled: !!actor && !isFetching,
-    retry: false,
   });
 }
 
-// ── Products ───────────────────────────────────────────────────────────────────
-
-export function useGetAllProducts() {
+export function useGetAllProductDetails() {
   const { actor, isFetching } = useActor();
 
   return useQuery<ProductDetail[]>({
-    queryKey: ['products'],
+    queryKey: ['productDetails'],
     queryFn: async () => {
       if (!actor) return [];
       return actor.getAllProductDetails();
@@ -54,45 +86,86 @@ export function useGetAllProducts() {
   });
 }
 
-export function useGetProductById(productId: bigint | null) {
+export function useGetProductDetail(productId: bigint | undefined) {
   const { actor, isFetching } = useActor();
 
   return useQuery<ProductDetail | null>({
-    queryKey: ['product', productId?.toString()],
+    queryKey: ['productDetail', productId?.toString()],
     queryFn: async () => {
-      if (!actor || productId === null) return null;
+      if (!actor || productId === undefined) return null;
       return actor.getProductDetail(productId);
     },
-    enabled: !!actor && !isFetching && productId !== null,
+    enabled: !!actor && !isFetching && productId !== undefined,
   });
 }
 
-export function useGetProductsByCategory(category: string) {
+export function useGetProductsByCategory(category: string | undefined) {
   const { actor, isFetching } = useActor();
 
   return useQuery<ProductDetail[]>({
-    queryKey: ['products', 'category', category],
+    queryKey: ['productsByCategory', category],
     queryFn: async () => {
-      if (!actor) return [];
-      return actor.getProductsByCategory(category);
+      if (!actor || !category) return [];
+      const results = await actor.getProductsByCategory(category);
+      return results;
     },
     enabled: !!actor && !isFetching && !!category,
   });
 }
 
-// ── Orders ─────────────────────────────────────────────────────────────────────
+export function useAddProductDetail() {
+  const { actor } = useActor();
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (data: {
+      productName: string;
+      category: string;
+      description: string;
+      specifications: Array<{ key: string; value: string }>;
+      price: bigint;
+      nutritionData: {
+        calories: number;
+        protein: number;
+        carbohydrates: number;
+        fat: number;
+        fiber: number;
+        iron: number;
+        zinc: number;
+        vitamins: string;
+        minerals: string;
+      };
+      imageUrl: string;
+      variants: Array<{ name: string; imageUrl: string }>;
+    }) => {
+      if (!actor) throw new Error('Actor not available');
+      return actor.addProductDetail(
+        data.productName,
+        data.category,
+        data.description,
+        data.specifications,
+        data.price,
+        data.nutritionData,
+        data.imageUrl,
+        data.variants
+      );
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['productDetails'] });
+      queryClient.invalidateQueries({ queryKey: ['productsByCategory'] });
+    },
+  });
+}
+
+// E-commerce hooks
 
 export function usePlaceOrder() {
   const { actor } = useActor();
-  const queryClient = useQueryClient();
 
   return useMutation<Order, Error, NewOrderInput>({
     mutationFn: async (input: NewOrderInput) => {
       if (!actor) throw new Error('Actor not available');
       return actor.placeOrder(input);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['orders'] });
     },
   });
 }
@@ -107,21 +180,19 @@ export function useGetAllOrders() {
       return actor.getAllOrders();
     },
     enabled: !!actor && !isFetching,
-    retry: false,
   });
 }
 
-export function useGetOrderById(orderId: string | undefined) {
+export function useGetOrderById(orderId: bigint | undefined) {
   const { actor, isFetching } = useActor();
 
   return useQuery<Order | null>({
-    queryKey: ['order', orderId],
+    queryKey: ['order', orderId?.toString()],
     queryFn: async () => {
-      if (!actor || !orderId) return null;
-      return actor.getOrderById(BigInt(orderId));
+      if (!actor || orderId === undefined) return null;
+      return actor.getOrderById(orderId);
     },
-    enabled: !!actor && !isFetching && !!orderId,
-    retry: false,
+    enabled: !!actor && !isFetching && orderId !== undefined,
   });
 }
 

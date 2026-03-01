@@ -16,7 +16,7 @@ export default function Footer() {
             <img
               src="/assets/Logo.png"
               alt="FarmSiddhi"
-              className="h-20 w-auto object-contain mb-4"
+              className="h-[65px] w-auto object-contain mb-4"
             />
             <p className="text-sm text-muted-foreground max-w-md">
               Empowering farmers and enabling global markets through transparent digital aggregation

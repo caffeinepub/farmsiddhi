@@ -1,58 +1,36 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-03-03T06:09:19.781Z",
-  "summary": "The diff implements most of the required changes for REQ-131, REQ-132, and REQ-133, but REQ-134 (generating actual static image files) is not evidenced in the diff. The backend migration module and main.mo are updated with product seeding. The Products.tsx and ProductDetail.tsx pages are updated with variant display and fallback images. The useQueries.ts hook is updated with useGetProductByCategory. However, the 33 required PNG image files under frontend/public/assets/generated/ are not shown as added files in the diff. Additionally, there are minor discrepancies in image URL naming conventions between what the spec requires and what was implemented.",
+  "generatedAt": "2026-03-03T06:56:13.322Z",
+  "summary": "The diff implements most of the requested requirements with good coverage. REQ-135, REQ-136, REQ-137, REQ-138, and REQ-139 appear substantially implemented. REQ-140 is not addressed — no image files were added to frontend/public/assets/generated/. Additionally, there are some partial gaps in REQ-136 (variant images use .dim_ filename paths not matching the exact filenames from REQ-140), and the Admin.tsx adds a third 'Product Catalog' tab not requested.",
   "missing_requirements": [
     {
-      "id": "REQ-134",
-      "requirement": "Generate representative static images for all 33 product variants under frontend/public/assets/generated/ with exact filenames: rice-basmati.png, rice-sona-masoori.png, rice-ir64.png, rice-brown.png, rice-broken.png, wheat-durum.png, wheat-whole.png, wheat-semolina.png, pulses-chana-dal.png, pulses-moong-dal.png, pulses-masoor-dal.png, pulses-urad-dal.png, pulses-toor-dal.png, pulses-rajma.png, pulses-kabuli-chana.png, spices-turmeric.png, spices-red-chilli.png, spices-coriander.png, spices-cumin.png, spices-black-pepper.png, spices-cardamom.png, spices-ginger-powder.png, spices-fenugreek.png, processed-rice-flour.png, processed-wheat-flour.png, processed-besan.png, processed-poha.png, processed-roasted-chana.png, processed-vermicelli.png, makhana-regular.png, makhana-premium.png, makhana-roasted.png, makhana-powder.png",
-      "reason": "The diff shows no added PNG image files. The diff lists 'Added: 1' file (backend/migration.mo) and 6 modified files, none of which are image assets. The frontend code references .dim_400x400.png filenames and fallback paths rather than the exact filenames required by REQ-134.",
+      "id": "REQ-140",
+      "requirement": "Generate representative static images for all 33 product variants at frontend/public/assets/generated/ with exact filenames like rice-basmati.png, rice-sona-masoori.png, etc.",
+      "reason": "The diff shows no added image files at frontend/public/assets/generated/. The ProductDetail.tsx references .dim_400x300.png variants but the required filenames are plain .png files (e.g., rice-basmati.png). No image files appear in the added or modified file list.",
       "evidence": [
-        "frontend/src/pages/Products.tsx",
         "frontend/src/pages/ProductDetail.tsx"
-      ]
-    },
-    {
-      "id": "REQ-131",
-      "requirement": "Each variant imageUrl must point to /assets/generated/<category>-<variant-slug>.png matching the exact filenames in REQ-134 (e.g., rice-ir64.png not rice-ir-64-parboiled.png)",
-      "reason": "The migration.mo snippet shows IR-64 Parboiled Rice variant imageUrl as '/assets/generated/rice-ir-64-parboiled.png', but REQ-134 requires the filename 'rice-ir64.png'. This mismatch means the backend imageUrls do not align with the specified filenames.",
-      "evidence": [
-        "backend/migration.mo"
       ]
     }
   ],
   "hallucinated_features": [
     {
-      "description": "VARIANT_IMAGE_FALLBACKS map in ProductDetail.tsx using .dim_400x400.png suffixed filenames and category-level .dim_400x300.png fallback images for variants when backend imageUrl is unavailable",
-      "reason": "The spec requires actual image files with plain .png extensions. The implementation adds a complex fallback map using .dim_400x400.png and .dim_400x300.png suffixed paths which were not requested.",
+      "description": "A third 'Product Catalog' tab was added to the Admin page with a 'Seed/Re-seed Products' button to populate the backend with complete variant data.",
+      "reason": "REQ-138 only requested two tabs: 'Contact Submissions' and 'Orders'. The Product Catalog tab with seeding functionality was not requested.",
       "evidence": [
-        "frontend/src/pages/ProductDetail.tsx"
-      ]
-    },
-    {
-      "description": "SUBCATEGORY_IMAGE_FALLBACKS map in Products.tsx using existing category images as fallbacks for missing variant images",
-      "reason": "The spec required generating the actual image files, not creating fallback mappings to existing unrelated category images. This is a workaround not requested in the build spec.",
-      "evidence": [
-        "frontend/src/pages/Products.tsx"
-      ]
-    },
-    {
-      "description": "CATEGORY_IMAGES map in ProductDetail.tsx mapping category slugs to .dim_800x600.png detail images",
-      "reason": "The spec did not request category-level detail images with .dim_800x600.png dimensions or a CATEGORY_IMAGES mapping object.",
-      "evidence": [
-        "frontend/src/pages/ProductDetail.tsx"
+        "frontend/src/pages/Admin.tsx",
+        "frontend-file-summaries.txt"
       ]
     }
   ],
-  "confidence": 0.82,
+  "confidence": 0.78,
   "changed_files": [
     "backend/main.mo",
     "backend/migration.mo",
     "frontend-file-summaries.txt",
     "frontend/src/hooks/useQueries.ts",
+    "frontend/src/pages/Admin.tsx",
     "frontend/src/pages/ProductDetail.tsx",
-    "frontend/src/pages/Products.tsx",
     "project_state.json"
   ]
 }

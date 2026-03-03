@@ -1,17 +1,11 @@
 import Map "mo:core/Map";
 import List "mo:core/List";
+import Time "mo:core/Time";
 import Nat "mo:core/Nat";
 import Float "mo:core/Float";
+import Principal "mo:core/Principal";
 
 module {
-  type ContactFormEntry = {
-    name : Text;
-    userType : Text;
-    email : Text;
-    phoneNumber : Text;
-    message : Text;
-  };
-
   type Specification = {
     key : Text;
     value : Text;
@@ -46,243 +40,285 @@ module {
     variants : [ProductVariant];
   };
 
-  type OldActor = {
+  type LegacyUserProfile = {
+    name : Text;
+    email : Text;
+  };
+
+  type LegacyOrder = {
+    orderId : Nat;
+    buyerName : Text;
+    buyerEmail : Text;
+    buyerPhone : Text;
+    shippingAddress : {
+      street : Text;
+      city : Text;
+      state : Text;
+      pincode : Text;
+      country : Text;
+    };
+    items : [
+      {
+        productId : Nat;
+        productName : Text;
+        variantName : Text;
+        quantity : Nat;
+        unitPrice : Nat;
+      }
+    ];
+    totalAmount : Nat;
+    status : { #pending; #confirmed; #processing; #shipped; #delivered; #cancelled };
+    createdAt : Time.Time;
+  };
+
+  type ContactFormEntry = {
+    name : Text;
+    userType : Text;
+    email : Text;
+    phoneNumber : Text;
+    message : Text;
+  };
+
+  type Order = {
+    orderId : Nat;
+    buyerName : Text;
+    buyerEmail : Text;
+    buyerPhone : Text;
+    shippingAddress : {
+      street : Text;
+      city : Text;
+      state : Text;
+      pincode : Text;
+      country : Text;
+    };
+    items : [
+      {
+        productId : Nat;
+        productName : Text;
+        variantName : Text;
+        quantity : Nat;
+        unitPrice : Nat;
+      }
+    ];
+    totalAmount : Nat;
+    status : { #pending; #confirmed; #processing; #shipped; #delivered; #cancelled };
+    createdAt : Time.Time;
+  };
+
+  type Actor = {
     contactFormEntries : List.List<ContactFormEntry>;
     productDetails : Map.Map<Nat, ProductDetail>;
+    userProfiles : Map.Map<Principal, LegacyUserProfile>;
+    orders : Map.Map<Nat, LegacyOrder>;
   };
 
   type NewActor = {
     contactFormEntries : List.List<ContactFormEntry>;
     productDetails : Map.Map<Nat, ProductDetail>;
+    userProfiles : Map.Map<Principal, LegacyUserProfile>;
+    orders : Map.Map<Nat, Order>;
   };
 
-  public func run(old : OldActor) : NewActor {
-    let productDetails = Map.fromIter<Nat, ProductDetail>(
-      [
-        (
-          0,
-          {
-            productId = 0;
-            productName = "Rice";
-            category = "rice";
-            description = "High quality rice with different variants such as Basmati, Sona Masoori, and IR-64 Parboiled.";
-            specifications = [
-              { key = "Type"; value = "Whole grain" },
-              { key = "Color"; value = "Creamy white, varies by type" },
-              { key = "Grain Length"; value = "Both long and medium grain varieties" },
-              { key = "Purity"; value = "Up to 99.9%" },
-              { key = "Moisture Content"; value = "12-14%" },
-            ];
-            price = 60;
-            nutritionData = {
-              calories = 130.0;
-              protein = 2.7;
-              carbohydrates = 28.0;
-              fat = 0.3;
-              fiber = 0.4;
-              iron = 1.0;
-              zinc = 0.7;
-              vitamins = "B vitamins present";
-              minerals = "Calcium, magnesium, phosphorus";
-            };
-            imageUrl = "/assets/generated/hero-rice.png";
-            variants = [
-              { name = "Basmati Rice"; imageUrl = "/assets/generated/rice-basmati.png" },
-              { name = "Sona Masoori"; imageUrl = "/assets/generated/rice-sona-masoori.png" },
-              { name = "IR-64 Parboiled Rice"; imageUrl = "/assets/generated/rice-ir-64-parboiled.png" },
-              { name = "Brown Rice"; imageUrl = "/assets/generated/rice-brown.png" },
-              { name = "Broken Rice"; imageUrl = "/assets/generated/rice-broken.png" },
-            ];
-          },
-        ),
-        (
-          1,
-          {
-            productId = 1;
-            productName = "Wheat";
-            category = "wheat";
-            description = "Best quality wheat including durum and whole wheat for various food products.";
-            specifications = [
-              { key = "Type"; value = "Whole grain" },
-              { key = "Color"; value = "Golden Brown" },
-              { key = "Grain Size"; value = "Hard and medium varieties" },
-              { key = "Moisture Content"; value = "12-14%" },
-              { key = "Organic"; value = "Available" },
-            ];
-            price = 50;
-            nutritionData = {
-              calories = 339.0;
-              protein = 13.7;
-              carbohydrates = 73.5;
-              fat = 1.9;
-              fiber = 10.7;
-              iron = 3.5;
-              zinc = 2.8;
-              vitamins = "B vitamins, vitamin E";
-              minerals = "Calcium, magnesium, potassium";
-            };
-            imageUrl = "/assets/generated/hero-wheat.png";
-            variants = [
-              { name = "Durum Wheat"; imageUrl = "/assets/generated/wheat-durum.png" },
-              { name = "Whole Wheat"; imageUrl = "/assets/generated/wheat-whole.png" },
-              { name = "Semolina"; imageUrl = "/assets/generated/wheat-semolina.png" },
-            ];
-          },
-        ),
-        (
-          2,
-          {
-            productId = 2;
-            productName = "Pulses (Dal)";
-            category = "pulses";
-            description = "High quality pulses including chana dal, moong dal, and masoor dal. Includes both whole and split variants like kabuli chana and rajma.";
-            specifications = [
-              { key = "Type"; value = "Whole grain" },
-              { key = "Color"; value = "Ranges from yellow to orange" },
-              { key = "Grain Size"; value = "Small, medium, and large" },
-              { key = "Purity"; value = "Up to 99.9%" },
-              { key = "Moisture Content"; value = "12-14%" },
-            ];
-            price = 70;
-            nutritionData = {
-              calories = 347.0;
-              protein = 25.0;
-              carbohydrates = 61.0;
-              fat = 1.7;
-              fiber = 17.4;
-              iron = 7.2;
-              zinc = 3.2;
-              vitamins = "B vitamins, folate";
-              minerals = "Calcium, magnesium, iron";
-            };
-            imageUrl = "/assets/generated/hero-pulses.png";
-            variants = [
-              { name = "Chana Dal"; imageUrl = "/assets/generated/pulses-chana-dal.png" },
-              { name = "Moong Dal"; imageUrl = "/assets/generated/pulses-moong-dal.png" },
-              { name = "Masoor Dal"; imageUrl = "/assets/generated/pulses-masoor-dal.png" },
-              { name = "Urad Dal"; imageUrl = "/assets/generated/pulses-urad-dal.png" },
-              { name = "Toor Dal"; imageUrl = "/assets/generated/pulses-toor-dal.png" },
-              { name = "Rajma"; imageUrl = "/assets/generated/pulses-rajma.png" },
-              { name = "Kabuli Chana"; imageUrl = "/assets/generated/pulses-kabuli-chana.png" },
-            ];
-          },
-        ),
-        (
-          3,
-          {
-            productId = 3;
-            productName = "Spices";
-            category = "spices";
-            description = "Premium spices including turmeric, red chilli, cumin, and cardamom.";
-            specifications = [
-              { key = "Type"; value = "Ground and whole" },
-              { key = "Color"; value = "Varies by spice" },
-              { key = "Purity"; value = "Up to 99.9%" },
-              { key = "Origin"; value = "Himalayan region" },
-              { key = "Moisture Content"; value = "8-10%" },
-            ];
-            price = 180;
-            nutritionData = {
-              calories = 251.0;
-              protein = 8.5;
-              carbohydrates = 55.5;
-              fat = 3.3;
-              fiber = 22.7;
-              iron = 41.1;
-              zinc = 4.7;
-              vitamins = "Vitamins E, B6, C";
-              minerals = "Calcium, magnesium, potassium";
-            };
-            imageUrl = "/assets/generated/hero-spices.png";
-            variants = [
-              { name = "Turmeric"; imageUrl = "/assets/generated/spices-turmeric.png" },
-              { name = "Red Chilli"; imageUrl = "/assets/generated/spices-red-chilli.png" },
-              { name = "Coriander"; imageUrl = "/assets/generated/spices-coriander.png" },
-              { name = "Cumin"; imageUrl = "/assets/generated/spices-cumin.png" },
-              { name = "Black Pepper"; imageUrl = "/assets/generated/spices-black-pepper.png" },
-              { name = "Cardamom"; imageUrl = "/assets/generated/spices-cardamom.png" },
-              { name = "Ginger Powder"; imageUrl = "/assets/generated/spices-ginger-powder.png" },
-              { name = "Fenugreek"; imageUrl = "/assets/generated/spices-fenugreek.png" },
-            ];
-          },
-        ),
-        (
-          4,
-          {
-            productId = 4;
-            productName = "Processed Food Products";
-            category = "processed-food-products";
-            description = "Range of processed products including wheat flour, besan, and various snacks.";
-            specifications = [
-              { key = "Type"; value = "Processed food" },
-              { key = "Base Ingredient"; value = "Wheat, rice, lentils, etc." },
-              { key = "Purity"; value = "High quality" },
-              { key = "Organic"; value = "Available" },
-              { key = "Shelf Life"; value = "Varies by product" },
-            ];
-            price = 70;
-            nutritionData = {
-              calories = 350.0;
-              protein = 12.0;
-              carbohydrates = 78.0;
-              fat = 2.0;
-              fiber = 7.0;
-              iron = 2.5;
-              zinc = 1.0;
-              vitamins = "Various B vitamins";
-              minerals = "Calcium, magnesium, iron";
-            };
-            imageUrl = "/assets/generated/hero-processed-foodproducts.png";
-            variants = [
-              { name = "Rice Flour"; imageUrl = "/assets/generated/processed-food-products-rice-flour.png" },
-              { name = "Wheat Flour / Atta"; imageUrl = "/assets/generated/processed-food-products-wheat-flour.png" },
-              { name = "Besan / Gram Flour"; imageUrl = "/assets/generated/processed-food-products-besan.png" },
-              { name = "Poha / Flattened Rice"; imageUrl = "/assets/generated/processed-food-products-poha.png" },
-              { name = "Roasted Chana"; imageUrl = "/assets/generated/processed-food-products-roasted-chana.png" },
-              { name = "Vermicelli"; imageUrl = "/assets/generated/processed-food-products-vermicelli.png" },
-            ];
-          },
-        ),
-        (
-          5,
-          {
-            productId = 5;
-            productName = "Makhana (Fox Nut)";
-            category = "makhana";
-            description = "High quality Makhana with various populations and roasts.";
-            specifications = [
-              { key = "Type"; value = "Snack" },
-              { key = "Origin"; value = "Himalayan foothills" },
-              { key = "Variants"; value = "Whole, roasted, flavored" },
-              { key = "Gluten-Free"; value = "Yes" },
-              { key = "Fat Content"; value = "Low" },
-            ];
-            price = 90;
-            nutritionData = {
-              calories = 350.0;
-              protein = 9.7;
-              carbohydrates = 76.9;
-              fat = 0.1;
-              fiber = 7.0;
-              iron = 1.4;
-              zinc = 1.1;
-              vitamins = "Thiamin present";
-              minerals = "Calcium, magnesium, potassium";
-            };
-            imageUrl = "/assets/generated/hero-makhana.png";
-            variants = [
-              { name = "Fox Nut Regular"; imageUrl = "/assets/generated/makhana-regular.png" },
-              { name = "Fox Nut Premium"; imageUrl = "/assets/generated/makhana-premium.png" },
-              { name = "Roasted Makhana"; imageUrl = "/assets/generated/makhana-roasted.png" },
-              { name = "Makhana Powder"; imageUrl = "/assets/generated/makhana-powder.png" },
-            ];
-          },
-        ),
-      ].values(),
-    );
+  public func run(old : Actor) : NewActor {
+    let riceProduct : ProductDetail = {
+      productId = 0;
+      productName = "Double Polished Rice";
+      category = "rice";
+      description = "Our Double Polished Rice undergoes a meticulous two-stage polishing process, resulting in grains of exceptional purity and brilliance. Experience the difference with every grain – pristine, flavorful, and perfect for elevating your favorite dishes.";
+      specifications = [
+        { key = "Type"; value = "Grain" },
+        { key = "Usage"; value = "Culinary/baking" },
+        { key = "Texture"; value = "Fine, powdery" },
+      ];
+      price = 100;
+      nutritionData = {
+        calories = 200.0;
+        protein = 4.0;
+        carbohydrates = 45.0;
+        fat = 0.5;
+        fiber = 1.0;
+        iron = 1.2;
+        zinc = 0.8;
+        vitamins = "Fortified with essential vitamins";
+        minerals = "Iron, zinc";
+      };
+      imageUrl = "rice_image_url";
+      variants = [
+        { name = "Variant A"; imageUrl = "variant_a_image_url" },
+        { name = "Variant B"; imageUrl = "variant_b_image_url" },
+      ];
+    };
+
+    let wheatProduct : ProductDetail = {
+      productId = 1;
+      productName = "Advanced Double Polished Wheat Flour";
+      category = "wheat";
+      description = "Our Advanced Double Polished Wheat Flour represents the pinnacle of refinement and quality. Through a cutting-edge double-stage polishing process, we ensure each grain retains its essential nutrients while achieving a smooth, pristine finish. Perfect for all your culinary needs, our wheat flour delivers superior taste, texture, and nutritional value in every batch.";
+      specifications = [
+        { key = "Type"; value = "Wheat flour" },
+        { key = "Processing"; value = "Double polished" },
+        { key = "Quality"; value = "Superior" },
+      ];
+      price = 199;
+      nutritionData = {
+        calories = 200.0;
+        protein = 4.0;
+        carbohydrates = 45.0;
+        fat = 0.5;
+        fiber = 1.0;
+        iron = 1.2;
+        zinc = 0.8;
+        vitamins = "Fortified with essential vitamins";
+        minerals = "Calcium, magnesium, potassium";
+      };
+      imageUrl = "wheat_image_url";
+      variants = [
+        { name = "Soft Wheat"; imageUrl = "soft_wheat_image_url" },
+        { name = "Hard Wheat"; imageUrl = "hard_wheat_image_url" },
+      ];
+    };
+
+    let pulsesProduct : ProductDetail = {
+      productId = 2;
+      productName = "Premium Dried Pulses";
+      category = "pulses";
+      description = "Explore our premium selection of high-quality dried pulses, including lentils, beans, chickpeas, and peas. Packed with essential nutrients and bursting with flavor, our pulses are meticulously sourced to bring you the finest quality for your kitchen. Perfect for a wide range of culinary creations, from hearty soups to flavorful curries, our pulses are a versatile addition to any pantry.";
+      specifications = [
+        { key = "Type"; value = "Lentils, beans, peas, chickpeas" },
+        { key = "Packaging"; value = "Standard" },
+      ];
+      price = 150;
+      nutritionData = {
+        calories = 150.0;
+        protein = 8.0;
+        carbohydrates = 30.0;
+        fat = 1.0;
+        fiber = 5.0;
+        iron = 2.0;
+        zinc = 1.5;
+        vitamins = "Rich in B vitamins";
+        minerals = "Calcium, magnesium, potassium";
+      };
+      imageUrl = "pulses_image_url";
+      variants = [
+        { name = "Red Lentils"; imageUrl = "red_lentils_image_url" },
+        { name = "Chickpeas"; imageUrl = "chickpeas_image_url" },
+      ];
+    };
+
+    let spicesProduct : ProductDetail = {
+      productId = 3;
+      productName = "Aromatic Whole Spices";
+      category = "spices";
+      description = "Elevate your culinary creations with our wide range of aromatic whole spices. Carefully sourced and expertly blended, our spice collection promises to enhance every dish with rich flavors and captivating aromas. From classic seasonings to exotic blends, our spices are the secret ingredient to a world of taste experiences.";
+      specifications = [
+        { key = "Type"; value = "Herbs and spices" },
+        { key = "Aroma"; value = "Aromatic" },
+      ];
+      price = 70;
+      nutritionData = {
+        calories = 0.5;
+        protein = 0.1;
+        carbohydrates = 0.2;
+        fat = 0.05;
+        fiber = 0.0;
+        iron = 0.02;
+        zinc = 0.01;
+        vitamins = "Varies by product";
+        minerals = "Calcium, magnesium, potassium";
+      };
+      imageUrl = "spices_image_url";
+      variants = [
+        { name = "Whole Spices"; imageUrl = "whole_spices_image_url" },
+        { name = "Ground Spices"; imageUrl = "ground_spices_image_url" },
+      ];
+    };
+
+    let processedFoodProduct : ProductDetail = {
+      productId = 4;
+      productName = "Convenient Packaged Processed Foods";
+      category = "processed-food-products";
+      description = "Explore our range of convenient packaged processed foods, meticulously crafted for quality and taste. From ready-to-eat snacks to meal kits, our processed food products offer a perfect blend of nutrition and convenience, making mealtime easy and enjoyable.";
+      specifications = [
+        { key = "Convenience"; value = "Ready-to-eat" },
+        { key = "Packaging"; value = "Packaged" },
+        { key = "Shelf Life"; value = "Varies by product" },
+      ];
+      price = 125;
+      nutritionData = {
+        calories = 180.0;
+        protein = 7.0;
+        carbohydrates = 17.0;
+        fat = 8.0;
+        fiber = 1.5;
+        iron = 0.5;
+        zinc = 0.1;
+        vitamins = "Varies by product";
+        minerals = "Varies by product";
+      };
+      imageUrl = "processed_food_image_url";
+      variants = [];
+    };
+
+    let makhanaProduct : ProductDetail = {
+      productId = 5;
+      productName = "Premium Roasted Makhana";
+      category = "makhana";
+      description = "Indulge in the ultimate snacking experience with our Premium Roasted Makhana. Sourced from the finest quality lotus seeds and expertly roasted to perfection, our makhana offers a light, crunchy texture and irresistible flavor. Packed with nutrients and gluten-free, it's the perfect wholesome snack for any occasion.";
+      specifications = [
+        { key = "Quality"; value = "Premium" },
+        { key = "Preparation"; value = "Roasted" },
+      ];
+      price = 80;
+      nutritionData = {
+        calories = 110.0;
+        protein = 3.0;
+        carbohydrates = 20.0;
+        fat = 1.5;
+        fiber = 2.0;
+        iron = 0.5;
+        zinc = 0.1;
+        vitamins = "Vitamin E, B-complex";
+        minerals = "Calcium, magnesium, potassium";
+      };
+      imageUrl = "makhana_image_url";
+      variants = [
+        { name = "Classic"; imageUrl = "classic_makhana_image_url" },
+        { name = "Masala"; imageUrl = "masala_makhana_image_url" },
+      ];
+    };
+
+    let defaultProductDetails = Map.empty<Nat, ProductDetail>();
+    defaultProductDetails.add(0, riceProduct);
+    defaultProductDetails.add(1, wheatProduct);
+    defaultProductDetails.add(2, pulsesProduct);
+    defaultProductDetails.add(3, spicesProduct);
+    defaultProductDetails.add(4, processedFoodProduct);
+    defaultProductDetails.add(5, makhanaProduct);
+
+    if (old.productDetails.size() >= 6) {
+      return {
+        old with
+        orders = old.orders;
+      };
+    };
+
+    let mergedProductDetails = if (old.productDetails.size() > 0) {
+      let copiedProductDetails = Map.empty<Nat, ProductDetail>();
+      copiedProductDetails.add(0, riceProduct);
+      copiedProductDetails.add(1, wheatProduct);
+      for ((id, product) in old.productDetails.entries()) {
+        copiedProductDetails.add(id, product);
+      };
+      copiedProductDetails;
+    } else {
+      defaultProductDetails;
+    };
+
     {
       old with
-      productDetails
+      productDetails = mergedProductDetails;
+      orders = old.orders;
     };
   };
 };

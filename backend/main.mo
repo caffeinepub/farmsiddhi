@@ -6,13 +6,12 @@ import Iter "mo:core/Iter";
 import Nat "mo:core/Nat";
 import Float "mo:core/Float";
 import Runtime "mo:core/Runtime";
+import Migration "migration";
 import Principal "mo:core/Principal";
 import MixinAuthorization "authorization/MixinAuthorization";
 import AccessControl "authorization/access-control";
 import MixinStorage "blob-storage/Mixin";
-import Migration "migration";
 
-// with clause for data migration on upgrade
 (with migration = Migration.run)
 actor {
   let accessControlState = AccessControl.initState();

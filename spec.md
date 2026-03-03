@@ -1,14 +1,14 @@
 # Specification
 
 ## Summary
-**Goal:** Fix the Products and ProductDetail pages so all six product categories display their complete sub-categories and products correctly, with fully seeded backend data and all variant images present.
+**Goal:** Fix the ProductDetail page to correctly fetch and display all product variants and nutritional information, fix the Admin page, ensure CartContext is fully wired, seed all six backend product records with correct slugs, and add missing product variant images.
 
 **Planned changes:**
-- Audit and fix the backend Motoko actor and migration module to fully seed all six ProductDetail records (Rice, Wheat, Pulses, Spices, Processed Food Products, Makhana) with correct category slugs, complete variant lists, and all required fields (nutritionData, specifications, description, price, imageUrl)
-- Fix `getProductByCategory` to look up records by exact lowercase hyphenated slugs
-- Ensure backend migration runs on postupgrade without overwriting existing contact form or order data
-- Fix the Products page to correctly fetch and display all variants for each category card, with proper URL slugs and a grid/scrollable variant sub-section
-- Fix the ProductDetail page and `useGetProductByCategory` hook to pass the raw category slug to the backend, handle null/undefined responses gracefully, and display the full variant list in the Product Variants grid and variant selector
-- Add all 33 missing variant product images to `frontend/public/assets/generated/`
+- Rewrite `useGetProductByCategory` hook to correctly call the backend's `getProductByCategory` function using the URL `productId` param, handle null/empty responses as "not found", and disable the query when `productId` is undefined
+- Rewrite the `ProductDetail` page to show loading/not-found states, product name/category/description/price/specifications, a nutritional information section, a Product Variants grid with all variants, a variant selector pre-populated with all variants, a quantity selector (default 1, increment/decrement), and an Add to Cart button with toast notification
+- Audit and fix `backend/main.mo` and `backend/migration.mo` to ensure all six product records are seeded with correct slugs (`rice`, `wheat`, `pulses`, `spices`, `processed-food-products`, `makhana`), fully populated `nutritionData`, and all variants with `name` and `imageUrl`; migration must not overwrite existing contact or order data
+- Fix `Admin.tsx` to load without errors, render a "Contact Submissions" tab (Name, Email, Phone, Message, User Type) and an "Orders" tab (Order ID, Buyer Name, Email, Phone, Total, Status, Date) with a per-row status update dropdown; fix all broken imports and TypeScript errors
+- Verify `CartContext` provides `addToCart`, `removeFromCart`, `updateQuantity`, `clearCart`, `cartTotal`, and `itemCount`; ensure `CartProvider` wraps the app and that `/cart`, `/checkout`, and `/order-confirmation/$orderId` routes are registered with lazy-loaded components
+- Add all 33 missing product variant images to `frontend/public/assets/generated/`
 
-**User-visible outcome:** All six product category pages show their complete list of sub-variants with images and product details; no blank or missing product states appear on the Products or ProductDetail pages.
+**User-visible outcome:** Users can navigate to any product category page and see full product details including all variants, nutritional info, and can add items to cart; admins can view contact submissions and manage orders without errors.

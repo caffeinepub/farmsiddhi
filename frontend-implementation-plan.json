@@ -1,226 +1,114 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Fix Products page: incomplete sub-categories and no products showing",
+  "title": "Fix ProductDetail page to show all variants & nutritional info; fix Admin page",
   "requirements": [
     {
-      "id": "REQ-132",
-      "summary": "Fix the Products page to correctly fetch and display the full set of variants for each of the six product category cards from the backend",
+      "id": "REQ-135",
+      "summary": "Rewrite useGetProductByCategory hook to correctly fetch product data by category slug",
       "acceptanceCriteria": [
-        "Products page renders all six category cards: Rice, Wheat, Pulses, Spices, Processed Food Products, Makhana",
-        "Each category card displays the full list of variants fetched from the backend with names and images",
-        "Rice card shows all 5 variants, Wheat shows 3, Pulses shows 7, Spices shows 8, Processed Food Products shows 6, Makhana shows 4",
-        "Category card links navigate to /products/rice, /products/wheat, /products/pulses, /products/spices, /products/processed-food-products, /products/makhana",
-        "No 404 image errors appear for variant images in the browser console",
-        "Variant sub-section renders in a grid or scrollable layout consistent with existing card design"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/Products.tsx",
-          "operation": "modify",
-          "description": "Modify the Products page to fetch product details for each category using the getProductByCategory backend capability with the exact slugs ('rice', 'wheat', 'pulses', 'spices', 'processed-food-products', 'makhana'). Replace hardcoded subcategory arrays with fetched variant data from the backend. Render all variant names and their corresponding images from frontend/public/assets/generated/ in a scrollable or grid sub-section within each category card. Ensure category card links use the correct URL slugs. Handle loading and error states gracefully."
-        }
-      ]
-    },
-    {
-      "id": "REQ-133",
-      "summary": "Fix the ProductDetail page and the useGetProductByCategory hook to ensure all six product categories display their full variant list and product information",
-      "acceptanceCriteria": [
-        "Navigating to /products/rice displays the Rice product detail with all 5 variants in the Product Variants grid",
-        "Navigating to /products/wheat displays all 3 wheat variants (Durum Wheat, Whole Wheat, Semolina) with images and nutritional info",
-        "Navigating to /products/pulses, /products/spices, /products/processed-food-products, /products/makhana each display their full variant sets",
-        "The variant selector for Add to Cart is pre-populated with the full variant list for the selected category",
-        "Product image, specifications table, nutritional information section, and add-to-cart controls remain unchanged",
-        "useGetProductByCategory passes the raw productId slug to the backend without transformation",
-        "Null/undefined backend responses show a 'Product not found' message without a JavaScript crash",
-        "No products show a blank or empty state when backend data is available"
+        "Navigating to /products/rice calls getProductByCategory with argument 'rice' and returns the rice ProductDetail record",
+        "Navigating to /products/wheat calls getProductByCategory with argument 'wheat' and returns the wheat ProductDetail record",
+        "All six slugs (rice, wheat, pulses, spices, processed-food-products, makhana) successfully fetch their respective records",
+        "When the backend returns null or empty optional, the hook returns { data: undefined, isNotFound: true } without crashing",
+        "Query is disabled (enabled: false) when productId is undefined"
       ],
       "file_operations": [
         {
           "path": "frontend/src/hooks/useQueries.ts",
           "operation": "modify",
-          "description": "Fix the useGetProductByCategory hook to pass the productId URL parameter (category slug) as-is to the backend getProductByCategory capability. Enable the query only when productId is defined. Treat null, undefined, or empty responses as a 'not found' state by returning null gracefully without throwing errors. Ensure proper error handling that does not crash the app."
-        },
-        {
-          "path": "frontend/src/pages/ProductDetail.tsx",
-          "operation": "modify",
-          "description": "Fix the ProductDetail page to display the full variant list from the backend in the Product Variants grid section, showing each variant's name and image from frontend/public/assets/generated/. Pre-populate the variant selector for Add to Cart with the complete variant list from the backend response. Handle null/undefined product responses by displaying a 'Product not found' message instead of crashing. Do not alter the existing product image, specifications table, nutritional information section, or add-to-cart controls. Reference generated variant images using their full workspace path (frontend/public/assets/generated/<category>-<variant-slug>.dim_400x400.png)."
+          "description": "Rewrite the useGetProductByCategory hook to accept a category parameter, call actor.getProductByCategory(category) with the exact category slug from the URL productId parameter, enable the query only when category is defined and non-empty, handle null/undefined/empty optional responses from the backend by returning { data: undefined, isNotFound: true } without throwing errors, and return the unwrapped ProductDetail data. Use proper TypeScript typing for Option<ProductDetail> response handling."
         }
       ]
     },
     {
-      "id": "REQ-134",
-      "summary": "Generate representative static images for all product variants missing from frontend/public/assets/generated/",
+      "id": "REQ-136",
+      "summary": "Rewrite ProductDetail page to display complete product information including all variants and nutritional data",
       "acceptanceCriteria": [
-        "All 33 variant image files exist under frontend/public/assets/generated/ with the exact filenames listed",
-        "No 404 errors are thrown for any variant image on the Products or ProductDetail pages",
-        "Each image visually represents the corresponding agricultural product variant"
+        "Loading spinner or skeleton shown while product data is being fetched",
+        "'Product not found' message displayed when backend returns no data for the slug",
+        "Product name, description, price in ₹, and category are visible",
+        "Specifications table renders all key-value pairs from the backend record",
+        "Nutritional information section renders per-gram values for all fields returned by the backend (calories, protein, carbohydrates, fat, fiber, minerals)",
+        "Product Variants grid shows all variants with name and image",
+        "Variant selector dropdown is pre-populated with all variant names",
+        "Quantity selector defaults to 1 and supports increment/decrement",
+        "Add to Cart button calls addToCart with selected variantName, unitPrice, and quantity",
+        "Success toast notification shown after adding to cart"
       ],
       "file_operations": [
         {
-          "path": "frontend/public/assets/generated/rice-basmati.dim_400x400.png",
-          "operation": "create",
-          "description": "Wire the generated image frontend/public/assets/generated/rice-basmati.dim_400x400.png as a static asset for the Basmati Rice variant. This image will be referenced by the Products and ProductDetail pages."
+          "path": "frontend/src/pages/ProductDetail.tsx",
+          "operation": "modify",
+          "description": "Rewrite the ProductDetail page to extract productId from URL params using TanStack Router's useParams, pass it to useGetProductByCategory hook, display loading state while fetching, show 'Product not found' message when data is null/undefined, and on success render: product name, category, description, price formatted in ₹, specifications table with all key-value pairs, a dedicated Nutritional Information section displaying per-gram values for calories, protein, carbohydrates, fat, fiber, and minerals fields, a Product Variants grid showing all variants with their names and images loaded from frontend/public/assets/generated/ using exact filenames (e.g., rice-basmati.dim_400x300.png), a variant selector dropdown pre-populated with all variant names from the backend, a quantity selector defaulting to 1 with +/- controls, and an Add to Cart button that calls addToCart from CartContext with productId (converted from bigint), productName, selected variantName, quantity (as number), and unitPrice (converted from bigint). Show a success toast notification after adding to cart. Reference generated images using their exact workspace paths: frontend/public/assets/generated/rice-basmati.dim_400x300.png, rice-sona-masoori.dim_400x300.png, rice-ir64.dim_400x300.png, rice-brown.dim_400x300.png, rice-broken.dim_400x300.png, wheat-durum.dim_400x300.png, wheat-whole.dim_400x300.png, wheat-semolina.dim_400x300.png, pulses-chana-dal.dim_400x300.png, pulses-moong-dal.dim_400x300.png, pulses-masoor-dal.dim_400x300.png, pulses-urad-dal.dim_400x300.png, pulses-toor-dal.dim_400x300.png, pulses-rajma.dim_400x300.png, pulses-kabuli-chana.dim_400x300.png, spices-turmeric.dim_400x300.png, spices-red-chilli.dim_400x300.png, spices-coriander.dim_400x300.png, spices-cumin.dim_400x300.png, spices-black-pepper.dim_400x300.png, spices-cardamom.dim_400x300.png, spices-ginger-powder.dim_400x300.png, spices-fenugreek.dim_400x300.png, processed-rice-flour.dim_400x300.png, processed-wheat-flour.dim_400x300.png, processed-besan.dim_400x300.png, processed-poha.dim_400x300.png, processed-roasted-chana.dim_400x300.png, processed-vermicelli.dim_400x300.png, makhana-regular.dim_400x300.png, makhana-premium.dim_400x300.png, makhana-roasted.dim_400x300.png, makhana-powder.dim_400x300.png. Do not remove or break any existing working sections (product image, specifications table)."
+        }
+      ]
+    },
+    {
+      "id": "REQ-138",
+      "summary": "Fix and fully restore the Admin page with Contact Submissions and Orders tabs",
+      "acceptanceCriteria": [
+        "Admin page loads without a white screen or runtime error",
+        "'Contact Submissions' tab renders a table with all submitted contact form entries",
+        "'Orders' tab renders a table with all orders from useGetAllOrders",
+        "Status dropdown per order row updates order status via useUpdateOrderStatus",
+        "No TypeScript compilation errors in Admin.tsx",
+        "All imports resolve correctly (no missing module errors)"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/Admin.tsx",
+          "operation": "modify",
+          "description": "Fix and fully restore the Admin page to render two tabs without any import errors or TypeScript type errors. Tab 1: 'Contact Submissions' — use useGetAllContactForms hook to fetch all contact form submissions and display them in a table with columns: Name, Email, Phone Number, Message, User Type. Tab 2: 'Orders' — use useGetAllOrders hook to fetch all orders and display them in a table with columns: Order ID, Buyer Name, Email, Phone, Total Amount (formatted in ₹), Status, Date (formatted from createdAt bigint timestamp). Each order row must include a status dropdown (with options: pending, confirmed, processing, shipped, delivered, cancelled) that calls useUpdateOrderStatus mutation when changed. Audit and fix all imports: verify useGetAllOrders and useUpdateOrderStatus are imported from '../hooks/useQueries', verify useGetAllContactForms is imported from '../hooks/useQueries', verify CartContext is imported if needed, and resolve any missing or broken import paths. Fix any TypeScript type errors related to Order, ContactFormEntry, OrderStatus enum, or bigint to number conversions. Ensure the page loads without runtime errors or white screens."
         },
         {
-          "path": "frontend/public/assets/generated/rice-sona-masoori.dim_400x400.png",
-          "operation": "create",
-          "description": "Wire the generated image frontend/public/assets/generated/rice-sona-masoori.dim_400x400.png as a static asset for the Sona Masoori variant."
+          "path": "frontend/src/hooks/useQueries.ts",
+          "operation": "modify",
+          "description": "Verify that useGetAllContactForms, useGetAllOrders, and useUpdateOrderStatus hooks are correctly implemented and exported. useGetAllContactForms must call actor.getAllContactForms() and return an array of ContactFormEntry. useGetAllOrders must call actor.getAllOrders() and return an array of Order. useUpdateOrderStatus must be a mutation that calls actor.updateOrderStatus(orderId, status) and invalidates the 'allOrders' query key on success. If any of these hooks are missing or incomplete, implement them following the existing pattern in the file. Ensure proper TypeScript typing for all return values and parameters."
+        }
+      ]
+    },
+    {
+      "id": "REQ-139",
+      "summary": "Verify CartContext provider is fully implemented and all cart/checkout routes are registered",
+      "acceptanceCriteria": [
+        "CartContext is available on all pages without errors",
+        "addToCart, removeFromCart, updateQuantity, clearCart functions work correctly",
+        "cartTotal and itemCount are correctly computed",
+        "Cart icon in navigation shows correct item count",
+        "'/cart', '/checkout', '/order-confirmation/$orderId' routes render their respective pages without 404 errors"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/context/CartContext.tsx",
+          "operation": "modify",
+          "description": "Verify that CartContext is fully implemented with all required functions: addToCart (accepts productId as string or number, productName, variantName, quantity as number, unitPrice as number), removeFromCart (accepts productId and variantName), updateQuantity (accepts productId, variantName, and new quantity), clearCart (empties the cart), and derived values: cartTotal (sum of all item subtotals), itemCount (total quantity of all items). Each cart item must include: productId (string), productName (string), variantName (string), quantity (number), unitPrice (number). Ensure CartProvider wraps children and provides the context value. If any function or field is missing, add it. Verify cartTotal and itemCount calculations are correct."
         },
         {
-          "path": "frontend/public/assets/generated/rice-ir64.dim_400x400.png",
-          "operation": "create",
-          "description": "Wire the generated image frontend/public/assets/generated/rice-ir64.dim_400x400.png as a static asset for the IR-64 Parboiled Rice variant."
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Verify that CartProvider wraps the entire app (inside QueryClientProvider, wrapping the RouterProvider). Verify that the following routes are registered in the TanStack Router configuration: '/cart' (lazy-loaded Cart component), '/checkout' (lazy-loaded Checkout component), '/order-confirmation/$orderId' (lazy-loaded OrderConfirmation component with orderId route parameter). If any route is missing, add it following the existing lazy-loading pattern. Ensure all three routes render their respective page components without 404 errors."
+        }
+      ]
+    },
+    {
+      "id": "REQ-140",
+      "summary": "Generate and wire all 33 product variant images into the frontend",
+      "acceptanceCriteria": [
+        "All 33 image files exist at frontend/public/assets/generated/ with the exact filenames listed",
+        "Variant images load without 404 errors on both the Products page and ProductDetail pages",
+        "Each image visually represents the corresponding ingredient or product"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/ProductDetail.tsx",
+          "operation": "modify",
+          "description": "Ensure the Product Variants grid in ProductDetail page references the generated variant images using the exact workspace paths and filenames: frontend/public/assets/generated/rice-basmati.dim_400x300.png, frontend/public/assets/generated/rice-sona-masoori.dim_400x300.png, frontend/public/assets/generated/rice-ir64.dim_400x300.png, frontend/public/assets/generated/rice-brown.dim_400x300.png, frontend/public/assets/generated/rice-broken.dim_400x300.png, frontend/public/assets/generated/wheat-durum.dim_400x300.png, frontend/public/assets/generated/wheat-whole.dim_400x300.png, frontend/public/assets/generated/wheat-semolina.dim_400x300.png, frontend/public/assets/generated/pulses-chana-dal.dim_400x300.png, frontend/public/assets/generated/pulses-moong-dal.dim_400x300.png, frontend/public/assets/generated/pulses-masoor-dal.dim_400x300.png, frontend/public/assets/generated/pulses-urad-dal.dim_400x300.png, frontend/public/assets/generated/pulses-toor-dal.dim_400x300.png, frontend/public/assets/generated/pulses-rajma.dim_400x300.png, frontend/public/assets/generated/pulses-kabuli-chana.dim_400x300.png, frontend/public/assets/generated/spices-turmeric.dim_400x300.png, frontend/public/assets/generated/spices-red-chilli.dim_400x300.png, frontend/public/assets/generated/spices-coriander.dim_400x300.png, frontend/public/assets/generated/spices-cumin.dim_400x300.png, frontend/public/assets/generated/spices-black-pepper.dim_400x300.png, frontend/public/assets/generated/spices-cardamom.dim_400x300.png, frontend/public/assets/generated/spices-ginger-powder.dim_400x300.png, frontend/public/assets/generated/spices-fenugreek.dim_400x300.png, frontend/public/assets/generated/processed-rice-flour.dim_400x300.png, frontend/public/assets/generated/processed-wheat-flour.dim_400x300.png, frontend/public/assets/generated/processed-besan.dim_400x300.png, frontend/public/assets/generated/processed-poha.dim_400x300.png, frontend/public/assets/generated/processed-roasted-chana.dim_400x300.png, frontend/public/assets/generated/processed-vermicelli.dim_400x300.png, frontend/public/assets/generated/makhana-regular.dim_400x300.png, frontend/public/assets/generated/makhana-premium.dim_400x300.png, frontend/public/assets/generated/makhana-roasted.dim_400x300.png, frontend/public/assets/generated/makhana-powder.dim_400x300.png. Map each variant's imageUrl field from the backend (e.g., 'rice-basmati.png') to the corresponding generated file in /assets/generated/ by constructing the full path at runtime. Verify that all variant images display correctly without 404 errors."
         },
         {
-          "path": "frontend/public/assets/generated/rice-brown.dim_400x400.png",
-          "operation": "create",
-          "description": "Wire the generated image frontend/public/assets/generated/rice-brown.dim_400x400.png as a static asset for the Brown Rice variant."
-        },
-        {
-          "path": "frontend/public/assets/generated/rice-broken.dim_400x400.png",
-          "operation": "create",
-          "description": "Wire the generated image frontend/public/assets/generated/rice-broken.dim_400x400.png as a static asset for the Broken Rice variant."
-        },
-        {
-          "path": "frontend/public/assets/generated/wheat-durum.dim_400x400.png",
-          "operation": "create",
-          "description": "Wire the generated image frontend/public/assets/generated/wheat-durum.dim_400x400.png as a static asset for the Durum Wheat variant."
-        },
-        {
-          "path": "frontend/public/assets/generated/wheat-whole.dim_400x400.png",
-          "operation": "create",
-          "description": "Wire the generated image frontend/public/assets/generated/wheat-whole.dim_400x400.png as a static asset for the Whole Wheat variant."
-        },
-        {
-          "path": "frontend/public/assets/generated/wheat-semolina.dim_400x400.png",
-          "operation": "create",
-          "description": "Wire the generated image frontend/public/assets/generated/wheat-semolina.dim_400x400.png as a static asset for the Semolina variant."
-        },
-        {
-          "path": "frontend/public/assets/generated/pulses-chana-dal.dim_400x400.png",
-          "operation": "create",
-          "description": "Wire the generated image frontend/public/assets/generated/pulses-chana-dal.dim_400x400.png as a static asset for the Chana Dal variant."
-        },
-        {
-          "path": "frontend/public/assets/generated/pulses-moong-dal.dim_400x400.png",
-          "operation": "create",
-          "description": "Wire the generated image frontend/public/assets/generated/pulses-moong-dal.dim_400x400.png as a static asset for the Moong Dal variant."
-        },
-        {
-          "path": "frontend/public/assets/generated/pulses-masoor-dal.dim_400x400.png",
-          "operation": "create",
-          "description": "Wire the generated image frontend/public/assets/generated/pulses-masoor-dal.dim_400x400.png as a static asset for the Masoor Dal variant."
-        },
-        {
-          "path": "frontend/public/assets/generated/pulses-urad-dal.dim_400x400.png",
-          "operation": "create",
-          "description": "Wire the generated image frontend/public/assets/generated/pulses-urad-dal.dim_400x400.png as a static asset for the Urad Dal variant."
-        },
-        {
-          "path": "frontend/public/assets/generated/pulses-toor-dal.dim_400x400.png",
-          "operation": "create",
-          "description": "Wire the generated image frontend/public/assets/generated/pulses-toor-dal.dim_400x400.png as a static asset for the Toor Dal variant."
-        },
-        {
-          "path": "frontend/public/assets/generated/pulses-rajma.dim_400x400.png",
-          "operation": "create",
-          "description": "Wire the generated image frontend/public/assets/generated/pulses-rajma.dim_400x400.png as a static asset for the Rajma variant."
-        },
-        {
-          "path": "frontend/public/assets/generated/pulses-kabuli-chana.dim_400x400.png",
-          "operation": "create",
-          "description": "Wire the generated image frontend/public/assets/generated/pulses-kabuli-chana.dim_400x400.png as a static asset for the Kabuli Chana variant."
-        },
-        {
-          "path": "frontend/public/assets/generated/spices-turmeric.dim_400x400.png",
-          "operation": "create",
-          "description": "Wire the generated image frontend/public/assets/generated/spices-turmeric.dim_400x400.png as a static asset for the Turmeric variant."
-        },
-        {
-          "path": "frontend/public/assets/generated/spices-red-chilli.dim_400x400.png",
-          "operation": "create",
-          "description": "Wire the generated image frontend/public/assets/generated/spices-red-chilli.dim_400x400.png as a static asset for the Red Chilli variant."
-        },
-        {
-          "path": "frontend/public/assets/generated/spices-coriander.dim_400x400.png",
-          "operation": "create",
-          "description": "Wire the generated image frontend/public/assets/generated/spices-coriander.dim_400x400.png as a static asset for the Coriander variant."
-        },
-        {
-          "path": "frontend/public/assets/generated/spices-cumin.dim_400x400.png",
-          "operation": "create",
-          "description": "Wire the generated image frontend/public/assets/generated/spices-cumin.dim_400x400.png as a static asset for the Cumin variant."
-        },
-        {
-          "path": "frontend/public/assets/generated/spices-black-pepper.dim_400x400.png",
-          "operation": "create",
-          "description": "Wire the generated image frontend/public/assets/generated/spices-black-pepper.dim_400x400.png as a static asset for the Black Pepper variant."
-        },
-        {
-          "path": "frontend/public/assets/generated/spices-cardamom.dim_400x400.png",
-          "operation": "create",
-          "description": "Wire the generated image frontend/public/assets/generated/spices-cardamom.dim_400x400.png as a static asset for the Cardamom variant."
-        },
-        {
-          "path": "frontend/public/assets/generated/spices-ginger-powder.dim_400x400.png",
-          "operation": "create",
-          "description": "Wire the generated image frontend/public/assets/generated/spices-ginger-powder.dim_400x400.png as a static asset for the Ginger Powder variant."
-        },
-        {
-          "path": "frontend/public/assets/generated/spices-fenugreek.dim_400x400.png",
-          "operation": "create",
-          "description": "Wire the generated image frontend/public/assets/generated/spices-fenugreek.dim_400x400.png as a static asset for the Fenugreek variant."
-        },
-        {
-          "path": "frontend/public/assets/generated/processed-rice-flour.dim_400x400.png",
-          "operation": "create",
-          "description": "Wire the generated image frontend/public/assets/generated/processed-rice-flour.dim_400x400.png as a static asset for the Rice Flour variant."
-        },
-        {
-          "path": "frontend/public/assets/generated/processed-wheat-flour.dim_400x400.png",
-          "operation": "create",
-          "description": "Wire the generated image frontend/public/assets/generated/processed-wheat-flour.dim_400x400.png as a static asset for the Wheat Flour (Atta) variant."
-        },
-        {
-          "path": "frontend/public/assets/generated/processed-besan.dim_400x400.png",
-          "operation": "create",
-          "description": "Wire the generated image frontend/public/assets/generated/processed-besan.dim_400x400.png as a static asset for the Besan (Gram Flour) variant."
-        },
-        {
-          "path": "frontend/public/assets/generated/processed-poha.dim_400x400.png",
-          "operation": "create",
-          "description": "Wire the generated image frontend/public/assets/generated/processed-poha.dim_400x400.png as a static asset for the Poha variant."
-        },
-        {
-          "path": "frontend/public/assets/generated/processed-roasted-chana.dim_400x400.png",
-          "operation": "create",
-          "description": "Wire the generated image frontend/public/assets/generated/processed-roasted-chana.dim_400x400.png as a static asset for the Roasted Chana variant."
-        },
-        {
-          "path": "frontend/public/assets/generated/processed-vermicelli.dim_400x400.png",
-          "operation": "create",
-          "description": "Wire the generated image frontend/public/assets/generated/processed-vermicelli.dim_400x400.png as a static asset for the Vermicelli variant."
-        },
-        {
-          "path": "frontend/public/assets/generated/makhana-regular.dim_400x400.png",
-          "operation": "create",
-          "description": "Wire the generated image frontend/public/assets/generated/makhana-regular.dim_400x400.png as a static asset for the Fox Nut Regular variant."
-        },
-        {
-          "path": "frontend/public/assets/generated/makhana-premium.dim_400x400.png",
-          "operation": "create",
-          "description": "Wire the generated image frontend/public/assets/generated/makhana-premium.dim_400x400.png as a static asset for the Fox Nut Premium variant."
-        },
-        {
-          "path": "frontend/public/assets/generated/makhana-roasted.dim_400x400.png",
-          "operation": "create",
-          "description": "Wire the generated image frontend/public/assets/generated/makhana-roasted.dim_400x400.png as a static asset for the Roasted Makhana variant."
-        },
-        {
-          "path": "frontend/public/assets/generated/makhana-powder.dim_400x400.png",
-          "operation": "create",
-          "description": "Wire the generated image frontend/public/assets/generated/makhana-powder.dim_400x400.png as a static asset for the Makhana Powder variant."
+          "path": "frontend/src/pages/Products.tsx",
+          "operation": "modify",
+          "description": "Verify that the Products page references the generated variant images where applicable, using the exact workspace paths listed above. Update any hardcoded image references or fallback mappings to use the generated files from frontend/public/assets/generated/. Ensure all subcategory images load without 404 errors."
         }
       ]
     }

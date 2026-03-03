@@ -1,9 +1,33 @@
 import React, { useState } from 'react';
-import { useGetAllContactForms, useGetAllOrders, useUpdateOrderStatus, useAddProductDetail } from '../hooks/useQueries';
+import { useInternetIdentity } from '../hooks/useInternetIdentity';
+import { useQueryClient } from '@tanstack/react-query';
+import {
+  useGetAllContactForms,
+  useGetAllOrders,
+  useUpdateOrderStatus,
+  useAddProductDetail,
+} from '../hooks/useQueries';
 import { OrderStatus } from '../backend';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
-import { Loader2, RefreshCw, Package, CheckCircle } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { toast } from 'sonner';
+import { Loader2, RefreshCw, ShieldAlert, Database } from 'lucide-react';
 
 const ORDER_STATUSES: OrderStatus[] = [
   OrderStatus.pending,
@@ -14,190 +38,297 @@ const ORDER_STATUSES: OrderStatus[] = [
   OrderStatus.cancelled,
 ];
 
-function getStatusColor(status: string): string {
-  switch (status) {
-    case 'pending': return 'bg-yellow-100 text-yellow-800';
-    case 'confirmed': return 'bg-blue-100 text-blue-800';
-    case 'processing': return 'bg-purple-100 text-purple-800';
-    case 'shipped': return 'bg-indigo-100 text-indigo-800';
-    case 'delivered': return 'bg-green-100 text-green-800';
-    case 'cancelled': return 'bg-red-100 text-red-800';
-    default: return 'bg-muted text-muted-foreground';
+const STATUS_COLORS: Record<OrderStatus, string> = {
+  [OrderStatus.pending]: 'bg-yellow-100 text-yellow-800 border-yellow-200',
+  [OrderStatus.confirmed]: 'bg-blue-100 text-blue-800 border-blue-200',
+  [OrderStatus.processing]: 'bg-purple-100 text-purple-800 border-purple-200',
+  [OrderStatus.shipped]: 'bg-indigo-100 text-indigo-800 border-indigo-200',
+  [OrderStatus.delivered]: 'bg-green-100 text-green-800 border-green-200',
+  [OrderStatus.cancelled]: 'bg-red-100 text-red-800 border-red-200',
+};
+
+function formatDate(timestamp: bigint): string {
+  try {
+    const ms = Number(timestamp) / 1_000_000;
+    return new Date(ms).toLocaleDateString('en-IN', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  } catch {
+    return 'N/A';
   }
 }
 
-function getOrderStatusString(status: any): string {
-  if (typeof status === 'string') return status;
-  if (typeof status === 'object' && status !== null) return Object.keys(status)[0];
-  return 'pending';
-}
-
+// Full product catalog data for seeding
 const PRODUCT_CATALOG = [
   {
-    productName: 'Rice',
+    productName: 'Premium Rice Collection',
     category: 'rice',
-    description: 'High-quality rice varieties sourced directly from farmers across India, including premium Basmati and non-Basmati options.',
+    description:
+      'Our premium rice collection offers the finest varieties sourced directly from top-producing regions. Each variety is carefully selected for its aroma, texture, and nutritional value.',
     specifications: [
-      { key: 'Origin', value: 'India' },
-      { key: 'Available Forms', value: 'Raw, Parboiled, Brown' },
-      { key: 'Packaging', value: '1kg, 5kg, 25kg, 50kg' },
-      { key: 'Moisture', value: 'Max 14%' },
+      { key: 'Type', value: 'Grain' },
+      { key: 'Processing', value: 'Double Polished' },
+      { key: 'Moisture', value: '< 14%' },
+      { key: 'Broken Grains', value: '< 2%' },
     ],
-    price: BigInt(120),
-    nutritionData: { calories: 365, protein: 7.1, carbohydrates: 79.5, fat: 0.6, fiber: 2.4, iron: 0.8, zinc: 1.2, vitamins: 'B1, B3', minerals: 'Phosphorus, Magnesium' },
+    price: BigInt(85),
+    nutritionData: {
+      calories: 130,
+      protein: 2.7,
+      carbohydrates: 28.2,
+      fat: 0.3,
+      fiber: 0.4,
+      iron: 0.2,
+      zinc: 0.5,
+      vitamins: 'Thiamine (B1), Niacin (B3)',
+      minerals: 'Iron, Zinc, Magnesium',
+    },
     imageUrl: '/assets/generated/rice-detail.dim_800x600.png',
     variants: [
-      { name: 'Basmati Rice', imageUrl: '/assets/generated/rice-basmati.dim_400x400.png' },
-      { name: 'Sona Masoori', imageUrl: '/assets/generated/rice-sona-masoori.dim_400x400.png' },
-      { name: 'IR-64 Parboiled Rice', imageUrl: '/assets/generated/rice-ir64.dim_400x400.png' },
-      { name: 'Brown Rice', imageUrl: '/assets/generated/rice-brown.dim_400x400.png' },
-      { name: 'Broken Rice', imageUrl: '/assets/generated/rice-broken.dim_400x400.png' },
+      { name: 'Basmati Rice', imageUrl: 'rice-basmati.png' },
+      { name: 'Sona Masoori', imageUrl: 'rice-sona-masoori.png' },
+      { name: 'IR64 Rice', imageUrl: 'rice-ir64.png' },
+      { name: 'Brown Rice', imageUrl: 'rice-brown.png' },
+      { name: 'Broken Rice', imageUrl: 'rice-broken.png' },
     ],
   },
   {
-    productName: 'Wheat',
+    productName: 'Premium Wheat Collection',
     category: 'wheat',
-    description: 'Premium quality wheat grains for various culinary and industrial uses, sourced from the best wheat-growing regions of India.',
+    description:
+      'Our premium wheat collection features carefully selected varieties for superior baking and cooking. From hard durum wheat to soft whole wheat, each variety delivers exceptional quality.',
     specifications: [
-      { key: 'Origin', value: 'Punjab, Haryana, MP' },
-      { key: 'Available Forms', value: 'Whole, Semolina, Flour' },
-      { key: 'Packaging', value: '2kg, 10kg, 50kg' },
-      { key: 'Protein Content', value: '11–14%' },
+      { key: 'Type', value: 'Wheat' },
+      { key: 'Processing', value: 'Cleaned & Graded' },
+      { key: 'Moisture', value: '< 12%' },
+      { key: 'Protein Content', value: '10-14%' },
     ],
-    price: BigInt(200),
-    nutritionData: { calories: 340, protein: 13.2, carbohydrates: 71.2, fat: 2.5, fiber: 12.2, iron: 3.6, zinc: 2.7, vitamins: 'B Vitamins, E', minerals: 'Magnesium, Phosphorus' },
+    price: BigInt(45),
+    nutritionData: {
+      calories: 340,
+      protein: 13.2,
+      carbohydrates: 72.0,
+      fat: 2.5,
+      fiber: 10.7,
+      iron: 3.6,
+      zinc: 2.8,
+      vitamins: 'Vitamin B1, B2, B3, B6, Folate',
+      minerals: 'Calcium, Magnesium, Potassium, Phosphorus',
+    },
     imageUrl: '/assets/generated/wheat-detail.dim_800x600.png',
     variants: [
-      { name: 'Durum Wheat', imageUrl: '/assets/generated/wheat-durum.dim_400x400.png' },
-      { name: 'Whole Wheat', imageUrl: '/assets/generated/wheat-whole.dim_400x400.png' },
-      { name: 'Semolina', imageUrl: '/assets/generated/wheat-semolina.dim_400x400.png' },
+      { name: 'Durum Wheat', imageUrl: 'wheat-durum.png' },
+      { name: 'Whole Wheat', imageUrl: 'wheat-whole.png' },
+      { name: 'Semolina (Suji)', imageUrl: 'wheat-semolina.png' },
     ],
   },
   {
-    productName: 'Pulses',
+    productName: 'Premium Pulses Collection',
     category: 'pulses',
-    description: 'Nutritious and protein-rich pulses from Indian farms, available in a wide range of varieties for domestic and export markets.',
+    description:
+      'Explore our premium selection of high-quality dried pulses. Packed with essential nutrients and bursting with flavor, our pulses are meticulously sourced for the finest quality.',
     specifications: [
-      { key: 'Origin', value: 'Madhya Pradesh, Rajasthan' },
-      { key: 'Available Forms', value: 'Whole, Split, Dehusked' },
-      { key: 'Packaging', value: '500g, 1kg, 25kg, 50kg' },
-      { key: 'Protein Content', value: '20–25%' },
+      { key: 'Type', value: 'Lentils, Beans, Peas, Chickpeas' },
+      { key: 'Processing', value: 'Cleaned & Sorted' },
+      { key: 'Moisture', value: '< 12%' },
+      { key: 'Packaging', value: 'Food-grade bags' },
     ],
-    price: BigInt(150),
-    nutritionData: { calories: 350, protein: 23.5, carbohydrates: 60.2, fat: 1.7, fiber: 16.5, iron: 8.5, zinc: 3.2, vitamins: 'Folate, B1', minerals: 'Potassium, Iron' },
+    price: BigInt(120),
+    nutritionData: {
+      calories: 116,
+      protein: 9.0,
+      carbohydrates: 20.1,
+      fat: 0.4,
+      fiber: 7.9,
+      iron: 3.3,
+      zinc: 1.3,
+      vitamins: 'Folate, Vitamin B1, B6',
+      minerals: 'Iron, Potassium, Magnesium, Phosphorus',
+    },
     imageUrl: '/assets/generated/pulses-detail.dim_800x600.png',
     variants: [
-      { name: 'Chana Dal', imageUrl: '/assets/generated/pulses-chana-dal.dim_400x400.png' },
-      { name: 'Moong Dal', imageUrl: '/assets/generated/pulses-moong-dal.dim_400x400.png' },
-      { name: 'Masoor Dal', imageUrl: '/assets/generated/pulses-masoor-dal.dim_400x400.png' },
-      { name: 'Urad Dal', imageUrl: '/assets/generated/pulses-urad-dal.dim_400x400.png' },
-      { name: 'Toor Dal', imageUrl: '/assets/generated/pulses-toor-dal.dim_400x400.png' },
-      { name: 'Rajma', imageUrl: '/assets/generated/pulses-rajma.dim_400x400.png' },
-      { name: 'Kabuli Chana', imageUrl: '/assets/generated/pulses-kabuli-chana.dim_400x400.png' },
+      { name: 'Chana Dal', imageUrl: 'pulses-chana-dal.png' },
+      { name: 'Moong Dal', imageUrl: 'pulses-moong-dal.png' },
+      { name: 'Masoor Dal', imageUrl: 'pulses-masoor-dal.png' },
+      { name: 'Urad Dal', imageUrl: 'pulses-urad-dal.png' },
+      { name: 'Toor Dal', imageUrl: 'pulses-toor-dal.png' },
+      { name: 'Rajma', imageUrl: 'pulses-rajma.png' },
+      { name: 'Kabuli Chana', imageUrl: 'pulses-kabuli-chana.png' },
     ],
   },
   {
-    productName: 'Spices',
+    productName: 'Aromatic Spices Collection',
     category: 'spices',
-    description: 'Aromatic and flavorful spices from premium Indian farms, processed to retain natural oils and freshness.',
+    description:
+      'Elevate your culinary creations with our wide range of aromatic spices. Carefully sourced and expertly processed, our spice collection promises to enhance every dish with rich flavors.',
     specifications: [
-      { key: 'Origin', value: 'Kerala, Rajasthan, Gujarat' },
-      { key: 'Available Forms', value: 'Whole, Powder, Blended' },
-      { key: 'Packaging', value: '100g, 250g, 500g, 1kg' },
-      { key: 'Shelf Life', value: '12–24 months' },
+      { key: 'Type', value: 'Herbs and Spices' },
+      { key: 'Processing', value: 'Cleaned & Ground' },
+      { key: 'Aroma', value: 'Aromatic' },
+      { key: 'Packaging', value: 'Airtight bags' },
     ],
-    price: BigInt(180),
-    nutritionData: { calories: 260, protein: 12.4, carbohydrates: 60.8, fat: 4.2, fiber: 30.2, iron: 19.2, zinc: 4.1, vitamins: 'A, C, B6', minerals: 'Calcium, Iron, Manganese' },
+    price: BigInt(200),
+    nutritionData: {
+      calories: 354,
+      protein: 12.7,
+      carbohydrates: 65.0,
+      fat: 4.4,
+      fiber: 21.1,
+      iron: 29.6,
+      zinc: 4.7,
+      vitamins: 'Vitamin C, Vitamin A, Vitamin K',
+      minerals: 'Iron, Calcium, Manganese, Potassium',
+    },
     imageUrl: '/assets/generated/spices-detail.dim_800x600.png',
     variants: [
-      { name: 'Turmeric', imageUrl: '/assets/generated/spices-turmeric.dim_400x400.png' },
-      { name: 'Red Chilli', imageUrl: '/assets/generated/spices-red-chilli.dim_400x400.png' },
-      { name: 'Coriander', imageUrl: '/assets/generated/spices-coriander.dim_400x400.png' },
-      { name: 'Cumin', imageUrl: '/assets/generated/spices-cumin.dim_400x400.png' },
-      { name: 'Black Pepper', imageUrl: '/assets/generated/spices-black-pepper.dim_400x400.png' },
-      { name: 'Cardamom', imageUrl: '/assets/generated/spices-cardamom.dim_400x400.png' },
-      { name: 'Ginger Powder', imageUrl: '/assets/generated/spices-ginger-powder.dim_400x400.png' },
-      { name: 'Fenugreek', imageUrl: '/assets/generated/spices-fenugreek.dim_400x400.png' },
+      { name: 'Turmeric Powder', imageUrl: 'spices-turmeric.png' },
+      { name: 'Red Chilli Powder', imageUrl: 'spices-red-chilli.png' },
+      { name: 'Coriander Powder', imageUrl: 'spices-coriander.png' },
+      { name: 'Cumin Seeds', imageUrl: 'spices-cumin.png' },
+      { name: 'Black Pepper', imageUrl: 'spices-black-pepper.png' },
+      { name: 'Cardamom', imageUrl: 'spices-cardamom.png' },
+      { name: 'Ginger Powder', imageUrl: 'spices-ginger-powder.png' },
+      { name: 'Fenugreek Seeds', imageUrl: 'spices-fenugreek.png' },
     ],
   },
   {
     productName: 'Processed Food Products',
     category: 'processed-food-products',
-    description: 'Convenient and high-quality processed food products including flours, flakes, and ready-to-cook items from premium agricultural produce.',
+    description:
+      'Explore our range of convenient packaged processed foods, meticulously crafted for quality and taste. From flours to ready-to-cook products, our range offers perfect nutrition and convenience.',
     specifications: [
-      { key: 'Type', value: 'Value-Added Products' },
-      { key: 'Packaging', value: '500g, 1kg, 5kg, 25kg' },
-      { key: 'Shelf Life', value: '6–12 months' },
-      { key: 'Processing', value: 'Hygienic, FSSAI Certified' },
+      { key: 'Type', value: 'Processed Grains & Flours' },
+      { key: 'Packaging', value: 'Food-grade sealed bags' },
+      { key: 'Shelf Life', value: '6-12 months' },
+      { key: 'Storage', value: 'Cool, dry place' },
     ],
-    price: BigInt(300),
-    nutritionData: { calories: 380, protein: 10.5, carbohydrates: 75.2, fat: 3.8, fiber: 5.4, iron: 4.2, zinc: 2.1, vitamins: 'B1, B2, B3', minerals: 'Calcium, Phosphorus' },
+    price: BigInt(95),
+    nutritionData: {
+      calories: 364,
+      protein: 10.3,
+      carbohydrates: 76.3,
+      fat: 1.0,
+      fiber: 2.7,
+      iron: 1.2,
+      zinc: 0.8,
+      vitamins: 'Vitamin B1, B2, B3',
+      minerals: 'Iron, Calcium, Potassium',
+    },
     imageUrl: '/assets/generated/processed-detail.dim_800x600.png',
     variants: [
-      { name: 'Rice Flour', imageUrl: '/assets/generated/processed-rice-flour.dim_400x400.png' },
-      { name: 'Wheat Flour (Atta)', imageUrl: '/assets/generated/processed-wheat-flour.dim_400x400.png' },
-      { name: 'Besan (Gram Flour)', imageUrl: '/assets/generated/processed-besan.dim_400x400.png' },
-      { name: 'Poha (Flattened Rice)', imageUrl: '/assets/generated/processed-poha.dim_400x400.png' },
-      { name: 'Roasted Chana', imageUrl: '/assets/generated/processed-roasted-chana.dim_400x400.png' },
-      { name: 'Vermicelli', imageUrl: '/assets/generated/processed-vermicelli.dim_400x400.png' },
+      { name: 'Rice Flour', imageUrl: 'processed-rice-flour.png' },
+      { name: 'Wheat Flour (Atta)', imageUrl: 'processed-wheat-flour.png' },
+      { name: 'Besan (Gram Flour)', imageUrl: 'processed-besan.png' },
+      { name: 'Poha (Flattened Rice)', imageUrl: 'processed-poha.png' },
+      { name: 'Roasted Chana', imageUrl: 'processed-roasted-chana.png' },
+      { name: 'Vermicelli', imageUrl: 'processed-vermicelli.png' },
     ],
   },
   {
-    productName: 'Makhana (Fox Nuts)',
+    productName: 'Premium Makhana Collection',
     category: 'makhana',
-    description: 'Premium quality Fox Nuts (Makhana) sourced from Bihar — a superfood rich in protein, calcium, and antioxidants.',
+    description:
+      'Indulge in the ultimate snacking experience with our Premium Makhana. Sourced from the finest quality lotus seeds and expertly processed, our makhana offers a light, crunchy texture and irresistible flavor.',
     specifications: [
-      { key: 'Origin', value: 'Bihar, India' },
-      { key: 'Available Forms', value: 'Raw, Roasted, Powder' },
-      { key: 'Packaging', value: '100g, 200g, 500g, 1kg' },
-      { key: 'Shelf Life', value: '6–12 months' },
+      { key: 'Type', value: 'Fox Nuts (Lotus Seeds)' },
+      { key: 'Quality', value: 'Premium Grade' },
+      { key: 'Processing', value: 'Roasted / Raw' },
+      { key: 'Packaging', value: 'Airtight bags' },
     ],
-    price: BigInt(250),
-    nutritionData: { calories: 350, protein: 9.7, carbohydrates: 77.2, fat: 0.5, fiber: 7.6, iron: 1.4, zinc: 0.7, vitamins: 'B1, B2, B3', minerals: 'Iron, Potassium, Calcium' },
+    price: BigInt(350),
+    nutritionData: {
+      calories: 347,
+      protein: 9.7,
+      carbohydrates: 76.9,
+      fat: 0.1,
+      fiber: 14.5,
+      iron: 1.4,
+      zinc: 0.5,
+      vitamins: 'Vitamin B1, B2, Vitamin E',
+      minerals: 'Calcium, Magnesium, Potassium, Phosphorus',
+    },
     imageUrl: '/assets/generated/makhana-detail.dim_800x600.png',
     variants: [
-      { name: 'Fox Nut Regular', imageUrl: '/assets/generated/makhana-regular.dim_400x400.png' },
-      { name: 'Fox Nut Premium', imageUrl: '/assets/generated/makhana-premium.dim_400x400.png' },
-      { name: 'Roasted Makhana', imageUrl: '/assets/generated/makhana-roasted.dim_400x400.png' },
-      { name: 'Makhana Powder', imageUrl: '/assets/generated/makhana-powder.dim_400x400.png' },
+      { name: 'Fox Nut Regular', imageUrl: 'makhana-regular.png' },
+      { name: 'Fox Nut Premium', imageUrl: 'makhana-premium.png' },
+      { name: 'Roasted Makhana', imageUrl: 'makhana-roasted.png' },
+      { name: 'Makhana Powder', imageUrl: 'makhana-powder.png' },
     ],
   },
 ];
 
 export default function Admin() {
-  const { data: contactForms, isLoading: formsLoading, error: formsError } = useGetAllContactForms();
-  const { data: orders, isLoading: ordersLoading, error: ordersError } = useGetAllOrders();
+  const { identity } = useInternetIdentity();
+  const queryClient = useQueryClient();
+  const [isSeeding, setIsSeeding] = useState(false);
+
+  const { data: contactForms = [], isLoading: contactLoading, error: contactError } = useGetAllContactForms();
+  const { data: orders = [], isLoading: ordersLoading, error: ordersError } = useGetAllOrders();
   const updateOrderStatus = useUpdateOrderStatus();
-  const addProduct = useAddProductDetail();
+  const addProductDetail = useAddProductDetail();
 
-  const [seedingStatus, setSeedingStatus] = useState<'idle' | 'seeding' | 'done' | 'error'>('idle');
-  const [seedMessage, setSeedMessage] = useState('');
+  const isAuthenticated = !!identity;
 
-  const handleStatusChange = (orderId: bigint, newStatus: string) => {
-    const statusEnum = newStatus as OrderStatus;
-    updateOrderStatus.mutate({ orderId, status: statusEnum });
-  };
-
-  const handleSeedProducts = async () => {
-    setSeedingStatus('seeding');
-    setSeedMessage('');
+  const handleStatusChange = async (orderId: bigint, status: string) => {
     try {
-      for (const product of PRODUCT_CATALOG) {
-        await addProduct.mutateAsync(product);
-      }
-      setSeedingStatus('done');
-      setSeedMessage('All 6 product categories seeded successfully!');
-    } catch (err: any) {
-      setSeedingStatus('error');
-      setSeedMessage(`Error seeding products: ${err?.message || 'Unknown error'}`);
+      await updateOrderStatus.mutateAsync({
+        orderId,
+        status: status as OrderStatus,
+      });
+      toast.success('Order status updated successfully');
+    } catch (err) {
+      toast.error('Failed to update order status');
     }
   };
 
+  const handleSeedProducts = async () => {
+    if (!isAuthenticated) {
+      toast.error('Please login as admin to seed products');
+      return;
+    }
+    setIsSeeding(true);
+    try {
+      for (const product of PRODUCT_CATALOG) {
+        await addProductDetail.mutateAsync(product);
+      }
+      toast.success('All 6 product categories seeded successfully!');
+      queryClient.invalidateQueries({ queryKey: ['allProductDetails'] });
+      queryClient.invalidateQueries({ queryKey: ['productByCategory'] });
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : String(err);
+      toast.error(`Seeding failed: ${msg}`);
+    } finally {
+      setIsSeeding(false);
+    }
+  };
+
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center space-y-4 max-w-md mx-auto p-8">
+          <ShieldAlert className="h-16 w-16 text-destructive mx-auto" />
+          <h2 className="text-2xl font-bold text-foreground">Admin Access Required</h2>
+          <p className="text-muted-foreground">
+            Please login with your admin account to access the admin dashboard.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-10">
-        <h1 className="text-3xl font-bold text-foreground mb-2">Admin Dashboard</h1>
-        <p className="text-muted-foreground mb-8">Manage orders, contact submissions, and product catalog.</p>
+      <div className="container mx-auto px-4 py-8">
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-foreground">Admin Dashboard</h1>
+          <p className="text-muted-foreground mt-1">
+            Manage orders, contact submissions, and product catalog
+          </p>
+        </div>
 
         <Tabs defaultValue="orders">
           <TabsList className="mb-6">
@@ -208,72 +339,91 @@ export default function Admin() {
 
           {/* Orders Tab */}
           <TabsContent value="orders">
-            <div className="bg-card border border-border rounded-xl shadow-sm overflow-hidden">
-              <div className="p-5 border-b border-border">
-                <h2 className="text-lg font-bold text-foreground">Orders</h2>
-                <p className="text-sm text-muted-foreground">Manage and update order statuses.</p>
+            <div className="rounded-xl border border-border overflow-hidden">
+              <div className="p-4 bg-muted/30 border-b border-border flex items-center justify-between">
+                <h2 className="font-semibold text-foreground">All Orders</h2>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => queryClient.invalidateQueries({ queryKey: ['allOrders'] })}
+                >
+                  <RefreshCw className="h-4 w-4 mr-2" />
+                  Refresh
+                </Button>
               </div>
               {ordersLoading ? (
-                <div className="flex items-center justify-center py-16">
-                  <Loader2 className="w-8 h-8 animate-spin text-primary" />
+                <div className="flex items-center justify-center py-12">
+                  <Loader2 className="h-8 w-8 animate-spin text-primary" />
                 </div>
               ) : ordersError ? (
-                <div className="p-6 text-destructive text-sm">
-                  Failed to load orders. Make sure you are logged in as an admin.
+                <div className="p-8 text-center text-muted-foreground">
+                  <ShieldAlert className="h-8 w-8 mx-auto mb-2 text-destructive" />
+                  <p>Unable to load orders. Admin access required.</p>
                 </div>
-              ) : !orders || orders.length === 0 ? (
-                <div className="p-10 text-center text-muted-foreground">
-                  <Package className="w-12 h-12 mx-auto mb-3 opacity-40" />
-                  <p>No orders yet.</p>
+              ) : orders.length === 0 ? (
+                <div className="p-8 text-center text-muted-foreground">
+                  No orders found.
                 </div>
               ) : (
                 <div className="overflow-x-auto">
-                  <table className="w-full text-sm">
-                    <thead className="bg-muted/50">
-                      <tr>
-                        <th className="px-4 py-3 text-left font-semibold text-foreground">Order ID</th>
-                        <th className="px-4 py-3 text-left font-semibold text-foreground">Buyer Name</th>
-                        <th className="px-4 py-3 text-left font-semibold text-foreground">Email</th>
-                        <th className="px-4 py-3 text-left font-semibold text-foreground">Phone</th>
-                        <th className="px-4 py-3 text-left font-semibold text-foreground">Total (₹)</th>
-                        <th className="px-4 py-3 text-left font-semibold text-foreground">Status</th>
-                        <th className="px-4 py-3 text-left font-semibold text-foreground">Date</th>
-                        <th className="px-4 py-3 text-left font-semibold text-foreground">Update Status</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {orders.map((order) => {
-                        const statusStr = getOrderStatusString(order.status);
-                        const createdDate = new Date(Number(order.createdAt) / 1_000_000).toLocaleDateString('en-IN');
-                        return (
-                          <tr key={order.orderId.toString()} className="border-t border-border hover:bg-muted/20 transition-colors">
-                            <td className="px-4 py-3 font-mono text-xs">#{order.orderId.toString()}</td>
-                            <td className="px-4 py-3 font-medium">{order.buyerName}</td>
-                            <td className="px-4 py-3 text-muted-foreground">{order.buyerEmail}</td>
-                            <td className="px-4 py-3 text-muted-foreground">{order.buyerPhone}</td>
-                            <td className="px-4 py-3 font-semibold">₹{Number(order.totalAmount)}</td>
-                            <td className="px-4 py-3">
-                              <span className={`px-2 py-1 rounded-full text-xs font-semibold ${getStatusColor(statusStr)}`}>
-                                {statusStr}
-                              </span>
-                            </td>
-                            <td className="px-4 py-3 text-muted-foreground">{createdDate}</td>
-                            <td className="px-4 py-3">
-                              <select
-                                value={statusStr}
-                                onChange={(e) => handleStatusChange(order.orderId, e.target.value)}
-                                className="text-xs border border-border rounded-lg px-2 py-1 bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/30"
-                              >
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Order ID</TableHead>
+                        <TableHead>Buyer Name</TableHead>
+                        <TableHead>Email</TableHead>
+                        <TableHead>Phone</TableHead>
+                        <TableHead>Total Amount</TableHead>
+                        <TableHead>Status</TableHead>
+                        <TableHead>Date</TableHead>
+                        <TableHead>Update Status</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {orders.map((order) => (
+                        <TableRow key={String(order.orderId)}>
+                          <TableCell className="font-mono text-sm">
+                            #{String(order.orderId)}
+                          </TableCell>
+                          <TableCell className="font-medium">{order.buyerName}</TableCell>
+                          <TableCell className="text-muted-foreground">{order.buyerEmail}</TableCell>
+                          <TableCell className="text-muted-foreground">{order.buyerPhone}</TableCell>
+                          <TableCell className="font-semibold">
+                            ₹{Number(order.totalAmount).toLocaleString('en-IN')}
+                          </TableCell>
+                          <TableCell>
+                            <span
+                              className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${
+                                STATUS_COLORS[order.status as OrderStatus] || 'bg-gray-100 text-gray-800'
+                              }`}
+                            >
+                              {String(order.status)}
+                            </span>
+                          </TableCell>
+                          <TableCell className="text-muted-foreground text-sm">
+                            {formatDate(order.createdAt)}
+                          </TableCell>
+                          <TableCell>
+                            <Select
+                              defaultValue={String(order.status)}
+                              onValueChange={(val) => handleStatusChange(order.orderId, val)}
+                            >
+                              <SelectTrigger className="w-36">
+                                <SelectValue />
+                              </SelectTrigger>
+                              <SelectContent>
                                 {ORDER_STATUSES.map((s) => (
-                                  <option key={s} value={s}>{s}</option>
+                                  <SelectItem key={s} value={s}>
+                                    {s.charAt(0).toUpperCase() + s.slice(1)}
+                                  </SelectItem>
                                 ))}
-                              </select>
-                            </td>
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </table>
+                              </SelectContent>
+                            </Select>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
                 </div>
               )}
             </div>
@@ -281,49 +431,63 @@ export default function Admin() {
 
           {/* Contact Submissions Tab */}
           <TabsContent value="contacts">
-            <div className="bg-card border border-border rounded-xl shadow-sm overflow-hidden">
-              <div className="p-5 border-b border-border">
-                <h2 className="text-lg font-bold text-foreground">Contact Submissions</h2>
-                <p className="text-sm text-muted-foreground">View all contact form submissions.</p>
+            <div className="rounded-xl border border-border overflow-hidden">
+              <div className="p-4 bg-muted/30 border-b border-border flex items-center justify-between">
+                <h2 className="font-semibold text-foreground">Contact Form Submissions</h2>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => queryClient.invalidateQueries({ queryKey: ['allContactForms'] })}
+                >
+                  <RefreshCw className="h-4 w-4 mr-2" />
+                  Refresh
+                </Button>
               </div>
-              {formsLoading ? (
-                <div className="flex items-center justify-center py-16">
-                  <Loader2 className="w-8 h-8 animate-spin text-primary" />
+              {contactLoading ? (
+                <div className="flex items-center justify-center py-12">
+                  <Loader2 className="h-8 w-8 animate-spin text-primary" />
                 </div>
-              ) : formsError ? (
-                <div className="p-6 text-destructive text-sm">
-                  Failed to load contact forms. Make sure you are logged in as an admin.
+              ) : contactError ? (
+                <div className="p-8 text-center text-muted-foreground">
+                  <ShieldAlert className="h-8 w-8 mx-auto mb-2 text-destructive" />
+                  <p>Unable to load contact forms. Admin access required.</p>
                 </div>
-              ) : !contactForms || contactForms.length === 0 ? (
-                <div className="p-10 text-center text-muted-foreground">
-                  <p>No contact submissions yet.</p>
+              ) : contactForms.length === 0 ? (
+                <div className="p-8 text-center text-muted-foreground">
+                  No contact form submissions found.
                 </div>
               ) : (
                 <div className="overflow-x-auto">
-                  <table className="w-full text-sm">
-                    <thead className="bg-muted/50">
-                      <tr>
-                        <th className="px-4 py-3 text-left font-semibold text-foreground">Name</th>
-                        <th className="px-4 py-3 text-left font-semibold text-foreground">Email</th>
-                        <th className="px-4 py-3 text-left font-semibold text-foreground">Phone Number</th>
-                        <th className="px-4 py-3 text-left font-semibold text-foreground">Message</th>
-                        <th className="px-4 py-3 text-left font-semibold text-foreground">User Type</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {contactForms.map((form, index) => (
-                        <tr key={index} className="border-t border-border hover:bg-muted/20 transition-colors">
-                          <td className="px-4 py-3 font-medium">{form.name}</td>
-                          <td className="px-4 py-3 text-muted-foreground">{form.email}</td>
-                          <td className="px-4 py-3 text-muted-foreground">{form.phoneNumber}</td>
-                          <td className="px-4 py-3 text-muted-foreground max-w-xs truncate">{form.message}</td>
-                          <td className="px-4 py-3">
-                            <Badge variant="secondary">{form.userType}</Badge>
-                          </td>
-                        </tr>
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>#</TableHead>
+                        <TableHead>Name</TableHead>
+                        <TableHead>Email</TableHead>
+                        <TableHead>Phone Number</TableHead>
+                        <TableHead>User Type</TableHead>
+                        <TableHead>Message</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {contactForms.map((entry, index) => (
+                        <TableRow key={index}>
+                          <TableCell className="text-muted-foreground">{index + 1}</TableCell>
+                          <TableCell className="font-medium">{entry.name}</TableCell>
+                          <TableCell className="text-muted-foreground">{entry.email}</TableCell>
+                          <TableCell className="text-muted-foreground">{entry.phoneNumber}</TableCell>
+                          <TableCell>
+                            <Badge variant="outline">{entry.userType}</Badge>
+                          </TableCell>
+                          <TableCell className="max-w-xs">
+                            <p className="text-sm text-muted-foreground truncate" title={entry.message}>
+                              {entry.message}
+                            </p>
+                          </TableCell>
+                        </TableRow>
                       ))}
-                    </tbody>
-                  </table>
+                    </TableBody>
+                  </Table>
                 </div>
               )}
             </div>
@@ -331,20 +495,50 @@ export default function Admin() {
 
           {/* Product Catalog Tab */}
           <TabsContent value="products">
-            <div className="bg-card border border-border rounded-xl shadow-sm p-6">
-              <h2 className="text-lg font-bold text-foreground mb-2">Product Catalog</h2>
-              <p className="text-sm text-muted-foreground mb-6">
-                Seed all 6 product categories into the backend with full sub-category variants. Use this if products are not showing up on the Products page.
-              </p>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
-                {PRODUCT_CATALOG.map((p) => (
-                  <div key={p.category} className="bg-muted/40 rounded-lg p-4 text-sm">
-                    <p className="font-semibold text-foreground mb-1">{p.productName}</p>
-                    <p className="text-muted-foreground text-xs mb-2">{p.category}</p>
+            <div className="rounded-xl border border-border overflow-hidden">
+              <div className="p-4 bg-muted/30 border-b border-border flex items-center justify-between">
+                <div>
+                  <h2 className="font-semibold text-foreground">Product Catalog Management</h2>
+                  <p className="text-xs text-muted-foreground mt-0.5">
+                    Seed or re-seed all 6 product categories with complete variant data
+                  </p>
+                </div>
+                <Button
+                  onClick={handleSeedProducts}
+                  disabled={isSeeding}
+                  className="gap-2"
+                >
+                  {isSeeding ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <Database className="h-4 w-4" />
+                  )}
+                  {isSeeding ? 'Seeding...' : 'Seed / Re-seed Products'}
+                </Button>
+              </div>
+              <div className="p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {PRODUCT_CATALOG.map((product) => (
+                  <div
+                    key={product.category}
+                    className="border border-border rounded-xl p-4 bg-card"
+                  >
+                    <div className="flex items-start justify-between mb-3">
+                      <div>
+                        <h3 className="font-semibold text-foreground text-sm">{product.productName}</h3>
+                        <Badge variant="outline" className="mt-1 text-xs">
+                          {product.category}
+                        </Badge>
+                      </div>
+                      <span className="text-primary font-bold text-sm">
+                        ₹{Number(product.price)}/kg
+                      </span>
+                    </div>
                     <div className="flex flex-wrap gap-1">
-                      {p.variants.map((v) => (
-                        <span key={v.name} className="text-[10px] bg-background border border-border rounded px-1.5 py-0.5 text-muted-foreground">
+                      {product.variants.map((v) => (
+                        <span
+                          key={v.name}
+                          className="text-xs bg-muted px-2 py-0.5 rounded-full text-muted-foreground"
+                        >
                           {v.name}
                         </span>
                       ))}
@@ -352,36 +546,6 @@ export default function Admin() {
                   </div>
                 ))}
               </div>
-
-              {seedingStatus === 'done' && (
-                <div className="flex items-center gap-2 text-green-700 bg-green-50 border border-green-200 rounded-lg p-4 mb-4">
-                  <CheckCircle className="w-5 h-5 flex-shrink-0" />
-                  <p className="text-sm font-medium">{seedMessage}</p>
-                </div>
-              )}
-              {seedingStatus === 'error' && (
-                <div className="text-destructive bg-destructive/10 border border-destructive/20 rounded-lg p-4 mb-4 text-sm">
-                  {seedMessage}
-                </div>
-              )}
-
-              <button
-                onClick={handleSeedProducts}
-                disabled={seedingStatus === 'seeding'}
-                className="flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-lg font-medium hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {seedingStatus === 'seeding' ? (
-                  <>
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                    Seeding Products...
-                  </>
-                ) : (
-                  <>
-                    <RefreshCw className="w-4 h-4" />
-                    Seed Product Catalog
-                  </>
-                )}
-              </button>
             </div>
           </TabsContent>
         </Tabs>

@@ -1,20 +1,86 @@
 import React, { useState } from 'react';
 import { useParams, Link } from '@tanstack/react-router';
 import { ArrowLeft, ShoppingCart, Plus, Minus, Star, Package, Leaf } from 'lucide-react';
-import { useGetProductsByCategory } from '../hooks/useQueries';
+import { useGetProductByCategory } from '../hooks/useQueries';
 import { useCart } from '../context/CartContext';
 import { toast } from 'sonner';
 
+// Fallback image map for variants when imageUrl from backend is not available or missing
+const VARIANT_IMAGE_FALLBACKS: Record<string, string> = {
+  // Rice
+  'Basmati Rice': '/assets/generated/rice-basmati.dim_400x400.png',
+  'Sona Masoori': '/assets/generated/rice-sona-masoori.dim_400x400.png',
+  'IR-64 Parboiled Rice': '/assets/generated/rice-ir64.dim_400x400.png',
+  'Brown Rice': '/assets/generated/rice-brown.dim_400x400.png',
+  'Broken Rice': '/assets/generated/rice-broken.dim_400x400.png',
+  // Wheat
+  'Durum Wheat': '/assets/generated/wheat-durum.dim_400x400.png',
+  'Whole Wheat': '/assets/generated/wheat-whole.dim_400x400.png',
+  'Semolina': '/assets/generated/wheat-semolina.dim_400x400.png',
+  // Pulses
+  'Chana Dal': '/assets/generated/pulses-chana-dal.dim_400x400.png',
+  'Moong Dal': '/assets/generated/pulses-moong-dal.dim_400x400.png',
+  'Masoor Dal': '/assets/generated/pulses-masoor-dal.dim_400x400.png',
+  'Urad Dal': '/assets/generated/pulses-urad-dal.dim_400x400.png',
+  'Toor Dal': '/assets/generated/pulses-toor-dal.dim_400x400.png',
+  'Rajma': '/assets/generated/pulses-rajma.dim_400x400.png',
+  'Kabuli Chana': '/assets/generated/pulses-kabuli-chana.dim_400x400.png',
+  // Spices - use existing spice images as fallbacks for missing ones
+  'Turmeric': '/assets/generated/spices-turmeric.dim_400x400.png',
+  'Red Chilli': '/assets/generated/spices-red-chilli.dim_400x400.png',
+  'Coriander': '/assets/generated/spices-coriander.dim_400x400.png',
+  'Cumin': '/assets/generated/spices-coriander.dim_400x400.png',
+  'Black Pepper': '/assets/generated/spices-turmeric.dim_400x400.png',
+  'Cardamom': '/assets/generated/spices-coriander.dim_400x400.png',
+  'Ginger Powder': '/assets/generated/spices-turmeric.dim_400x400.png',
+  'Fenugreek': '/assets/generated/spices-coriander.dim_400x400.png',
+  // Processed Food Products - use existing processed/flour images as fallbacks
+  'Rice Flour': '/assets/generated/rice.dim_400x300.png',
+  'Wheat Flour (Atta)': '/assets/generated/wheat.dim_400x300.png',
+  'Wheat Flour / Atta': '/assets/generated/wheat.dim_400x300.png',
+  'Besan (Gram Flour)': '/assets/generated/pulses.dim_400x300.png',
+  'Besan / Gram Flour': '/assets/generated/pulses.dim_400x300.png',
+  'Poha (Flattened Rice)': '/assets/generated/rice.dim_400x300.png',
+  'Poha / Flattened Rice': '/assets/generated/rice.dim_400x300.png',
+  'Roasted Chana': '/assets/generated/pulses.dim_400x300.png',
+  'Vermicelli': '/assets/generated/wheat.dim_400x300.png',
+  // Makhana - use existing makhana images as fallbacks
+  'Fox Nut Regular': '/assets/generated/makhana.dim_400x300.png',
+  'Fox Nut Premium': '/assets/generated/makhana.dim_400x300.png',
+  'Roasted Makhana': '/assets/generated/makhana-roasted.dim_400x300.png',
+  'Makhana Powder': '/assets/generated/makhana.dim_400x300.png',
+};
+
+// Category-level detail images
+const CATEGORY_IMAGES: Record<string, string> = {
+  rice: '/assets/generated/rice-detail.dim_800x600.png',
+  wheat: '/assets/generated/wheat-detail.dim_800x600.png',
+  pulses: '/assets/generated/pulses-detail.dim_800x600.png',
+  spices: '/assets/generated/spices-detail.dim_800x600.png',
+  'processed-food-products': '/assets/generated/processed-detail.dim_800x600.png',
+  makhana: '/assets/generated/makhana-detail.dim_800x600.png',
+};
+
+function getProductImage(cat: string): string {
+  return CATEGORY_IMAGES[cat] || '/assets/generated/rice-detail.dim_800x600.png';
+}
+
+function getVariantImage(variantName: string, variantImageUrl: string, cat: string): string {
+  // Use the imageUrl from backend if it looks like a valid local path
+  if (variantImageUrl && variantImageUrl.startsWith('/assets/')) {
+    return variantImageUrl;
+  }
+  // Fall back to our local map, then category image
+  return VARIANT_IMAGE_FALLBACKS[variantName] || getProductImage(cat);
+}
+
 export default function ProductDetail() {
   const { category } = useParams({ from: '/products/$category' });
-  const { data: products, isLoading, error } = useGetProductsByCategory(category);
+  const { data: product, isLoading, error } = useGetProductByCategory(category);
   const { addToCart } = useCart();
 
   const [selectedVariant, setSelectedVariant] = useState<string>('');
   const [quantity, setQuantity] = useState(1);
-
-  // Derive product - only after loading is complete
-  const product = products && products.length > 0 ? products[0] : null;
 
   // Set default variant when product loads
   React.useEffect(() => {
@@ -36,38 +102,8 @@ export default function ProductDetail() {
     toast.success(`${product.productName} added to cart!`);
   };
 
-  const getProductImage = (cat: string) => {
-    const imageMap: Record<string, string> = {
-      rice: '/assets/generated/rice-detail.dim_800x600.png',
-      wheat: '/assets/generated/wheat-detail.dim_800x600.png',
-      pulses: '/assets/generated/pulses-detail.dim_800x600.png',
-      spices: '/assets/generated/spices-detail.dim_800x600.png',
-      'processed-food-products': '/assets/generated/processed-detail.dim_800x600.png',
-      makhana: '/assets/generated/makhana-detail.dim_800x600.png',
-    };
-    return imageMap[cat] || '/assets/generated/rice-detail.dim_800x600.png';
-  };
-
-  const getVariantImage = (variantName: string, cat: string) => {
-    const variantImageMap: Record<string, string> = {
-      'Long Grain': '/assets/generated/basmati-premium.dim_400x300.png',
-      'Short Grain': '/assets/generated/basmati-regular.dim_400x300.png',
-      'Whole Grain': '/assets/generated/wheat-whole.dim_400x300.png',
-      'Cracked Wheat': '/assets/generated/wheat-detail.dim_800x600.png',
-      'Red Lentils': '/assets/generated/moong-red.dim_400x300.png',
-      'Chickpeas': '/assets/generated/moong-yellow.dim_400x300.png',
-      'Turmeric': '/assets/generated/turmeric-powder.dim_400x300.png',
-      'Cumin': '/assets/generated/chili-powder.dim_400x300.png',
-      'Pasta': '/assets/generated/processed-detail.dim_800x600.png',
-      'Noodles': '/assets/generated/processed-foods.dim_400x300.png',
-      'Peri Peri': '/assets/generated/makhana-flavored.dim_400x300.png',
-      'Cheese': '/assets/generated/makhana-roasted.dim_400x300.png',
-    };
-    return variantImageMap[variantName] || getProductImage(cat);
-  };
-
   // Loading state
-  if (isLoading || products === undefined) {
+  if (isLoading || product === undefined) {
     return (
       <div className="min-h-screen bg-background">
         <div className="container mx-auto px-4 py-8">
@@ -119,8 +155,6 @@ export default function ProductDetail() {
       </div>
     );
   }
-
-  const isWheat = category === 'wheat';
 
   return (
     <div className="min-h-screen bg-background">
@@ -176,7 +210,12 @@ export default function ProductDetail() {
             {/* Variant Selector */}
             {product.variants.length > 0 && (
               <div>
-                <h3 className="font-semibold text-foreground mb-3">Select Variant</h3>
+                <h3 className="font-semibold text-foreground mb-3">
+                  Select Variant
+                  <span className="ml-2 text-xs font-normal text-muted-foreground">
+                    ({product.variants.length} available)
+                  </span>
+                </h3>
                 <div className="flex flex-wrap gap-2">
                   {product.variants.map((variant) => (
                     <button
@@ -295,28 +334,43 @@ export default function ProductDetail() {
         {/* Product Variants Display */}
         {product.variants.length > 0 && (
           <div className="mb-12">
-            <h2 className="text-2xl font-bold text-foreground mb-6">Available Variants</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            <h2 className="text-2xl font-bold text-foreground mb-2">Product Variants</h2>
+            <p className="text-muted-foreground text-sm mb-6">
+              {product.variants.length} varieties available — click to select
+            </p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
               {product.variants.map((variant) => (
                 <div
                   key={variant.name}
                   className={`bg-card border-2 rounded-xl overflow-hidden shadow-sm cursor-pointer transition-all hover:shadow-md ${
                     selectedVariant === variant.name
-                      ? 'border-primary'
+                      ? 'border-primary ring-2 ring-primary/20'
                       : 'border-border hover:border-primary/50'
                   }`}
                   onClick={() => setSelectedVariant(variant.name)}
                 >
-                  <div className="aspect-[4/3] overflow-hidden bg-muted">
+                  <div className="aspect-square overflow-hidden bg-muted">
                     <img
-                      src={getVariantImage(variant.name, category)}
+                      src={getVariantImage(variant.name, variant.imageUrl, category)}
                       alt={variant.name}
                       className="w-full h-full object-cover"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        // Try the fallback from our map
+                        const fallback = VARIANT_IMAGE_FALLBACKS[variant.name];
+                        if (fallback && target.src !== window.location.origin + fallback) {
+                          target.src = fallback;
+                        } else {
+                          target.style.display = 'none';
+                        }
+                      }}
                     />
                   </div>
-                  <div className="p-4">
-                    <h3 className="font-semibold text-foreground">{variant.name}</h3>
-                    <p className="text-sm text-muted-foreground mt-1">₹{Number(product.price)} per unit</p>
+                  <div className="p-3">
+                    <h3 className="font-semibold text-foreground text-sm leading-tight">{variant.name}</h3>
+                    {selectedVariant === variant.name && (
+                      <span className="text-xs text-primary font-medium mt-1 block">Selected</span>
+                    )}
                   </div>
                 </div>
               ))}
@@ -325,9 +379,9 @@ export default function ProductDetail() {
         )}
 
         {/* Wheat-specific: Available Varieties */}
-        {isWheat && (
+        {category === 'wheat' && (
           <div className="mb-12">
-            <h2 className="text-2xl font-bold text-foreground mb-6">Available Varieties</h2>
+            <h2 className="text-2xl font-bold text-foreground mb-6">Wheat Variety Comparison</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {[
                 {
@@ -346,30 +400,37 @@ export default function ProductDetail() {
                   nutrition: { calories: 360, protein: 12.7, carbs: 72.8, fat: 1.1, fiber: 3.9 },
                 },
               ].map((variety) => (
-                <div key={variety.name} className="bg-card border border-border rounded-xl overflow-hidden shadow-sm">
-                  <div className="aspect-square overflow-hidden bg-muted">
+                <div
+                  key={variety.name}
+                  className="bg-card border border-border rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow cursor-pointer"
+                  onClick={() => setSelectedVariant(variety.name)}
+                >
+                  <div className="aspect-video overflow-hidden bg-muted">
                     <img
                       src={variety.image}
                       alt={variety.name}
                       className="w-full h-full object-cover"
                     />
                   </div>
-                  <div className="p-5">
-                    <h3 className="font-bold text-foreground text-lg mb-3">{variety.name}</h3>
-                    <p className="text-xs text-muted-foreground mb-3 font-medium uppercase tracking-wide">Per 100g</p>
-                    <div className="space-y-2">
-                      {[
-                        { label: 'Calories', value: `${variety.nutrition.calories} kcal` },
-                        { label: 'Protein', value: `${variety.nutrition.protein}g` },
-                        { label: 'Carbs', value: `${variety.nutrition.carbs}g` },
-                        { label: 'Fat', value: `${variety.nutrition.fat}g` },
-                        { label: 'Fiber', value: `${variety.nutrition.fiber}g` },
-                      ].map((n) => (
-                        <div key={n.label} className="flex justify-between text-sm">
-                          <span className="text-muted-foreground">{n.label}</span>
-                          <span className="font-medium text-foreground">{n.value}</span>
-                        </div>
-                      ))}
+                  <div className="p-4">
+                    <h3 className="font-bold text-foreground mb-3">{variety.name}</h3>
+                    <div className="grid grid-cols-2 gap-2 text-xs">
+                      <div className="bg-muted/40 rounded p-2 text-center">
+                        <div className="text-muted-foreground">Calories</div>
+                        <div className="font-semibold">{variety.nutrition.calories}</div>
+                      </div>
+                      <div className="bg-muted/40 rounded p-2 text-center">
+                        <div className="text-muted-foreground">Protein</div>
+                        <div className="font-semibold">{variety.nutrition.protein}g</div>
+                      </div>
+                      <div className="bg-muted/40 rounded p-2 text-center">
+                        <div className="text-muted-foreground">Carbs</div>
+                        <div className="font-semibold">{variety.nutrition.carbs}g</div>
+                      </div>
+                      <div className="bg-muted/40 rounded p-2 text-center">
+                        <div className="text-muted-foreground">Fiber</div>
+                        <div className="font-semibold">{variety.nutrition.fiber}g</div>
+                      </div>
                     </div>
                   </div>
                 </div>

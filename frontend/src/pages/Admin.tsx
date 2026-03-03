@@ -36,62 +36,131 @@ const PRODUCT_CATALOG = [
   {
     productName: 'Rice',
     category: 'rice',
-    description: 'High-quality basmati rice sourced directly from farmers.',
-    specifications: [{ key: 'Type', value: 'Basmati' }, { key: 'Weight', value: '1kg' }],
+    description: 'High-quality rice varieties sourced directly from farmers across India, including premium Basmati and non-Basmati options.',
+    specifications: [
+      { key: 'Origin', value: 'India' },
+      { key: 'Available Forms', value: 'Raw, Parboiled, Brown' },
+      { key: 'Packaging', value: '1kg, 5kg, 25kg, 50kg' },
+      { key: 'Moisture', value: 'Max 14%' },
+    ],
     price: BigInt(120),
-    nutritionData: { calories: 365, protein: 7.1, carbohydrates: 79.5, fat: 0.6, fiber: 2.4, iron: 0.8, zinc: 1.2, vitamins: 'B1, B3', minerals: 'Phosphorus' },
+    nutritionData: { calories: 365, protein: 7.1, carbohydrates: 79.5, fat: 0.6, fiber: 2.4, iron: 0.8, zinc: 1.2, vitamins: 'B1, B3', minerals: 'Phosphorus, Magnesium' },
     imageUrl: '/assets/generated/rice-detail.dim_800x600.png',
-    variants: [{ name: 'Long Grain', imageUrl: '/assets/generated/basmati-premium.dim_400x300.png' }, { name: 'Short Grain', imageUrl: '/assets/generated/basmati-regular.dim_400x300.png' }],
+    variants: [
+      { name: 'Basmati Rice', imageUrl: '/assets/generated/rice-basmati.dim_400x400.png' },
+      { name: 'Sona Masoori', imageUrl: '/assets/generated/rice-sona-masoori.dim_400x400.png' },
+      { name: 'IR-64 Parboiled Rice', imageUrl: '/assets/generated/rice-ir64.dim_400x400.png' },
+      { name: 'Brown Rice', imageUrl: '/assets/generated/rice-brown.dim_400x400.png' },
+      { name: 'Broken Rice', imageUrl: '/assets/generated/rice-broken.dim_400x400.png' },
+    ],
   },
   {
     productName: 'Wheat',
     category: 'wheat',
-    description: 'Premium quality wheat grains for various culinary uses.',
-    specifications: [{ key: 'Type', value: 'Hard Wheat' }, { key: 'Weight', value: '2kg' }],
+    description: 'Premium quality wheat grains for various culinary and industrial uses, sourced from the best wheat-growing regions of India.',
+    specifications: [
+      { key: 'Origin', value: 'Punjab, Haryana, MP' },
+      { key: 'Available Forms', value: 'Whole, Semolina, Flour' },
+      { key: 'Packaging', value: '2kg, 10kg, 50kg' },
+      { key: 'Protein Content', value: '11–14%' },
+    ],
     price: BigInt(200),
-    nutritionData: { calories: 340, protein: 13.2, carbohydrates: 71.2, fat: 2.5, fiber: 12.2, iron: 3.6, zinc: 2.7, vitamins: 'B Vitamins', minerals: 'Magnesium' },
+    nutritionData: { calories: 340, protein: 13.2, carbohydrates: 71.2, fat: 2.5, fiber: 12.2, iron: 3.6, zinc: 2.7, vitamins: 'B Vitamins, E', minerals: 'Magnesium, Phosphorus' },
     imageUrl: '/assets/generated/wheat-detail.dim_800x600.png',
-    variants: [{ name: 'Whole Grain', imageUrl: '/assets/generated/wheat-whole.dim_400x300.png' }, { name: 'Cracked Wheat', imageUrl: '/assets/generated/wheat-detail.dim_800x600.png' }],
+    variants: [
+      { name: 'Durum Wheat', imageUrl: '/assets/generated/wheat-durum.dim_400x400.png' },
+      { name: 'Whole Wheat', imageUrl: '/assets/generated/wheat-whole.dim_400x400.png' },
+      { name: 'Semolina', imageUrl: '/assets/generated/wheat-semolina.dim_400x400.png' },
+    ],
   },
   {
     productName: 'Pulses',
     category: 'pulses',
-    description: 'Nutritious and protein-rich pulses from Indian farms.',
-    specifications: [{ key: 'Type', value: 'Mixed Variety' }, { key: 'Weight', value: '500g' }],
+    description: 'Nutritious and protein-rich pulses from Indian farms, available in a wide range of varieties for domestic and export markets.',
+    specifications: [
+      { key: 'Origin', value: 'Madhya Pradesh, Rajasthan' },
+      { key: 'Available Forms', value: 'Whole, Split, Dehusked' },
+      { key: 'Packaging', value: '500g, 1kg, 25kg, 50kg' },
+      { key: 'Protein Content', value: '20–25%' },
+    ],
     price: BigInt(150),
-    nutritionData: { calories: 350, protein: 23.5, carbohydrates: 60.2, fat: 1.7, fiber: 16.5, iron: 8.5, zinc: 3.2, vitamins: 'Folate', minerals: 'Potassium' },
+    nutritionData: { calories: 350, protein: 23.5, carbohydrates: 60.2, fat: 1.7, fiber: 16.5, iron: 8.5, zinc: 3.2, vitamins: 'Folate, B1', minerals: 'Potassium, Iron' },
     imageUrl: '/assets/generated/pulses-detail.dim_800x600.png',
-    variants: [{ name: 'Red Lentils', imageUrl: '/assets/generated/moong-green.dim_400x300.png' }, { name: 'Chickpeas', imageUrl: '/assets/generated/moong-yellow.dim_400x300.png' }],
+    variants: [
+      { name: 'Chana Dal', imageUrl: '/assets/generated/pulses-chana-dal.dim_400x400.png' },
+      { name: 'Moong Dal', imageUrl: '/assets/generated/pulses-moong-dal.dim_400x400.png' },
+      { name: 'Masoor Dal', imageUrl: '/assets/generated/pulses-masoor-dal.dim_400x400.png' },
+      { name: 'Urad Dal', imageUrl: '/assets/generated/pulses-urad-dal.dim_400x400.png' },
+      { name: 'Toor Dal', imageUrl: '/assets/generated/pulses-toor-dal.dim_400x400.png' },
+      { name: 'Rajma', imageUrl: '/assets/generated/pulses-rajma.dim_400x400.png' },
+      { name: 'Kabuli Chana', imageUrl: '/assets/generated/pulses-kabuli-chana.dim_400x400.png' },
+    ],
   },
   {
     productName: 'Spices',
     category: 'spices',
-    description: 'Aromatic and flavorful spices from premium Indian farms.',
-    specifications: [{ key: 'Type', value: 'Mixed Varieties' }, { key: 'Weight', value: '250g Pack' }],
+    description: 'Aromatic and flavorful spices from premium Indian farms, processed to retain natural oils and freshness.',
+    specifications: [
+      { key: 'Origin', value: 'Kerala, Rajasthan, Gujarat' },
+      { key: 'Available Forms', value: 'Whole, Powder, Blended' },
+      { key: 'Packaging', value: '100g, 250g, 500g, 1kg' },
+      { key: 'Shelf Life', value: '12–24 months' },
+    ],
     price: BigInt(180),
-    nutritionData: { calories: 260, protein: 12.4, carbohydrates: 60.8, fat: 4.2, fiber: 30.2, iron: 19.2, zinc: 4.1, vitamins: 'A, C, B6', minerals: 'Calcium, Iron' },
+    nutritionData: { calories: 260, protein: 12.4, carbohydrates: 60.8, fat: 4.2, fiber: 30.2, iron: 19.2, zinc: 4.1, vitamins: 'A, C, B6', minerals: 'Calcium, Iron, Manganese' },
     imageUrl: '/assets/generated/spices-detail.dim_800x600.png',
-    variants: [{ name: 'Turmeric', imageUrl: '/assets/generated/turmeric-powder.dim_400x300.png' }, { name: 'Cumin', imageUrl: '/assets/generated/chili-powder.dim_400x300.png' }],
+    variants: [
+      { name: 'Turmeric', imageUrl: '/assets/generated/spices-turmeric.dim_400x400.png' },
+      { name: 'Red Chilli', imageUrl: '/assets/generated/spices-red-chilli.dim_400x400.png' },
+      { name: 'Coriander', imageUrl: '/assets/generated/spices-coriander.dim_400x400.png' },
+      { name: 'Cumin', imageUrl: '/assets/generated/spices-cumin.dim_400x400.png' },
+      { name: 'Black Pepper', imageUrl: '/assets/generated/spices-black-pepper.dim_400x400.png' },
+      { name: 'Cardamom', imageUrl: '/assets/generated/spices-cardamom.dim_400x400.png' },
+      { name: 'Ginger Powder', imageUrl: '/assets/generated/spices-ginger-powder.dim_400x400.png' },
+      { name: 'Fenugreek', imageUrl: '/assets/generated/spices-fenugreek.dim_400x400.png' },
+    ],
   },
   {
     productName: 'Processed Food Products',
     category: 'processed-food-products',
-    description: 'Convenient and delicious processed food products.',
-    specifications: [{ key: 'Type', value: 'Ready-to-Eat' }, { key: 'Weight', value: '500g Pack' }],
+    description: 'Convenient and high-quality processed food products including flours, flakes, and ready-to-cook items from premium agricultural produce.',
+    specifications: [
+      { key: 'Type', value: 'Value-Added Products' },
+      { key: 'Packaging', value: '500g, 1kg, 5kg, 25kg' },
+      { key: 'Shelf Life', value: '6–12 months' },
+      { key: 'Processing', value: 'Hygienic, FSSAI Certified' },
+    ],
     price: BigInt(300),
-    nutritionData: { calories: 420, protein: 12.8, carbohydrates: 70.5, fat: 10.2, fiber: 8.6, iron: 5.3, zinc: 2.8, vitamins: 'D, E, B12', minerals: 'Calcium, Magnesium' },
+    nutritionData: { calories: 380, protein: 10.5, carbohydrates: 75.2, fat: 3.8, fiber: 5.4, iron: 4.2, zinc: 2.1, vitamins: 'B1, B2, B3', minerals: 'Calcium, Phosphorus' },
     imageUrl: '/assets/generated/processed-detail.dim_800x600.png',
-    variants: [{ name: 'Pasta', imageUrl: '/assets/generated/processed-detail.dim_800x600.png' }, { name: 'Noodles', imageUrl: '/assets/generated/processed-foods.dim_400x300.png' }],
+    variants: [
+      { name: 'Rice Flour', imageUrl: '/assets/generated/processed-rice-flour.dim_400x400.png' },
+      { name: 'Wheat Flour (Atta)', imageUrl: '/assets/generated/processed-wheat-flour.dim_400x400.png' },
+      { name: 'Besan (Gram Flour)', imageUrl: '/assets/generated/processed-besan.dim_400x400.png' },
+      { name: 'Poha (Flattened Rice)', imageUrl: '/assets/generated/processed-poha.dim_400x400.png' },
+      { name: 'Roasted Chana', imageUrl: '/assets/generated/processed-roasted-chana.dim_400x400.png' },
+      { name: 'Vermicelli', imageUrl: '/assets/generated/processed-vermicelli.dim_400x400.png' },
+    ],
   },
   {
     productName: 'Makhana (Fox Nuts)',
     category: 'makhana',
-    description: 'Nutritious and crunchy flavored makhana from Bihar.',
-    specifications: [{ key: 'Type', value: 'Flavored' }, { key: 'Weight', value: '200g' }],
+    description: 'Premium quality Fox Nuts (Makhana) sourced from Bihar — a superfood rich in protein, calcium, and antioxidants.',
+    specifications: [
+      { key: 'Origin', value: 'Bihar, India' },
+      { key: 'Available Forms', value: 'Raw, Roasted, Powder' },
+      { key: 'Packaging', value: '100g, 200g, 500g, 1kg' },
+      { key: 'Shelf Life', value: '6–12 months' },
+    ],
     price: BigInt(250),
-    nutritionData: { calories: 350, protein: 9.7, carbohydrates: 77.2, fat: 0.5, fiber: 7.6, iron: 1.4, zinc: 0.7, vitamins: 'B1, B2, B3', minerals: 'Iron, Potassium' },
+    nutritionData: { calories: 350, protein: 9.7, carbohydrates: 77.2, fat: 0.5, fiber: 7.6, iron: 1.4, zinc: 0.7, vitamins: 'B1, B2, B3', minerals: 'Iron, Potassium, Calcium' },
     imageUrl: '/assets/generated/makhana-detail.dim_800x600.png',
-    variants: [{ name: 'Peri Peri', imageUrl: '/assets/generated/makhana-flavored.dim_400x300.png' }, { name: 'Cheese', imageUrl: '/assets/generated/makhana-roasted.dim_400x300.png' }],
+    variants: [
+      { name: 'Fox Nut Regular', imageUrl: '/assets/generated/makhana-regular.dim_400x400.png' },
+      { name: 'Fox Nut Premium', imageUrl: '/assets/generated/makhana-premium.dim_400x400.png' },
+      { name: 'Roasted Makhana', imageUrl: '/assets/generated/makhana-roasted.dim_400x400.png' },
+      { name: 'Makhana Powder', imageUrl: '/assets/generated/makhana-powder.dim_400x400.png' },
+    ],
   },
 ];
 
@@ -265,14 +334,21 @@ export default function Admin() {
             <div className="bg-card border border-border rounded-xl shadow-sm p-6">
               <h2 className="text-lg font-bold text-foreground mb-2">Product Catalog</h2>
               <p className="text-sm text-muted-foreground mb-6">
-                Seed all 6 product categories into the backend. This is useful if products are not showing up on the Products page.
+                Seed all 6 product categories into the backend with full sub-category variants. Use this if products are not showing up on the Products page.
               </p>
 
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
                 {PRODUCT_CATALOG.map((p) => (
-                  <div key={p.category} className="bg-muted/40 rounded-lg p-3 text-sm">
-                    <p className="font-semibold text-foreground">{p.productName}</p>
-                    <p className="text-muted-foreground text-xs">{p.category}</p>
+                  <div key={p.category} className="bg-muted/40 rounded-lg p-4 text-sm">
+                    <p className="font-semibold text-foreground mb-1">{p.productName}</p>
+                    <p className="text-muted-foreground text-xs mb-2">{p.category}</p>
+                    <div className="flex flex-wrap gap-1">
+                      {p.variants.map((v) => (
+                        <span key={v.name} className="text-[10px] bg-background border border-border rounded px-1.5 py-0.5 text-muted-foreground">
+                          {v.name}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 ))}
               </div>

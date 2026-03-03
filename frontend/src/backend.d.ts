@@ -104,6 +104,7 @@ export interface backendInterface {
     getCallerUserRole(): Promise<UserRole>;
     getFormEntry(index: bigint): Promise<ContactFormEntry>;
     getOrderById(orderId: bigint): Promise<Order | null>;
+    getProductByCategory(category: string): Promise<ProductDetail | null>;
     getProductDetail(productId: bigint): Promise<ProductDetail | null>;
     getProductsByCategory(category: string): Promise<Array<ProductDetail>>;
     getUserProfile(user: Principal): Promise<UserProfile | null>;

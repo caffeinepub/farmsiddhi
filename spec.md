@@ -1,20 +1,14 @@
 # Specification
 
 ## Summary
-**Goal:** Fix the "Product Not Found" error for all six product categories and fully restore the e-commerce cart, checkout, and order management features that were removed.
+**Goal:** Fix the Products and ProductDetail pages so all six product categories display their complete sub-categories and products correctly, with fully seeded backend data and all variant images present.
 
 **Planned changes:**
-- Seed all six ProductDetail records (rice, wheat, pulses, spices, processed-food-products, makhana) in backend stable storage with exact lowercase hyphenated category slugs; fix the `getProductByCategory` lookup and the postupgrade migration hook so seeding is automatic and existing data is preserved
-- Fix the `useGetProductByCategory` hook to pass the URL slug correctly to the backend and handle null/undefined responses gracefully
-- Fix product category card links on the Products page to use the correct URL slugs matching backend values
-- Implement CartContext with full cart state management (addToCart, removeFromCart, updateQuantity, clearCart, cartTotal, itemCount) and wrap the app with CartProvider in App.tsx
-- Restore all four e-commerce React Query hooks: `usePlaceOrder`, `useGetAllOrders`, `useGetOrderById`, and `useUpdateOrderStatus`
-- Restore "Add to Cart" functionality on the ProductDetail page with variant selector, quantity selector, and success toast notification
-- Restore the Cart page at `/cart` with item list, editable quantities, subtotal, and navigation to checkout or products
-- Restore the Checkout page at `/checkout` with buyer details form, shipping address, order summary sidebar, and order submission logic
-- Restore the Order Confirmation page at `/order-confirmation/$orderId` with full order details, thank-you message, and color-coded status badge
-- Restore the cart icon with item count badge in the Navigation component linking to `/cart`
-- Register `/cart`, `/checkout`, and `/order-confirmation/$orderId` routes in App.tsx
-- Fix the Admin page to load without errors, showing a Contact Submissions tab and an Orders tab with per-row status update dropdowns
+- Audit and fix the backend Motoko actor and migration module to fully seed all six ProductDetail records (Rice, Wheat, Pulses, Spices, Processed Food Products, Makhana) with correct category slugs, complete variant lists, and all required fields (nutritionData, specifications, description, price, imageUrl)
+- Fix `getProductByCategory` to look up records by exact lowercase hyphenated slugs
+- Ensure backend migration runs on postupgrade without overwriting existing contact form or order data
+- Fix the Products page to correctly fetch and display all variants for each category card, with proper URL slugs and a grid/scrollable variant sub-section
+- Fix the ProductDetail page and `useGetProductByCategory` hook to pass the raw category slug to the backend, handle null/undefined responses gracefully, and display the full variant list in the Product Variants grid and variant selector
+- Add all 33 missing variant product images to `frontend/public/assets/generated/`
 
-**User-visible outcome:** Clicking any product category navigates to a working product detail page; users can add items to a cart, proceed through checkout, and receive an order confirmation; the cart icon in the navigation shows the current item count; the Admin page correctly displays contact submissions and orders with status management.
+**User-visible outcome:** All six product category pages show their complete list of sub-variants with images and product details; no blank or missing product states appear on the Products or ProductDetail pages.

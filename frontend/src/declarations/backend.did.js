@@ -157,6 +157,11 @@ export const idlService = IDL.Service({
   'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
   'getFormEntry' : IDL.Func([IDL.Nat], [ContactFormEntry], ['query']),
   'getOrderById' : IDL.Func([IDL.Nat], [IDL.Opt(Order)], ['query']),
+  'getProductByCategory' : IDL.Func(
+      [IDL.Text],
+      [IDL.Opt(ProductDetail)],
+      ['query'],
+    ),
   'getProductDetail' : IDL.Func([IDL.Nat], [IDL.Opt(ProductDetail)], ['query']),
   'getProductsByCategory' : IDL.Func(
       [IDL.Text],
@@ -325,6 +330,11 @@ export const idlFactory = ({ IDL }) => {
     'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
     'getFormEntry' : IDL.Func([IDL.Nat], [ContactFormEntry], ['query']),
     'getOrderById' : IDL.Func([IDL.Nat], [IDL.Opt(Order)], ['query']),
+    'getProductByCategory' : IDL.Func(
+        [IDL.Text],
+        [IDL.Opt(ProductDetail)],
+        ['query'],
+      ),
     'getProductDetail' : IDL.Func(
         [IDL.Nat],
         [IDL.Opt(ProductDetail)],

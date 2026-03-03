@@ -113,6 +113,24 @@ export function useGetProductsByCategory(category: string | undefined) {
   });
 }
 
+export function useGetProductByCategory(category: string | undefined) {
+  const { actor, isFetching } = useActor();
+
+  return useQuery<ProductDetail | null>({
+    queryKey: ['productByCategory', category],
+    queryFn: async () => {
+      if (!actor || !category) return null;
+      try {
+        const result = await actor.getProductByCategory(category);
+        return result ?? null;
+      } catch {
+        return null;
+      }
+    },
+    enabled: !!actor && !isFetching && !!category,
+  });
+}
+
 export function useAddProductDetail() {
   const { actor } = useActor();
   const queryClient = useQueryClient();
@@ -153,6 +171,7 @@ export function useAddProductDetail() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['productDetails'] });
       queryClient.invalidateQueries({ queryKey: ['productsByCategory'] });
+      queryClient.invalidateQueries({ queryKey: ['productByCategory'] });
     },
   });
 }

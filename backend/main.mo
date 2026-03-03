@@ -6,12 +6,13 @@ import Iter "mo:core/Iter";
 import Nat "mo:core/Nat";
 import Float "mo:core/Float";
 import Runtime "mo:core/Runtime";
-import Migration "migration";
 import Principal "mo:core/Principal";
-import AccessControl "authorization/access-control";
 import MixinAuthorization "authorization/MixinAuthorization";
+import AccessControl "authorization/access-control";
 import MixinStorage "blob-storage/Mixin";
+import Migration "migration";
 
+// with clause for data migration on upgrade
 (with migration = Migration.run)
 actor {
   let accessControlState = AccessControl.initState();
@@ -115,7 +116,6 @@ actor {
   let userProfiles = Map.empty<Principal, UserProfile>();
   let orders = Map.empty<Nat, Order>();
 
-  // User Profile Functions (required by frontend)
   public query ({ caller }) func getCallerUserProfile() : async ?UserProfile {
     if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
       Runtime.trap("Unauthorized: Only users can view their profile");
@@ -137,7 +137,6 @@ actor {
     userProfiles.add(caller, profile);
   };
 
-  // Contact Form Functions — open to all (including guests/anonymous)
   public shared ({ caller }) func submitContactForm(name : Text, email : Text, phoneNumber : Text, message : Text, userType : Text) : async () {
     let newEntry : ContactFormEntry = {
       name;
@@ -167,7 +166,6 @@ actor {
     contactFormEntries.toArray();
   };
 
-  // Product Functions — read access open to all
   public shared ({ caller }) func addProductDetail(
     productName : Text,
     category : Text,
@@ -207,7 +205,7 @@ actor {
     productDetails.values().toArray();
   };
 
-  public query func getProductsByCategory(category : Text) : async [ProductDetail] {
+  public query ({ caller }) func getProductsByCategory(category : Text) : async [ProductDetail] {
     let iter = productDetails.values();
     let filtered = iter.filter(
       func(product) {
@@ -217,7 +215,18 @@ actor {
     filtered.toArray();
   };
 
-  // Order Management — placing orders open to all (guests can place orders)
+  public query ({ caller }) func getProductByCategory(category : Text) : async ?ProductDetail {
+    switch (category) {
+      case ("rice") { productDetails.get(0) };
+      case ("wheat") { productDetails.get(1) };
+      case ("pulses") { productDetails.get(2) };
+      case ("spices") { productDetails.get(3) };
+      case ("processed-food-products") { productDetails.get(4) };
+      case ("makhana") { productDetails.get(5) };
+      case (_) { null };
+    };
+  };
+
   public shared ({ caller }) func placeOrder(input : NewOrderInput) : async Order {
     let totalAmount = input.items.foldLeft(
       0,

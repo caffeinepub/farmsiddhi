@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 61,
+  "projectStateVersion": 65,
   "summary": "Premium corporate website for FarmSiddhi - an Indian agriculture and processed food export company. Multi-page site with modern, professional design featuring Home, About Us, Products, Farmer Network, Exports, and Contact pages. Silver green and silver brown color palette on white background. B2B export-oriented tone. E-commerce features being added to the existing site.",
   "architectural_notes": [
     "Multi-page corporate website structure with 6 main pages",
@@ -21,9 +21,11 @@
     "Logo image not loading correctly in the Navigation and/or Footer components",
     "E-commerce features (cart, checkout, order confirmation, add-to-cart) appear to have been removed in a recent deployment and need to be restored",
     "Admin page not loading after recent deployment",
-    "Product not found error when selecting a product from the Products page"
+    "Product not found error when selecting a product from the Products page",
+    "Sub product categories not completely listed and no products showing on product pages in version 31"
   ],
   "isFixRequest": true,
+  "imageRequirements": "## Required Images\n- Basmati rice grain close-up, golden/white long grains on neutral background (rice-basmati.dim_400x400.png)\n- Sona Masoori rice grain close-up, medium-grain white rice on neutral background (rice-sona-masoori.dim_400x400.png)\n- IR-64 parboiled rice grain, golden-yellow parboiled rice on neutral background (rice-ir64.dim_400x400.png)\n- Brown rice grain close-up, unpolished brown grains on neutral background (rice-brown.dim_400x400.png)\n- Broken rice fragments close-up on neutral background (rice-broken.dim_400x400.png)\n- Durum wheat grain close-up, hard amber wheat kernels on neutral background (wheat-durum.dim_400x400.png)\n- Whole wheat grain close-up, brown wheat kernels on neutral background (wheat-whole.dim_400x400.png)\n- Semolina flour texture, coarse yellow semolina powder on neutral background (wheat-semolina.dim_400x400.png)\n- Chana dal split yellow chickpeas close-up on neutral background (pulses-chana-dal.dim_400x400.png)\n- Moong dal split yellow mung beans close-up on neutral background (pulses-moong-dal.dim_400x400.png)\n- Masoor dal split red lentils close-up on neutral background (pulses-masoor-dal.dim_400x400.png)\n- Urad dal split black gram close-up on neutral background (pulses-urad-dal.dim_400x400.png)\n- Toor dal split pigeon peas close-up on neutral background (pulses-toor-dal.dim_400x400.png)\n- Rajma kidney beans close-up, dark red beans on neutral background (pulses-rajma.dim_400x400.png)\n- Kabuli chana whole chickpeas close-up, cream-colored large chickpeas on neutral background (pulses-kabuli-chana.dim_400x400.png)\n- Turmeric powder, bright yellow spice on neutral background (spices-turmeric.dim_400x400.png)\n- Red chilli powder, vibrant red spice on neutral background (spices-red-chilli.dim_400x400.png)\n- Coriander seeds close-up, round light-brown seeds on neutral background (spices-coriander.dim_400x400.png)\n- Cumin seeds close-up, dark elongated seeds on neutral background (spices-cumin.dim_400x400.png)\n- Black pepper corns close-up on neutral background (spices-black-pepper.dim_400x400.png)\n- Green cardamom pods close-up on neutral background (spices-cardamom.dim_400x400.png)\n- Ginger powder, pale yellow spice on neutral background (spices-ginger-powder.dim_400x400.png)\n- Fenugreek seeds close-up, small yellow-brown seeds on neutral background (spices-fenugreek.dim_400x400.png)\n- Rice flour, fine white powder in a bowl on neutral background (processed-rice-flour.dim_400x400.png)\n- Wheat flour (atta), fine white powder in a bowl on neutral background (processed-wheat-flour.dim_400x400.png)\n- Besan gram flour, yellow chickpea flour in a bowl on neutral background (processed-besan.dim_400x400.png)\n- Poha flattened rice flakes close-up on neutral background (processed-poha.dim_400x400.png)\n- Roasted chana, crispy roasted chickpeas on neutral background (processed-roasted-chana.dim_400x400.png)\n- Vermicelli noodles bundle close-up on neutral background (processed-vermicelli.dim_400x400.png)\n- Fox nut makhana regular, white puffed lotus seeds on neutral background (makhana-regular.dim_400x400.png)\n- Fox nut makhana premium, large white puffed lotus seeds on neutral background (makhana-premium.dim_400x400.png)\n- Roasted makhana, lightly golden roasted lotus seeds on neutral background (makhana-roasted.dim_400x400.png)\n- Makhana powder, fine white lotus seed powder in a bowl on neutral background (makhana-powder.dim_400x400.png)",
   "existing_features": [
     {
       "id": "feature-create-a-home-page-with-a-hero-section-displaying-the-tagline-empowering-farmers-enabling-global-markets-a-short-introduction-about-farmsiddhi-an-our-services-section-listing-aggregation-quality-control-processing-packaging-and-logistics-a-product-categories-overview-section-a-farm-to-export-supply-chain-model-visualization-or-explanation-and-a-partner-with-us-call-to-action-button",
@@ -783,6 +785,54 @@
         "REQ-126"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-generate-representative-static-images-for-all-new-product-variants-excluding-the-three-wheat-variants-already-generated-and-place-them-under-frontend-public-assets-generated-required-images-rice-basmati-png-rice-sona-masoori-png-rice-ir64-png-rice-brown-png-rice-broken-png-pulses-chana-dal-png-pulses-moong-dal-png-pulses-masoor-dal-png-pulses-urad-dal-png-pulses-toor-dal-png-pulses-rajma-png-pulses-kabuli-chana-png-spices-turmeric-png-spices-red-chilli-png-spices-coriander-png-spices-cumin-png-spices-black-pepper-png-spices-cardamom-png-spices-ginger-powder-png-spices-fenugreek-png-processed-rice-flour-png-processed-wheat-flour-png-processed-besan-png-processed-poha-png-processed-roasted-chana-png-processed-vermicelli-png-makhana-regular-png-makhana-premium-png-makhana-roasted-png-makhana-powder-png-filenames-must-exactly-match-the-imageurl-values-stored-in-the-backend-variant-records",
+      "title": "Generate representative static images for all new product variants (excluding the three wheat variants already generated) and place them under frontend/public/assets/generated/. Required images: rice-basmati.png, rice-sona-masoori.png, rice-ir64.png, rice-brown.png, rice-broken.png, pulses-chana-dal.png, pulses-moong-dal.png, pulses-masoor-dal.png, pulses-urad-dal.png, pulses-toor-dal.png, pulses-rajma.png, pulses-kabuli-chana.png, spices-turmeric.png, spices-red-chilli.png, spices-coriander.png, spices-cumin.png, spices-black-pepper.png, spices-cardamom.png, spices-ginger-powder.png, spices-fenugreek.png, processed-rice-flour.png, processed-wheat-flour.png, processed-besan.png, processed-poha.png, processed-roasted-chana.png, processed-vermicelli.png, makhana-regular.png, makhana-premium.png, makhana-roasted.png, makhana-powder.png. Filenames must exactly match the imageUrl values stored in the backend variant records.",
+      "reqIds": [
+        "REQ-128"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-products-page-frontend-src-pages-products-tsx-to-display-the-full-set-of-variants-for-each-product-category-card-rice-wheat-pulses-spices-processed-food-products-makhana-each-category-card-must-show-all-variant-names-and-their-corresponding-images-fetched-from-the-backend-productdetail-records-the-layout-should-show-variants-in-a-scrollable-or-grid-sub-section-within-or-below-each-category-card-consistent-with-the-existing-variant-display-style-do-not-alter-the-category-card-navigation-links-or-overall-page-structure",
+      "title": "Update the Products page (frontend/src/pages/Products.tsx) to display the full set of variants for each product category card (Rice, Wheat, Pulses, Spices, Processed Food Products, Makhana). Each category card must show all variant names and their corresponding images fetched from the backend ProductDetail records. The layout should show variants in a scrollable or grid sub-section within or below each category card, consistent with the existing variant display style. Do not alter the category card navigation links or overall page structure.",
+      "reqIds": [
+        "REQ-129"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-productdetail-page-frontend-src-pages-productdetail-tsx-to-correctly-render-the-expanded-set-of-variants-for-all-six-product-categories-the-product-variants-grid-section-must-display-all-variants-returned-by-the-backend-for-the-selected-category-showing-each-variant-s-name-and-image-the-variant-selector-for-the-add-to-cart-control-must-also-be-pre-populated-with-the-full-list-of-variants-do-not-alter-the-existing-product-image-specifications-table-nutritional-information-section-or-add-to-cart-controls",
+      "title": "Update the ProductDetail page (frontend/src/pages/ProductDetail.tsx) to correctly render the expanded set of variants for all six product categories. The Product Variants grid section must display all variants returned by the backend for the selected category, showing each variant's name and image. The variant selector for the Add to Cart control must also be pre-populated with the full list of variants. Do not alter the existing product image, specifications table, nutritional information section, or add-to-cart controls.",
+      "reqIds": [
+        "REQ-130"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-the-products-page-frontend-src-pages-products-tsx-to-correctly-fetch-and-display-the-full-set-of-variants-for-each-of-the-six-product-category-cards-rice-wheat-pulses-spices-processed-food-products-makhana-from-the-backend-each-category-card-must-show-all-variant-names-and-their-corresponding-images-in-a-scrollable-or-grid-sub-section-within-or-below-the-category-card-the-category-card-navigation-links-must-use-the-exact-url-slugs-rice-wheat-pulses-spices-processed-food-products-and-makhana-do-not-alter-the-overall-page-structure-or-category-card-navigation-links",
+      "title": "Fix the Products page (frontend/src/pages/Products.tsx) to correctly fetch and display the full set of variants for each of the six product category cards (Rice, Wheat, Pulses, Spices, Processed Food Products, Makhana) from the backend. Each category card must show all variant names and their corresponding images in a scrollable or grid sub-section within or below the category card. The category card navigation links must use the exact URL slugs 'rice', 'wheat', 'pulses', 'spices', 'processed-food-products', and 'makhana'. Do not alter the overall page structure or category card navigation links.",
+      "reqIds": [
+        "REQ-132"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-the-productdetail-page-frontend-src-pages-productdetail-tsx-and-the-usegetproductbycategory-hook-frontend-src-hooks-usequeries-ts-to-ensure-all-six-product-categories-display-their-full-variant-list-and-product-information-the-hook-must-pass-the-productid-url-parameter-category-slug-as-is-to-the-backend-getproductbycategory-call-enable-the-query-only-when-productid-is-defined-and-treat-null-undefined-empty-responses-as-a-not-found-state-without-crashing-the-product-variants-grid-section-must-display-all-variants-returned-by-the-backend-showing-each-variant-s-name-and-image-the-variant-selector-for-add-to-cart-must-be-pre-populated-with-the-full-variant-list-do-not-alter-existing-product-image-specifications-table-nutritional-information-section-or-add-to-cart-controls",
+      "title": "Fix the ProductDetail page (frontend/src/pages/ProductDetail.tsx) and the useGetProductByCategory hook (frontend/src/hooks/useQueries.ts) to ensure all six product categories display their full variant list and product information. The hook must pass the productId URL parameter (category slug) as-is to the backend getProductByCategory call, enable the query only when productId is defined, and treat null/undefined/empty responses as a 'not found' state without crashing. The Product Variants grid section must display all variants returned by the backend, showing each variant's name and image. The variant selector for Add to Cart must be pre-populated with the full variant list. Do not alter existing product image, specifications table, nutritional information section, or add-to-cart controls.",
+      "reqIds": [
+        "REQ-133"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-generate-representative-static-images-for-all-product-variants-that-are-missing-from-frontend-public-assets-generated-required-images-filenames-must-exactly-match-the-imageurl-values-stored-in-the-backend-variant-records-rice-basmati-png-rice-sona-masoori-png-rice-ir64-png-rice-brown-png-rice-broken-png-wheat-durum-png-wheat-whole-png-wheat-semolina-png-pulses-chana-dal-png-pulses-moong-dal-png-pulses-masoor-dal-png-pulses-urad-dal-png-pulses-toor-dal-png-pulses-rajma-png-pulses-kabuli-chana-png-spices-turmeric-png-spices-red-chilli-png-spices-coriander-png-spices-cumin-png-spices-black-pepper-png-spices-cardamom-png-spices-ginger-powder-png-spices-fenugreek-png-processed-rice-flour-png-processed-wheat-flour-png-processed-besan-png-processed-poha-png-processed-roasted-chana-png-processed-vermicelli-png-makhana-regular-png-makhana-premium-png-makhana-roasted-png-makhana-powder-png",
+      "title": "Generate representative static images for all product variants that are missing from frontend/public/assets/generated/. Required images (filenames must exactly match the imageUrl values stored in the backend variant records): rice-basmati.png, rice-sona-masoori.png, rice-ir64.png, rice-brown.png, rice-broken.png, wheat-durum.png, wheat-whole.png, wheat-semolina.png, pulses-chana-dal.png, pulses-moong-dal.png, pulses-masoor-dal.png, pulses-urad-dal.png, pulses-toor-dal.png, pulses-rajma.png, pulses-kabuli-chana.png, spices-turmeric.png, spices-red-chilli.png, spices-coriander.png, spices-cumin.png, spices-black-pepper.png, spices-cardamom.png, spices-ginger-powder.png, spices-fenugreek.png, processed-rice-flour.png, processed-wheat-flour.png, processed-besan.png, processed-poha.png, processed-roasted-chana.png, processed-vermicelli.png, makhana-regular.png, makhana-premium.png, makhana-roasted.png, makhana-powder.png.",
+      "reqIds": [
+        "REQ-134"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -1133,6 +1183,28 @@
       "summary": "Verify and fix all product category card links on the Products page (frontend/src/pages/Products.tsx) to use URL slugs that exactly match the backend category values: 'rice', 'wheat', 'pulses', 'spices', 'processed-food-products', and 'makhana'. Fix any mismatches found.",
       "reqIds": [
         "REQ-117"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-81",
+      "summary": "Add all sub-categories/variants for all six product categories: Rice, Wheat, Spices, Pulses, Processed Food Products, and Makhana on the Products and ProductDetail pages",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-82",
+      "summary": "Update the backend Motoko actor (backend/main.mo) and migration module (backend/migration.mo) to enrich all six ProductDetail records with comprehensive variants. Rice: Basmati Rice, Sona Masoori, IR-64 Parboiled Rice, Brown Rice, Broken Rice. Wheat: Durum Wheat, Whole Wheat, Semolina (already seeded — ensure they persist). Pulses: Chana Dal, Moong Dal, Masoor Dal, Urad Dal, Toor Dal, Rajma, Kabuli Chana. Spices: Turmeric, Red Chilli, Coriander, Cumin, Black Pepper, Cardamom, Ginger Powder, Fenugreek. Processed Food Products: Rice Flour, Wheat Flour (Atta), Besan (Gram Flour), Poha (Flattened Rice), Roasted Chana, Vermicelli. Makhana: Fox Nut Regular, Fox Nut Premium, Roasted Makhana, Makhana Powder. Each variant must have a name (string) and imageUrl (string) pointing to /assets/generated/<category>-<variant-slug>.png. All six ProductDetail records must also retain fully populated nutritionData, specifications, description, price, and imageUrl fields. The migration must run on postupgrade without overwriting existing contact form or order data.",
+      "reqIds": [
+        "REQ-127"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-83",
+      "summary": "Audit and fix the backend Motoko actor (backend/main.mo) and migration module (backend/migration.mo) to ensure all six ProductDetail records are fully seeded in stable storage with correct category slugs ('rice', 'wheat', 'pulses', 'spices', 'processed-food-products', 'makhana') and comprehensive variants: Rice (Basmati Rice, Sona Masoori, IR-64 Parboiled Rice, Brown Rice, Broken Rice), Wheat (Durum Wheat, Whole Wheat, Semolina), Pulses (Chana Dal, Moong Dal, Masoor Dal, Urad Dal, Toor Dal, Rajma, Kabuli Chana), Spices (Turmeric, Red Chilli, Coriander, Cumin, Black Pepper, Cardamom, Ginger Powder, Fenugreek), Processed Food Products (Rice Flour, Wheat Flour/Atta, Besan/Gram Flour, Poha/Flattened Rice, Roasted Chana, Vermicelli), Makhana (Fox Nut Regular, Fox Nut Premium, Roasted Makhana, Makhana Powder). Each variant must have a name and imageUrl pointing to /assets/generated/<category>-<variant-slug>.png. Every ProductDetail record must retain fully populated nutritionData, specifications, description, price, and imageUrl. The getProductByCategory function must look up records by these exact lowercase hyphenated slugs. Migration must run on postupgrade without overwriting existing contact form or order data.",
+      "reqIds": [
+        "REQ-131"
       ],
       "status": "pending"
     }

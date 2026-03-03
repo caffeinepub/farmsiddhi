@@ -2,10 +2,10 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-fix-the-usegetproductbycategory-hook-in-frontend-src-hooks-usequeries-ts-to-correctly-pass-the-productid-url-parameter-the-category-slug-as-is-to-the-backend-getproductbycategory-call-enable-the-query-only-when-productid-is-defined-and-treat-null-undefined-empty-responses-from-the-backend-as-a-not-found-state-without-crashing",
-      "featureTitle": "Fix the useGetProductByCategory hook in frontend/src/hooks/useQueries.ts to correctly pass the productId URL parameter (the category slug) as-is to the backend getProductByCategory call, enable the query only when productId is defined, and treat null/undefined/empty responses from the backend as a 'not found' state without crashing.",
+      "featureId": "feature-fix-the-products-page-frontend-src-pages-products-tsx-to-correctly-fetch-and-display-the-full-set-of-variants-for-each-of-the-six-product-category-cards-rice-wheat-pulses-spices-processed-food-products-makhana-from-the-backend-each-category-card-must-show-all-variant-names-and-their-corresponding-images-in-a-scrollable-or-grid-sub-section-within-or-below-the-category-card-the-category-card-navigation-links-must-use-the-exact-url-slugs-rice-wheat-pulses-spices-processed-food-products-and-makhana-do-not-alter-the-overall-page-structure-or-category-card-navigation-links",
+      "featureTitle": "Fix the Products page (frontend/src/pages/Products.tsx) to correctly fetch and display the full set of variants for each of the six product category cards (Rice, Wheat, Pulses, Spices, Processed Food Products, Makhana) from the backend. Each category card must show all variant names and their corresponding images in a scrollable or grid sub-section within or below the category card. The category card navigation links must use the exact URL slugs 'rice', 'wheat', 'pulses', 'spices', 'processed-food-products', and 'makhana'. Do not alter the overall page structure or category card navigation links.",
       "files": [
-        "frontend/src/hooks/useQueries.ts"
+        "frontend/src/pages/Products.tsx"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -17,55 +17,15 @@
         "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-116"
+        "REQ-132"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-ensure-the-cartcontext-provider-in-frontend-src-context-cartcontext-tsx-is-fully-implemented-with-cart-state-management-addtocart-removefromcart-updatequantity-clearcart-carttotal-itemcount-each-cart-item-must-contain-productid-productname-variantname-quantity-and-unitprice-the-cartcontext-provider-must-wrap-the-entire-app-in-frontend-src-app-tsx",
-      "featureTitle": "Ensure the CartContext provider in frontend/src/context/CartContext.tsx is fully implemented with cart state management (addToCart, removeFromCart, updateQuantity, clearCart, cartTotal, itemCount). Each cart item must contain productId, productName, variantName, quantity, and unitPrice. The CartContext provider must wrap the entire app in frontend/src/App.tsx.",
+      "featureId": "feature-fix-the-productdetail-page-frontend-src-pages-productdetail-tsx-and-the-usegetproductbycategory-hook-frontend-src-hooks-usequeries-ts-to-ensure-all-six-product-categories-display-their-full-variant-list-and-product-information-the-hook-must-pass-the-productid-url-parameter-category-slug-as-is-to-the-backend-getproductbycategory-call-enable-the-query-only-when-productid-is-defined-and-treat-null-undefined-empty-responses-as-a-not-found-state-without-crashing-the-product-variants-grid-section-must-display-all-variants-returned-by-the-backend-showing-each-variant-s-name-and-image-the-variant-selector-for-add-to-cart-must-be-pre-populated-with-the-full-variant-list-do-not-alter-existing-product-image-specifications-table-nutritional-information-section-or-add-to-cart-controls",
+      "featureTitle": "Fix the ProductDetail page (frontend/src/pages/ProductDetail.tsx) and the useGetProductByCategory hook (frontend/src/hooks/useQueries.ts) to ensure all six product categories display their full variant list and product information. The hook must pass the productId URL parameter (category slug) as-is to the backend getProductByCategory call, enable the query only when productId is defined, and treat null/undefined/empty responses as a 'not found' state without crashing. The Product Variants grid section must display all variants returned by the backend, showing each variant's name and image. The variant selector for Add to Cart must be pre-populated with the full variant list. Do not alter existing product image, specifications table, nutritional information section, or add-to-cart controls.",
       "files": [
-        "frontend/src/App.tsx",
-        "frontend/src/context/CartContext.tsx"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0",
-        "authorization@4.0.0",
-        "blob-storage@4.0.0"
-      ],
-      "testIds": [
-        "REQ-118"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-ensure-all-four-e-commerce-react-query-hooks-are-present-and-correctly-implemented-in-frontend-src-hooks-usequeries-ts-useplaceorder-mutation-calling-actor-placeorder-usegetallorders-query-calling-actor-getallorders-usegetorderbyid-query-calling-actor-getorderbyid-with-orderid-parameter-and-useupdateorderstatus-mutation-calling-actor-updateorderstatus-each-hook-must-correctly-interface-with-the-backend-actor-and-handle-loading-error-states",
-      "featureTitle": "Ensure all four e-commerce React Query hooks are present and correctly implemented in frontend/src/hooks/useQueries.ts: usePlaceOrder (mutation calling actor.placeOrder), useGetAllOrders (query calling actor.getAllOrders), useGetOrderById (query calling actor.getOrderById with orderId parameter), and useUpdateOrderStatus (mutation calling actor.updateOrderStatus). Each hook must correctly interface with the backend actor and handle loading/error states.",
-      "files": [
-        "frontend/src/hooks/useQueries.ts"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0",
-        "authorization@4.0.0",
-        "blob-storage@4.0.0"
-      ],
-      "testIds": [
-        "REQ-119"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-restore-the-add-to-cart-functionality-on-the-productdetail-page-frontend-src-pages-productdetail-tsx-ensure-a-variant-selector-pre-populated-with-the-product-s-variants-fetched-from-the-backend-a-quantity-selector-defaulting-to-1-with-increment-decrement-controls-and-an-add-to-cart-button-that-calls-addtocart-from-cartcontext-using-the-selected-variant-s-name-unitprice-from-the-product-s-price-field-and-the-current-quantity-display-a-success-toast-notification-when-an-item-is-added-do-not-alter-existing-product-image-specifications-nutritional-information-or-product-variants-display-sections",
-      "featureTitle": "Restore the 'Add to Cart' functionality on the ProductDetail page (frontend/src/pages/ProductDetail.tsx). Ensure a variant selector pre-populated with the product's variants fetched from the backend, a quantity selector defaulting to 1 with increment/decrement controls, and an 'Add to Cart' button that calls addToCart from CartContext using the selected variant's name, unitPrice from the product's price field, and the current quantity. Display a success toast notification when an item is added. Do not alter existing product image, specifications, nutritional information, or product variants display sections.",
-      "files": [
+        "frontend/src/hooks/useQueries.ts",
         "frontend/src/pages/ProductDetail.tsx"
       ],
       "components": [
@@ -78,16 +38,14 @@
         "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-120"
+        "REQ-133"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-restore-the-cart-page-at-frontend-src-pages-cart-tsx-accessible-at-route-cart-it-must-list-all-cart-items-with-product-name-variant-name-unit-price-in-editable-quantity-with-increment-decrement-controls-line-total-and-a-remove-button-per-item-display-the-cart-subtotal-include-a-proceed-to-checkout-button-navigating-to-checkout-and-a-continue-shopping-link-to-products-show-an-empty-cart-message-with-a-link-to-products-when-the-cart-is-empty",
-      "featureTitle": "Restore the Cart page at frontend/src/pages/Cart.tsx accessible at route '/cart'. It must list all cart items with product name, variant name, unit price (in ₹), editable quantity with increment/decrement controls, line total, and a remove button per item. Display the cart subtotal. Include a 'Proceed to Checkout' button navigating to '/checkout' and a 'Continue Shopping' link to '/products'. Show an empty cart message with a link to Products when the cart is empty.",
-      "files": [
-        "frontend/src/pages/Cart.tsx"
-      ],
+      "featureId": "feature-generate-representative-static-images-for-all-product-variants-that-are-missing-from-frontend-public-assets-generated-required-images-filenames-must-exactly-match-the-imageurl-values-stored-in-the-backend-variant-records-rice-basmati-png-rice-sona-masoori-png-rice-ir64-png-rice-brown-png-rice-broken-png-wheat-durum-png-wheat-whole-png-wheat-semolina-png-pulses-chana-dal-png-pulses-moong-dal-png-pulses-masoor-dal-png-pulses-urad-dal-png-pulses-toor-dal-png-pulses-rajma-png-pulses-kabuli-chana-png-spices-turmeric-png-spices-red-chilli-png-spices-coriander-png-spices-cumin-png-spices-black-pepper-png-spices-cardamom-png-spices-ginger-powder-png-spices-fenugreek-png-processed-rice-flour-png-processed-wheat-flour-png-processed-besan-png-processed-poha-png-processed-roasted-chana-png-processed-vermicelli-png-makhana-regular-png-makhana-premium-png-makhana-roasted-png-makhana-powder-png",
+      "featureTitle": "Generate representative static images for all product variants that are missing from frontend/public/assets/generated/. Required images (filenames must exactly match the imageUrl values stored in the backend variant records): rice-basmati.png, rice-sona-masoori.png, rice-ir64.png, rice-brown.png, rice-broken.png, wheat-durum.png, wheat-whole.png, wheat-semolina.png, pulses-chana-dal.png, pulses-moong-dal.png, pulses-masoor-dal.png, pulses-urad-dal.png, pulses-toor-dal.png, pulses-rajma.png, pulses-kabuli-chana.png, spices-turmeric.png, spices-red-chilli.png, spices-coriander.png, spices-cumin.png, spices-black-pepper.png, spices-cardamom.png, spices-ginger-powder.png, spices-fenugreek.png, processed-rice-flour.png, processed-wheat-flour.png, processed-besan.png, processed-poha.png, processed-roasted-chana.png, processed-vermicelli.png, makhana-regular.png, makhana-premium.png, makhana-roasted.png, makhana-powder.png.",
+      "files": [],
       "components": [
         "core-infrastructure@1.0.2",
         "shadcn-ui@1.0.0",
@@ -98,107 +56,7 @@
         "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-121"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-restore-the-checkout-page-at-frontend-src-pages-checkout-tsx-accessible-at-route-checkout-it-must-display-a-form-for-buyer-details-name-email-phone-number-and-a-shipping-address-street-city-state-pincode-country-and-an-order-summary-sidebar-listing-cart-items-quantities-and-total-amount-in-on-form-submission-call-the-useplaceorder-mutation-to-submit-the-order-to-the-backend-on-success-clear-the-cart-and-navigate-to-order-confirmation-orderid",
-      "featureTitle": "Restore the Checkout page at frontend/src/pages/Checkout.tsx accessible at route '/checkout'. It must display a form for buyer details (Name, Email, Phone Number) and a Shipping Address (Street, City, State, Pincode, Country), and an order summary sidebar listing cart items, quantities, and total amount in ₹. On form submission, call the usePlaceOrder mutation to submit the order to the backend. On success, clear the cart and navigate to '/order-confirmation/$orderId'.",
-      "files": [
-        "frontend/src/pages/Checkout.tsx"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0",
-        "authorization@4.0.0",
-        "blob-storage@4.0.0"
-      ],
-      "testIds": [
-        "REQ-122"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-restore-the-order-confirmation-page-at-frontend-src-pages-orderconfirmation-tsx-accessible-at-route-order-confirmation-orderid-it-must-display-order-details-order-id-buyer-name-email-phone-status-with-color-coded-badge-shipping-address-and-itemized-order-items-with-quantities-and-prices-retrieved-from-sessionstorage-or-via-usegetorderbyid-display-a-prominent-thank-you-message-handle-loading-and-error-states",
-      "featureTitle": "Restore the Order Confirmation page at frontend/src/pages/OrderConfirmation.tsx accessible at route '/order-confirmation/$orderId'. It must display order details (order ID, buyer name, email, phone, status with color-coded badge, shipping address, and itemized order items with quantities and prices) retrieved from sessionStorage or via useGetOrderById. Display a prominent thank-you message. Handle loading and error states.",
-      "files": [
-        "frontend/src/pages/OrderConfirmation.tsx"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0",
-        "authorization@4.0.0",
-        "blob-storage@4.0.0"
-      ],
-      "testIds": [
-        "REQ-123"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-restore-the-cart-icon-button-in-the-navigation-component-frontend-src-components-navigation-tsx-that-displays-the-current-item-count-from-cartcontext-as-a-badge-clicking-the-cart-icon-must-navigate-to-cart-do-not-alter-the-existing-logo-size-h-77px-navigation-links-or-mobile-menu-structure",
-      "featureTitle": "Restore the cart icon button in the Navigation component (frontend/src/components/Navigation.tsx) that displays the current item count from CartContext as a badge. Clicking the cart icon must navigate to '/cart'. Do not alter the existing logo size (h-[77px]), navigation links, or mobile menu structure.",
-      "files": [
-        "frontend/src/components/Navigation.tsx"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0",
-        "authorization@4.0.0",
-        "blob-storage@4.0.0"
-      ],
-      "testIds": [
-        "REQ-124"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-ensure-the-cart-checkout-and-order-confirmation-orderid-routes-are-registered-in-frontend-src-app-tsx-with-lazy-loaded-cart-checkout-and-orderconfirmation-page-components-do-not-alter-any-existing-routes-or-layout-structure",
-      "featureTitle": "Ensure the '/cart', '/checkout', and '/order-confirmation/$orderId' routes are registered in frontend/src/App.tsx with lazy-loaded Cart, Checkout, and OrderConfirmation page components. Do not alter any existing routes or layout structure.",
-      "files": [
-        "frontend/src/App.tsx"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0",
-        "authorization@4.0.0",
-        "blob-storage@4.0.0"
-      ],
-      "testIds": [
-        "REQ-125"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-fix-and-fully-restore-the-admin-page-at-frontend-src-pages-admin-tsx-it-must-render-two-tabs-1-contact-submissions-displaying-all-contact-form-submissions-in-a-table-showing-name-email-phone-number-message-and-user-type-2-orders-displaying-all-orders-fetched-via-usegetallorders-in-a-table-showing-order-id-buyer-name-email-phone-total-amount-status-and-date-with-a-per-row-status-update-dropdown-pending-confirmed-processing-shipped-delivered-cancelled-calling-useupdateorderstatus-when-changed-resolve-any-import-errors-typescript-type-errors-or-missing-hook-issues-that-prevent-the-page-from-loading",
-      "featureTitle": "Fix and fully restore the Admin page at frontend/src/pages/Admin.tsx. It must render two tabs: (1) 'Contact Submissions' displaying all contact form submissions in a table showing Name, Email, Phone Number, Message, and User Type; (2) 'Orders' displaying all orders fetched via useGetAllOrders in a table showing Order ID, Buyer Name, Email, Phone, Total Amount (₹), Status, and Date, with a per-row status update dropdown (pending/confirmed/processing/shipped/delivered/cancelled) calling useUpdateOrderStatus when changed. Resolve any import errors, TypeScript type errors, or missing hook issues that prevent the page from loading.",
-      "files": [
-        "frontend/src/pages/Admin.tsx"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0",
-        "authorization@4.0.0",
-        "blob-storage@4.0.0"
-      ],
-      "testIds": [
-        "REQ-126"
+        "REQ-134"
       ],
       "confidence": "high"
     }

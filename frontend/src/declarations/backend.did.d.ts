@@ -133,6 +133,7 @@ export interface _SERVICE {
   'getCallerUserRole' : ActorMethod<[], UserRole>,
   'getFormEntry' : ActorMethod<[bigint], ContactFormEntry>,
   'getOrderById' : ActorMethod<[bigint], [] | [Order]>,
+  'getProductByCategory' : ActorMethod<[string], [] | [ProductDetail]>,
   'getProductDetail' : ActorMethod<[bigint], [] | [ProductDetail]>,
   'getProductsByCategory' : ActorMethod<[string], Array<ProductDetail>>,
   'getUserProfile' : ActorMethod<[Principal], [] | [UserProfile]>,

@@ -3,81 +3,213 @@
 @tailwind utilities;
 
 @layer base {
-    :root {
-        --radius: 0.625rem;
-        --background: 1 0 0;
-        --foreground: 0.145 0 0;
-        --card: 1 0 0;
-        --card-foreground: 0.145 0 0;
-        --popover: 1 0 0;
-        --popover-foreground: 0.145 0 0;
-        --primary: 0.205 0 0;
-        --primary-foreground: 0.985 0 0;
-        --secondary: 0.97 0 0;
-        --secondary-foreground: 0.205 0 0;
-        --muted: 0.97 0 0;
-        --muted-foreground: 0.556 0 0;
-        --accent: 0.97 0 0;
-        --accent-foreground: 0.205 0 0;
-        --destructive: 0.577 0.245 27.325;
-        --destructive-foreground: 0.985 0 0;
-        --border: 0.922 0 0;
-        --input: 0.922 0 0;
-        --ring: 0.708 0 0;
-        --chart-1: 0.646 0.222 41.116;
-        --chart-2: 0.6 0.118 184.704;
-        --chart-3: 0.398 0.07 227.392;
-        --chart-4: 0.828 0.189 84.429;
-        --chart-5: 0.769 0.188 70.08;
-        --sidebar: 0.985 0 0;
-        --sidebar-foreground: 0.145 0 0;
-        --sidebar-primary: 0.205 0 0;
-        --sidebar-primary-foreground: 0.985 0 0;
-        --sidebar-accent: 0.97 0 0;
-        --sidebar-accent-foreground: 0.205 0 0;
-        --sidebar-border: 0.922 0 0;
-        --sidebar-ring: 0.708 0 0;
-    }
+  :root {
+    --radius: 0.375rem;
+    /* Silver Green — primary brand color */
+    --primary: 0.48 0.1 148;
+    --primary-foreground: 0.99 0 0;
+    /* Silver Brown — secondary accent */
+    --secondary: 0.46 0.07 60;
+    --secondary-foreground: 0.99 0 0;
+    /* Neutral whites and grays */
+    --background: 1 0 0;
+    --foreground: 0.2 0.01 148;
+    --card: 0.985 0 0;
+    --card-foreground: 0.2 0.01 148;
+    --popover: 1 0 0;
+    --popover-foreground: 0.2 0.01 148;
+    --muted: 0.96 0.005 148;
+    --muted-foreground: 0.48 0.02 148;
+    --accent: 0.48 0.1 148;
+    --accent-foreground: 0.99 0 0;
+    --destructive: 0.577 0.245 27.325;
+    --destructive-foreground: 0.985 0 0;
+    --border: 0.88 0.01 148;
+    --input: 0.88 0.01 148;
+    --ring: 0.48 0.1 148;
+    --chart-1: 0.48 0.1 148;
+    --chart-2: 0.46 0.07 60;
+    --chart-3: 0.6 0.12 148;
+    --chart-4: 0.38 0.05 60;
+    --chart-5: 0.55 0.09 148;
+    --sidebar: 0.98 0.005 148;
+    --sidebar-foreground: 0.2 0.01 148;
+    --sidebar-primary: 0.48 0.1 148;
+    --sidebar-primary-foreground: 0.99 0 0;
+    --sidebar-accent: 0.96 0.005 148;
+    --sidebar-accent-foreground: 0.2 0.01 148;
+    --sidebar-border: 0.88 0.01 148;
+    --sidebar-ring: 0.48 0.1 148;
+  }
 
-    .dark {
-        --background: 0.145 0 0;
-        --foreground: 0.985 0 0;
-        --card: 0.205 0 0;
-        --card-foreground: 0.985 0 0;
-        --popover: 0.269 0 0;
-        --popover-foreground: 0.985 0 0;
-        --primary: 0.922 0 0;
-        --primary-foreground: 0.205 0 0;
-        --secondary: 0.269 0 0;
-        --secondary-foreground: 0.985 0 0;
-        --muted: 0.269 0 0;
-        --muted-foreground: 0.708 0 0;
-        --accent: 0.371 0 0;
-        --accent-foreground: 0.985 0 0;
-        --destructive: 0.704 0.191 22.216;
-        --destructive-foreground: 0.205 0 0;
-        --border: 1 0 0 / 10%;
-        --input: 1 0 0 / 15%;
-        --ring: 0.556 0 0;
-        --chart-1: 0.488 0.243 264.376;
-        --chart-2: 0.696 0.17 162.48;
-        --chart-3: 0.769 0.188 70.08;
-        --chart-4: 0.627 0.265 303.9;
-        --chart-5: 0.645 0.246 16.439;
-        --sidebar: 0.205 0 0;
-        --sidebar-foreground: 0.985 0 0;
-        --sidebar-primary: 0.488 0.243 264.376;
-        --sidebar-primary-foreground: 0.985 0 0;
-        --sidebar-accent: 0.269 0 0;
-        --sidebar-accent-foreground: 0.985 0 0;
-        --sidebar-border: 1 0 0 / 10%;
-        --sidebar-ring: 0.439 0 0;
-    }
+  .dark {
+    --primary: 0.62 0.12 148;
+    --primary-foreground: 0.12 0 0;
+    --secondary: 0.58 0.09 60;
+    --secondary-foreground: 0.12 0 0;
+    --background: 0.14 0.005 148;
+    --foreground: 0.95 0 0;
+    --card: 0.19 0.005 148;
+    --card-foreground: 0.95 0 0;
+    --popover: 0.22 0.005 148;
+    --popover-foreground: 0.95 0 0;
+    --muted: 0.24 0.005 148;
+    --muted-foreground: 0.68 0.02 148;
+    --accent: 0.28 0.01 148;
+    --accent-foreground: 0.95 0 0;
+    --destructive: 0.704 0.191 22.216;
+    --destructive-foreground: 0.14 0 0;
+    --border: 0.3 0.01 148;
+    --input: 0.3 0.01 148;
+    --ring: 0.62 0.12 148;
+    --chart-1: 0.62 0.12 148;
+    --chart-2: 0.58 0.09 60;
+    --chart-3: 0.72 0.14 148;
+    --chart-4: 0.52 0.07 60;
+    --chart-5: 0.67 0.11 148;
+    --sidebar: 0.19 0.005 148;
+    --sidebar-foreground: 0.95 0 0;
+    --sidebar-primary: 0.62 0.12 148;
+    --sidebar-primary-foreground: 0.12 0 0;
+    --sidebar-accent: 0.24 0.005 148;
+    --sidebar-accent-foreground: 0.95 0 0;
+    --sidebar-border: 0.3 0.01 148;
+    --sidebar-ring: 0.62 0.12 148;
+  }
 
-    * {
-        @apply border-border;
-    }
-    body {
-        @apply bg-background text-foreground;
-    }
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+      "Roboto", "Oxygen", "Ubuntu", "Cantarell", sans-serif;
+  }
 }
+
+@layer components {
+  .section-container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .section-padding {
+    @apply py-16 md:py-24;
+  }
+
+  /* Watermark uses the actual uploaded logo at /assets/Logo.png */
+  .watermark-container {
+    @apply fixed inset-0 z-0 pointer-events-none;
+    background-image: url("/assets/Logo.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 55%;
+    opacity: 0.22;
+  }
+
+  .dark .watermark-container {
+    opacity: 0.13;
+  }
+
+  /* Hero background class — ensures the path is detected by the build scanner */
+  .hero-bg-image {
+    background-image: url("/assets/generated/hero-bg.dim_1920x800.png");
+    background-size: cover;
+    background-position: center;
+  }
+
+}
+
+/*
+ * IMAGE MANIFEST — do not remove this block.
+ * Every generated image filename is listed as a background-image declaration
+ * on a never-matched selector. This guarantees every filename string appears
+ * in the compiled CSS file so the Caffeine build-time prune scanner keeps
+ * every image asset in dist/assets/generated/.
+ *
+ * Selector [data-img-manifest] never matches any DOM element, so these rules
+ * have zero visual impact.
+ */
+[data-img-manifest="farmsiddhi-logo"] { background-image: url("/assets/generated/farmsiddhi-logo.dim_400x120.png"); }
+[data-img-manifest="farmsiddhi-watermark-h"] { background-image: url("/assets/generated/farmsiddhi-watermark.dim_1200x600.png"); }
+[data-img-manifest="farmsiddhi-watermark-v"] { background-image: url("/assets/generated/farmsiddhi-watermark.dim_1200x800.png"); }
+[data-img-manifest="hero-bg"] { background-image: url("/assets/generated/hero-bg.dim_1920x800.png"); }
+[data-img-manifest="icon-makhana"] { background-image: url("/assets/generated/icon-makhana.dim_128x128.png"); }
+[data-img-manifest="icon-processed"] { background-image: url("/assets/generated/icon-processed.dim_128x128.png"); }
+[data-img-manifest="icon-pulses"] { background-image: url("/assets/generated/icon-pulses.dim_128x128.png"); }
+[data-img-manifest="icon-rice"] { background-image: url("/assets/generated/icon-rice.dim_128x128.png"); }
+[data-img-manifest="icon-spices"] { background-image: url("/assets/generated/icon-spices.dim_128x128.png"); }
+[data-img-manifest="icon-wheat"] { background-image: url("/assets/generated/icon-wheat.dim_128x128.png"); }
+[data-img-manifest="logo-400x150"] { background-image: url("/assets/generated/Logo.dim_400x150.png"); }
+[data-img-manifest="logo-400x200"] { background-image: url("/assets/generated/Logo.dim_400x200.png"); }
+[data-img-manifest="logo-1200x600"] { background-image: url("/assets/generated/Logo.png.dim_1200x600.png"); }
+[data-img-manifest="makhana-detail"] { background-image: url("/assets/generated/makhana-detail.dim_800x600.png"); }
+[data-img-manifest="makhana-flavored"] { background-image: url("/assets/generated/makhana-flavored.dim_400x300.png"); }
+[data-img-manifest="makhana-home"] { background-image: url("/assets/generated/makhana-home.dim_800x600.png"); }
+[data-img-manifest="makhana-powder"] { background-image: url("/assets/generated/makhana-powder.dim_400x300.png"); }
+[data-img-manifest="makhana-roasted"] { background-image: url("/assets/generated/makhana-roasted.dim_400x300.png"); }
+[data-img-manifest="makhana"] { background-image: url("/assets/generated/makhana.dim_400x300.png"); }
+[data-img-manifest="mandi-banner"] { background-image: url("/assets/generated/mandi-banner.dim_1200x400.png"); }
+[data-img-manifest="moong-green"] { background-image: url("/assets/generated/moong-green.dim_400x300.png"); }
+[data-img-manifest="moong-yellow"] { background-image: url("/assets/generated/moong-yellow.dim_400x300.png"); }
+[data-img-manifest="processed-besan"] { background-image: url("/assets/generated/processed-besan.dim_400x300.png"); }
+[data-img-manifest="processed-detail"] { background-image: url("/assets/generated/processed-detail.dim_800x600.png"); }
+[data-img-manifest="processed-foods"] { background-image: url("/assets/generated/processed-foods.dim_400x300.png"); }
+[data-img-manifest="processed-poha"] { background-image: url("/assets/generated/processed-poha.dim_400x300.png"); }
+[data-img-manifest="processed-rice-flour"] { background-image: url("/assets/generated/processed-rice-flour.dim_400x300.png"); }
+[data-img-manifest="processed-roasted-chana"] { background-image: url("/assets/generated/processed-roasted-chana.dim_400x300.png"); }
+[data-img-manifest="processed-vermicelli"] { background-image: url("/assets/generated/processed-vermicelli.dim_400x300.png"); }
+[data-img-manifest="processed-wheat-flour"] { background-image: url("/assets/generated/processed-wheat-flour.dim_400x300.png"); }
+[data-img-manifest="pulses-chana-300"] { background-image: url("/assets/generated/pulses-chana-dal.dim_400x300.png"); }
+[data-img-manifest="pulses-chana-400"] { background-image: url("/assets/generated/pulses-chana-dal.dim_400x400.png"); }
+[data-img-manifest="pulses-detail"] { background-image: url("/assets/generated/pulses-detail.dim_800x600.png"); }
+[data-img-manifest="pulses-kabuli-300"] { background-image: url("/assets/generated/pulses-kabuli-chana.dim_400x300.png"); }
+[data-img-manifest="pulses-kabuli-400"] { background-image: url("/assets/generated/pulses-kabuli-chana.dim_400x400.png"); }
+[data-img-manifest="pulses-masoor-300"] { background-image: url("/assets/generated/pulses-masoor-dal.dim_400x300.png"); }
+[data-img-manifest="pulses-masoor-400"] { background-image: url("/assets/generated/pulses-masoor-dal.dim_400x400.png"); }
+[data-img-manifest="pulses-moong-300"] { background-image: url("/assets/generated/pulses-moong-dal.dim_400x300.png"); }
+[data-img-manifest="pulses-moong-400"] { background-image: url("/assets/generated/pulses-moong-dal.dim_400x400.png"); }
+[data-img-manifest="pulses-rajma-300"] { background-image: url("/assets/generated/pulses-rajma.dim_400x300.png"); }
+[data-img-manifest="pulses-rajma-400"] { background-image: url("/assets/generated/pulses-rajma.dim_400x400.png"); }
+[data-img-manifest="pulses-toor-300"] { background-image: url("/assets/generated/pulses-toor-dal.dim_400x300.png"); }
+[data-img-manifest="pulses-toor-400"] { background-image: url("/assets/generated/pulses-toor-dal.dim_400x400.png"); }
+[data-img-manifest="pulses-urad-300"] { background-image: url("/assets/generated/pulses-urad-dal.dim_400x300.png"); }
+[data-img-manifest="pulses-urad-400"] { background-image: url("/assets/generated/pulses-urad-dal.dim_400x400.png"); }
+[data-img-manifest="pulses-main"] { background-image: url("/assets/generated/pulses.dim_400x300.png"); }
+[data-img-manifest="rice-basmati-300"] { background-image: url("/assets/generated/rice-basmati.dim_400x300.png"); }
+[data-img-manifest="rice-basmati-400"] { background-image: url("/assets/generated/rice-basmati.dim_400x400.png"); }
+[data-img-manifest="rice-broken-300"] { background-image: url("/assets/generated/rice-broken.dim_400x300.png"); }
+[data-img-manifest="rice-broken-400"] { background-image: url("/assets/generated/rice-broken.dim_400x400.png"); }
+[data-img-manifest="rice-brown-300"] { background-image: url("/assets/generated/rice-brown.dim_400x300.png"); }
+[data-img-manifest="rice-brown-400"] { background-image: url("/assets/generated/rice-brown.dim_400x400.png"); }
+[data-img-manifest="rice-detail"] { background-image: url("/assets/generated/rice-detail.dim_800x600.png"); }
+[data-img-manifest="rice-ir64-300"] { background-image: url("/assets/generated/rice-ir64.dim_400x300.png"); }
+[data-img-manifest="rice-ir64-400"] { background-image: url("/assets/generated/rice-ir64.dim_400x400.png"); }
+[data-img-manifest="rice-sona-300"] { background-image: url("/assets/generated/rice-sona-masoori.dim_400x300.png"); }
+[data-img-manifest="rice-sona-400"] { background-image: url("/assets/generated/rice-sona-masoori.dim_400x400.png"); }
+[data-img-manifest="rice-main"] { background-image: url("/assets/generated/rice.dim_400x300.png"); }
+[data-img-manifest="spices-black-pepper"] { background-image: url("/assets/generated/spices-black-pepper.dim_400x300.png"); }
+[data-img-manifest="spices-cardamom"] { background-image: url("/assets/generated/spices-cardamom.dim_400x300.png"); }
+[data-img-manifest="spices-coriander"] { background-image: url("/assets/generated/spices-coriander.dim_400x400.png"); }
+[data-img-manifest="spices-cumin"] { background-image: url("/assets/generated/spices-cumin.dim_400x300.png"); }
+[data-img-manifest="spices-detail"] { background-image: url("/assets/generated/spices-detail.dim_800x600.png"); }
+[data-img-manifest="spices-fenugreek"] { background-image: url("/assets/generated/spices-fenugreek.dim_400x300.png"); }
+[data-img-manifest="spices-ginger"] { background-image: url("/assets/generated/spices-ginger.dim_400x300.png"); }
+[data-img-manifest="spices-red-chilli"] { background-image: url("/assets/generated/spices-red-chilli.dim_400x400.png"); }
+[data-img-manifest="spices-turmeric"] { background-image: url("/assets/generated/spices-turmeric.dim_400x400.png"); }
+[data-img-manifest="spices-main"] { background-image: url("/assets/generated/spices.dim_400x300.png"); }
+[data-img-manifest="supply-chain"] { background-image: url("/assets/generated/supply-chain-diagram.dim_800x400.png"); }
+[data-img-manifest="tractor-watermark"] { background-image: url("/assets/generated/tractor-field-watermark.dim_800x600.png"); }
+[data-img-manifest="turmeric-powder"] { background-image: url("/assets/generated/turmeric-powder.dim_400x300.png"); }
+[data-img-manifest="wheat-detail"] { background-image: url("/assets/generated/wheat-detail.dim_800x600.png"); }
+[data-img-manifest="wheat-durum-300"] { background-image: url("/assets/generated/wheat-durum.dim_400x300.png"); }
+[data-img-manifest="wheat-durum-400"] { background-image: url("/assets/generated/wheat-durum.dim_400x400.png"); }
+[data-img-manifest="wheat-refined"] { background-image: url("/assets/generated/wheat-refined.dim_400x300.png"); }
+[data-img-manifest="wheat-semolina-300"] { background-image: url("/assets/generated/wheat-semolina.dim_400x300.png"); }
+[data-img-manifest="wheat-semolina-400"] { background-image: url("/assets/generated/wheat-semolina.dim_400x400.png"); }
+[data-img-manifest="wheat-whole-300"] { background-image: url("/assets/generated/wheat-whole.dim_400x300.png"); }
+[data-img-manifest="wheat-whole-400"] { background-image: url("/assets/generated/wheat-whole.dim_400x400.png"); }
+[data-img-manifest="wheat-main"] { background-image: url("/assets/generated/wheat.dim_400x300.png"); }
+[data-img-manifest="basmati-organic"] { background-image: url("/assets/generated/basmati-organic.dim_400x300.png"); }
+[data-img-manifest="basmati-premium"] { background-image: url("/assets/generated/basmati-premium.dim_400x300.png"); }
+[data-img-manifest="basmati-regular"] { background-image: url("/assets/generated/basmati-regular.dim_400x300.png"); }
+[data-img-manifest="chili-powder"] { background-image: url("/assets/generated/chili-powder.dim_400x300.png"); }

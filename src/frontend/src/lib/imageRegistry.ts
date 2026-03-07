@@ -5,18 +5,17 @@
  *
  * WHY THIS FILE EXISTS:
  * The Caffeine build pipeline prunes assets from public/assets/generated/ that
- * are not detected in the compiled JS/CSS output. By centralising every image
- * path in this single exported module, the build scanner will always find each
- * path string in the compiled bundle and will never prune a referenced asset.
+ * are not detected in the compiled JS/CSS output. Every image filename MUST
+ * appear as a literal string in the compiled JS bundle so the prune scanner
+ * never removes a referenced asset.
  *
- * RULE: Every <img src="…"> or CSS backgroundImage that references a
- * /assets/… path MUST be sourced from this registry. Never use inline string
- * literals for image paths anywhere else in the codebase.
+ * All image paths are string constants so Vite (with minify:false) includes
+ * them verbatim in the output JS, making them detectable by the filename
+ * substring scanner.
  */
 
 // ─── Logo ────────────────────────────────────────────────────────────────────
 export const logoUrl = "/assets/Logo.png";
-// Additional uploaded logos (kept so build scanner never prunes them)
 export const logoAlt1 = "/assets/generated/Logo.dim_400x200.png";
 export const logoAlt2 = "/assets/generated/Logo.dim_400x150.png";
 export const logoAlt3 = "/assets/generated/Logo.png.dim_1200x600.png";
@@ -40,8 +39,10 @@ export const watermark =
   "/assets/generated/farmsiddhi-watermark.dim_1200x800.png";
 export const watermarkFallback =
   "/assets/generated/farmsiddhi-watermark.dim_1200x600.png";
+export const tractorWatermark =
+  "/assets/generated/tractor-field-watermark.dim_800x600.png";
 
-// ─── Rice ────────────────────────────────────────────────────────────────────
+// ─── Rice (400x300) ──────────────────────────────────────────────────────────
 export const riceDetail = "/assets/generated/rice-detail.dim_800x600.png";
 export const riceBasmati = "/assets/generated/rice-basmati.dim_400x300.png";
 export const riceSonaMasoori =
@@ -50,13 +51,27 @@ export const riceIr64 = "/assets/generated/rice-ir64.dim_400x300.png";
 export const riceBrown = "/assets/generated/rice-brown.dim_400x300.png";
 export const riceBroken = "/assets/generated/rice-broken.dim_400x300.png";
 
-// ─── Wheat ───────────────────────────────────────────────────────────────────
+// ─── Rice (400x400) ──────────────────────────────────────────────────────────
+export const riceBasmati400 = "/assets/generated/rice-basmati.dim_400x400.png";
+export const riceSonaMasoori400 =
+  "/assets/generated/rice-sona-masoori.dim_400x400.png";
+export const riceIr64400 = "/assets/generated/rice-ir64.dim_400x400.png";
+export const riceBrown400 = "/assets/generated/rice-brown.dim_400x400.png";
+export const riceBroken400 = "/assets/generated/rice-broken.dim_400x400.png";
+
+// ─── Wheat (400x300) ─────────────────────────────────────────────────────────
 export const wheatDetail = "/assets/generated/wheat-detail.dim_800x600.png";
 export const wheatDurum = "/assets/generated/wheat-durum.dim_400x300.png";
 export const wheatWhole = "/assets/generated/wheat-whole.dim_400x300.png";
 export const wheatSemolina = "/assets/generated/wheat-semolina.dim_400x300.png";
 
-// ─── Pulses ──────────────────────────────────────────────────────────────────
+// ─── Wheat (400x400) ─────────────────────────────────────────────────────────
+export const wheatDurum400 = "/assets/generated/wheat-durum.dim_400x400.png";
+export const wheatWhole400 = "/assets/generated/wheat-whole.dim_400x400.png";
+export const wheatSemolina400 =
+  "/assets/generated/wheat-semolina.dim_400x400.png";
+
+// ─── Pulses (400x300) ────────────────────────────────────────────────────────
 export const pulsesDetail = "/assets/generated/pulses-detail.dim_800x600.png";
 export const pulsesChana = "/assets/generated/pulses-chana-dal.dim_400x300.png";
 export const pulsesMoong = "/assets/generated/pulses-moong-dal.dim_400x300.png";
@@ -67,6 +82,21 @@ export const pulsesToor = "/assets/generated/pulses-toor-dal.dim_400x300.png";
 export const pulsesRajma = "/assets/generated/pulses-rajma.dim_400x300.png";
 export const pulsesKabuli =
   "/assets/generated/pulses-kabuli-chana.dim_400x300.png";
+
+// ─── Pulses (400x400) ────────────────────────────────────────────────────────
+export const pulsesChana400 =
+  "/assets/generated/pulses-chana-dal.dim_400x400.png";
+export const pulsesMoong400 =
+  "/assets/generated/pulses-moong-dal.dim_400x400.png";
+export const pulsesMasoor400 =
+  "/assets/generated/pulses-masoor-dal.dim_400x400.png";
+export const pulsesUrad400 =
+  "/assets/generated/pulses-urad-dal.dim_400x400.png";
+export const pulsesToor400 =
+  "/assets/generated/pulses-toor-dal.dim_400x400.png";
+export const pulsesRajma400 = "/assets/generated/pulses-rajma.dim_400x400.png";
+export const pulsesKabuli400 =
+  "/assets/generated/pulses-kabuli-chana.dim_400x400.png";
 
 // ─── Spices ──────────────────────────────────────────────────────────────────
 export const spicesDetail = "/assets/generated/spices-detail.dim_800x600.png";
@@ -138,11 +168,13 @@ export const moongYellow = "/assets/generated/moong-yellow.dim_400x300.png";
 export const processedFoods =
   "/assets/generated/processed-foods.dim_400x300.png";
 
-// ─── Watermark / banners ──────────────────────────────────────────────────────
-export const tractorWatermark =
-  "/assets/generated/tractor-field-watermark.dim_800x600.png";
-
 // ─── Convenience grouped export ──────────────────────────────────────────────
+/**
+ * IMPORTANT: The `images` object is iterated at runtime by the ImageVault
+ * component in App.tsx which renders every image as a hidden <img> element.
+ * This ensures all 84 image path strings appear in the compiled JS so the
+ * build-time prune scanner keeps every file.
+ */
 export const images = {
   // Logo
   logoUrl,
@@ -175,6 +207,11 @@ export const images = {
   riceIr64,
   riceBrown,
   riceBroken,
+  riceBasmati400,
+  riceSonaMasoori400,
+  riceIr64400,
+  riceBrown400,
+  riceBroken400,
   basmatiPremium,
   basmatiRegular,
   basmatiOrganic,
@@ -186,6 +223,9 @@ export const images = {
   wheatWhole,
   wheatSemolina,
   wheatRefined,
+  wheatDurum400,
+  wheatWhole400,
+  wheatSemolina400,
 
   // Pulses
   pulsesDetail,
@@ -197,6 +237,13 @@ export const images = {
   pulsesToor,
   pulsesRajma,
   pulsesKabuli,
+  pulsesChana400,
+  pulsesMoong400,
+  pulsesMasoor400,
+  pulsesUrad400,
+  pulsesToor400,
+  pulsesRajma400,
+  pulsesKabuli400,
   moongGreen,
   moongYellow,
 

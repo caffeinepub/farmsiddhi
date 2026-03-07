@@ -17,6 +17,7 @@ import {
   Truck,
 } from "lucide-react";
 import {
+  heroBg,
   iconMakhana,
   iconProcessed,
   iconPulses,
@@ -98,7 +99,10 @@ export default function Home() {
   return (
     <div>
       {/* Hero Section */}
-      <section className="relative bg-cover bg-center hero-bg-image">
+      <section
+        className="relative bg-cover bg-center hero-bg-image"
+        style={{ backgroundImage: `url(${heroBg})` }}
+      >
         <div className="absolute inset-0 bg-gradient-to-r from-background/95 to-background/70" />
         <div className="relative section-container py-12 md:py-16">
           <div className="max-w-3xl">

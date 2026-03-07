@@ -11,6 +11,8 @@ import { Suspense, lazy } from "react";
 import Footer from "./components/Footer";
 import Navigation from "./components/Navigation";
 import { CartProvider } from "./context/CartContext";
+import imageManifest from "./imageManifest.json";
+import { images } from "./lib/imageRegistry";
 
 const Home = lazy(() => import("./pages/Home"));
 const AboutUs = lazy(() => import("./pages/AboutUs"));
@@ -34,9 +36,41 @@ const queryClient = new QueryClient({
   },
 });
 
+/**
+ * ImageVault — renders every image from the registry AND the static manifest
+ * as hidden, zero-size elements. This guarantees that ALL image path strings
+ * appear in the compiled JS bundle so the build-time prune scanner never
+ * removes a referenced asset.
+ */
+function ImageVault() {
+  // Combine registry images with manifest images for maximum coverage
+  const allImages = [...Object.values(images), ...imageManifest.images];
+  // Deduplicate
+  const uniqueImages = [...new Set(allImages)];
+
+  return (
+    <div
+      aria-hidden="true"
+      style={{
+        position: "absolute",
+        width: 0,
+        height: 0,
+        overflow: "hidden",
+        opacity: 0,
+        pointerEvents: "none",
+      }}
+    >
+      {uniqueImages.map((src) => (
+        <img key={src} src={src} alt="" width={1} height={1} />
+      ))}
+    </div>
+  );
+}
+
 function Layout() {
   return (
     <div className="min-h-screen flex flex-col">
+      <ImageVault />
       <Navigation />
       <main className="flex-1">
         <Suspense

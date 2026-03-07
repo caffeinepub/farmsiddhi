@@ -4,74 +4,77 @@
 
 @layer base {
   :root {
-    --radius: 0.25rem;
-    --background: 1 0 0;
-    --foreground: 0.25 0 0;
-    --card: 0.99 0 0;
-    --card-foreground: 0.25 0 0;
-    --popover: 1 0 0;
-    --popover-foreground: 0.25 0 0;
-    --primary: 0.55 0.08 145;
+    --radius: 0.375rem;
+    /* Silver Green — primary brand color */
+    --primary: 0.48 0.1 148;
     --primary-foreground: 0.99 0 0;
-    --secondary: 0.5 0.06 65;
+    /* Silver Brown — secondary accent */
+    --secondary: 0.46 0.07 60;
     --secondary-foreground: 0.99 0 0;
-    --muted: 0.96 0 0;
-    --muted-foreground: 0.5 0 0;
-    --accent: 0.55 0.08 145;
+    /* Neutral whites and grays */
+    --background: 1 0 0;
+    --foreground: 0.2 0.01 148;
+    --card: 0.985 0 0;
+    --card-foreground: 0.2 0.01 148;
+    --popover: 1 0 0;
+    --popover-foreground: 0.2 0.01 148;
+    --muted: 0.96 0.005 148;
+    --muted-foreground: 0.48 0.02 148;
+    --accent: 0.48 0.1 148;
     --accent-foreground: 0.99 0 0;
     --destructive: 0.577 0.245 27.325;
     --destructive-foreground: 0.985 0 0;
-    --border: 0.9 0 0;
-    --input: 0.9 0 0;
-    --ring: 0.55 0.08 145;
-    --chart-1: 0.55 0.08 145;
-    --chart-2: 0.5 0.06 65;
-    --chart-3: 0.65 0.1 145;
-    --chart-4: 0.45 0.05 65;
-    --chart-5: 0.6 0.07 145;
-    --sidebar: 0.985 0 0;
-    --sidebar-foreground: 0.25 0 0;
-    --sidebar-primary: 0.55 0.08 145;
-    --sidebar-primary-foreground: 0.985 0 0;
-    --sidebar-accent: 0.97 0 0;
-    --sidebar-accent-foreground: 0.25 0 0;
-    --sidebar-border: 0.9 0 0;
-    --sidebar-ring: 0.55 0.08 145;
+    --border: 0.88 0.01 148;
+    --input: 0.88 0.01 148;
+    --ring: 0.48 0.1 148;
+    --chart-1: 0.48 0.1 148;
+    --chart-2: 0.46 0.07 60;
+    --chart-3: 0.6 0.12 148;
+    --chart-4: 0.38 0.05 60;
+    --chart-5: 0.55 0.09 148;
+    --sidebar: 0.98 0.005 148;
+    --sidebar-foreground: 0.2 0.01 148;
+    --sidebar-primary: 0.48 0.1 148;
+    --sidebar-primary-foreground: 0.99 0 0;
+    --sidebar-accent: 0.96 0.005 148;
+    --sidebar-accent-foreground: 0.2 0.01 148;
+    --sidebar-border: 0.88 0.01 148;
+    --sidebar-ring: 0.48 0.1 148;
   }
 
   .dark {
-    --background: 0.15 0 0;
+    --primary: 0.62 0.12 148;
+    --primary-foreground: 0.12 0 0;
+    --secondary: 0.58 0.09 60;
+    --secondary-foreground: 0.12 0 0;
+    --background: 0.14 0.005 148;
     --foreground: 0.95 0 0;
-    --card: 0.2 0 0;
+    --card: 0.19 0.005 148;
     --card-foreground: 0.95 0 0;
-    --popover: 0.25 0 0;
+    --popover: 0.22 0.005 148;
     --popover-foreground: 0.95 0 0;
-    --primary: 0.65 0.1 145;
-    --primary-foreground: 0.15 0 0;
-    --secondary: 0.6 0.08 65;
-    --secondary-foreground: 0.95 0 0;
-    --muted: 0.25 0 0;
-    --muted-foreground: 0.7 0 0;
-    --accent: 0.3 0 0;
+    --muted: 0.24 0.005 148;
+    --muted-foreground: 0.68 0.02 148;
+    --accent: 0.28 0.01 148;
     --accent-foreground: 0.95 0 0;
     --destructive: 0.704 0.191 22.216;
-    --destructive-foreground: 0.15 0 0;
-    --border: 0.3 0 0;
-    --input: 0.3 0 0;
-    --ring: 0.65 0.1 145;
-    --chart-1: 0.65 0.1 145;
-    --chart-2: 0.6 0.08 65;
-    --chart-3: 0.7 0.12 145;
-    --chart-4: 0.55 0.07 65;
-    --chart-5: 0.6 0.09 145;
-    --sidebar: 0.2 0 0;
+    --destructive-foreground: 0.14 0 0;
+    --border: 0.3 0.01 148;
+    --input: 0.3 0.01 148;
+    --ring: 0.62 0.12 148;
+    --chart-1: 0.62 0.12 148;
+    --chart-2: 0.58 0.09 60;
+    --chart-3: 0.72 0.14 148;
+    --chart-4: 0.52 0.07 60;
+    --chart-5: 0.67 0.11 148;
+    --sidebar: 0.19 0.005 148;
     --sidebar-foreground: 0.95 0 0;
-    --sidebar-primary: 0.65 0.1 145;
-    --sidebar-primary-foreground: 0.95 0 0;
-    --sidebar-accent: 0.25 0 0;
+    --sidebar-primary: 0.62 0.12 148;
+    --sidebar-primary-foreground: 0.12 0 0;
+    --sidebar-accent: 0.24 0.005 148;
     --sidebar-accent-foreground: 0.95 0 0;
-    --sidebar-border: 0.3 0 0;
-    --sidebar-ring: 0.65 0.1 145;
+    --sidebar-border: 0.3 0.01 148;
+    --sidebar-ring: 0.62 0.12 148;
   }
 
   * {
@@ -93,16 +96,22 @@
     @apply py-16 md:py-24;
   }
 
+  /* Watermark uses the actual uploaded logo at /assets/Logo.png */
   .watermark-container {
     @apply fixed inset-0 z-0 pointer-events-none;
-    background-image: url("/assets/generated/Logo.png");
+    background-image: url("/assets/Logo.png");
     background-repeat: no-repeat;
     background-position: center center;
-    background-size: 60%;
-    opacity: 0.18;
+    background-size: 55%;
+    opacity: 0.22;
   }
 
   .dark .watermark-container {
-    opacity: 0.1125;
+    opacity: 0.13;
+  }
+
+  /* Hero background class — ensures the path is detected by the build scanner */
+  .hero-bg-image {
+    background-image: url("/assets/generated/hero-bg.dim_1920x800.png");
   }
 }

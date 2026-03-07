@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { Menu, ShoppingCart, X } from "lucide-react";
 import { useState } from "react";
 import { useCart } from "../context/CartContext";
+import { logoUrl } from "../lib/imageRegistry";
 
 const navLinks = [
   { label: "Home", path: "/" },
@@ -24,9 +25,12 @@ export default function Navigation() {
           {/* Logo */}
           <Link to="/" className="flex items-center flex-shrink-0">
             <img
-              src="/assets/Logo.png"
+              src={logoUrl}
               alt="FarmSiddhi"
               className="h-[77px] w-auto object-contain"
+              onError={(e) => {
+                (e.target as HTMLImageElement).style.display = "none";
+              }}
             />
           </Link>
 

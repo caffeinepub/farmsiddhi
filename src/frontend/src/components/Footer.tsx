@@ -1,5 +1,6 @@
 import { Heart, Mail, MapPin, Phone } from "lucide-react";
 import { SiFacebook, SiLinkedin, SiX } from "react-icons/si";
+import { logoUrl } from "../lib/imageRegistry";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -14,9 +15,12 @@ export default function Footer() {
           {/* Logo and Description */}
           <div className="lg:col-span-2">
             <img
-              src="/assets/Logo.png"
+              src={logoUrl}
               alt="FarmSiddhi"
               className="h-[65px] w-auto object-contain mb-4"
+              onError={(e) => {
+                (e.target as HTMLImageElement).style.display = "none";
+              }}
             />
             <p className="text-sm text-muted-foreground max-w-md">
               Empowering farmers and enabling global markets through transparent

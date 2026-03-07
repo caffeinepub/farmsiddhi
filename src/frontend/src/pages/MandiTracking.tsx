@@ -32,6 +32,7 @@ import {
   useAddMandiPriceSeed,
   useGetAllMandiPrices,
 } from "../hooks/useQueries";
+import { mandiBanner } from "../lib/imageRegistry";
 
 const COMMODITY_OPTIONS = [
   { value: "all", label: "All Commodities" },
@@ -183,9 +184,12 @@ export default function MandiTracking() {
       {/* Hero Banner */}
       <section className="relative overflow-hidden">
         <img
-          src="/assets/generated/mandi-banner.dim_1200x400.png"
+          src={mandiBanner}
           alt="Live Mandi Prices"
           className="w-full h-48 md:h-64 object-cover"
+          onError={(e) => {
+            (e.target as HTMLImageElement).style.opacity = "0";
+          }}
         />
         <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/60 to-transparent flex items-center">
           <div className="section-container">

@@ -16,6 +16,17 @@ import {
   TrendingUp,
   Truck,
 } from "lucide-react";
+import {
+  iconMakhana,
+  iconProcessed,
+  iconPulses,
+  iconRice,
+  iconSpices,
+  iconWheat,
+  mandiBanner,
+  supplyChain,
+  watermarkFallback,
+} from "../lib/imageRegistry";
 
 export default function Home() {
   const services = [
@@ -54,32 +65,32 @@ export default function Home() {
   const products = [
     {
       name: "Rice",
-      icon: "/assets/generated/icon-rice.dim_128x128.png",
+      icon: iconRice,
       link: "/products/rice",
     },
     {
       name: "Wheat",
-      icon: "/assets/generated/icon-wheat.dim_128x128.png",
+      icon: iconWheat,
       link: "/products/wheat",
     },
     {
       name: "Pulses",
-      icon: "/assets/generated/icon-pulses.dim_128x128.png",
+      icon: iconPulses,
       link: "/products/pulses",
     },
     {
       name: "Spices",
-      icon: "/assets/generated/icon-spices.dim_128x128.png",
+      icon: iconSpices,
       link: "/products/spices",
     },
     {
       name: "Processed Foods",
-      icon: "/assets/generated/icon-processed.dim_128x128.png",
+      icon: iconProcessed,
       link: "/products/processed-food-products",
     },
     {
       name: "Makhana",
-      icon: "/assets/generated/icon-makhana.dim_128x128.png",
+      icon: iconMakhana,
       link: "/products/makhana",
     },
   ];
@@ -87,12 +98,7 @@ export default function Home() {
   return (
     <div>
       {/* Hero Section */}
-      <section
-        className="relative bg-cover bg-center"
-        style={{
-          backgroundImage: "url(/assets/generated/hero-bg.dim_1920x800.png)",
-        }}
-      >
+      <section className="relative bg-cover bg-center hero-bg-image">
         <div className="absolute inset-0 bg-gradient-to-r from-background/95 to-background/70" />
         <div className="relative section-container py-12 md:py-16">
           <div className="max-w-3xl">
@@ -147,9 +153,12 @@ export default function Home() {
         <div className="rounded-xl overflow-hidden border border-border shadow-soft">
           <div className="relative">
             <img
-              src="/assets/generated/mandi-banner.dim_1200x400.png"
+              src={mandiBanner}
               alt="Live Mandi Prices"
               className="w-full h-40 md:h-52 object-cover"
+              onError={(e) => {
+                (e.target as HTMLImageElement).style.opacity = "0";
+              }}
             />
             <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/75 to-transparent flex items-center">
               <div className="px-6 md:px-10 py-6 max-w-xl">
@@ -233,6 +242,9 @@ export default function Home() {
                     src={product.icon}
                     alt={product.name}
                     className="w-20 h-20 mx-auto mb-4 object-contain"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).style.opacity = "0.3";
+                    }}
                   />
                   <h3 className="font-semibold text-foreground">
                     {product.name}
@@ -258,9 +270,12 @@ export default function Home() {
           </div>
           <div className="max-w-4xl mx-auto">
             <img
-              src="/assets/generated/supply-chain-diagram.dim_800x400.png"
+              src={supplyChain}
               alt="Supply Chain Model"
               className="w-full h-auto rounded-lg shadow-medium"
+              onError={(e) => {
+                (e.target as HTMLImageElement).style.display = "none";
+              }}
             />
           </div>
         </div>

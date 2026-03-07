@@ -27,6 +27,46 @@ import {
   useGetAllOrders,
   useUpdateOrderStatus,
 } from "../hooks/useQueries";
+import {
+  makhana,
+  makhanaDetail,
+  makhanaPowder,
+  makhanaRoasted,
+  processedBesan,
+  processedDetail,
+  processedPoha,
+  processedRiceFlour,
+  processedRoastedChana,
+  processedVermicelli,
+  processedWheatFlour,
+  pulsesChana,
+  pulsesDetail,
+  pulsesKabuli,
+  pulsesMasoor,
+  pulsesMoong,
+  pulsesRajma,
+  pulsesToor,
+  pulsesUrad,
+  riceBasmati,
+  riceBroken,
+  riceBrown,
+  riceDetail,
+  riceIr64,
+  riceSonaMasoori,
+  spicesBlackPepper,
+  spicesCardamom,
+  spicesCoriander,
+  spicesCumin,
+  spicesDetail,
+  spicesFenugreek,
+  spicesGinger,
+  spicesRedChilli,
+  spicesTurmeric,
+  wheatDetail,
+  wheatDurum,
+  wheatSemolina,
+  wheatWhole,
+} from "../lib/imageRegistry";
 
 const ORDER_STATUSES = [
   { value: OrderStatus.pending, label: "Pending" },
@@ -79,28 +119,13 @@ const SEED_PRODUCTS = [
       vitamins: "B1, B3, B6",
       minerals: "Magnesium, Phosphorus",
     },
-    imageUrl: "/assets/generated/rice-detail.dim_800x600.png",
+    imageUrl: riceDetail,
     variants: [
-      {
-        name: "Basmati Rice",
-        imageUrl: "/assets/generated/rice-basmati.dim_400x300.png",
-      },
-      {
-        name: "Sona Masoori",
-        imageUrl: "/assets/generated/rice-sona-masoori.dim_400x300.png",
-      },
-      {
-        name: "IR64 Rice",
-        imageUrl: "/assets/generated/rice-ir64.dim_400x300.png",
-      },
-      {
-        name: "Brown Rice",
-        imageUrl: "/assets/generated/rice-brown.dim_400x300.png",
-      },
-      {
-        name: "Broken Rice",
-        imageUrl: "/assets/generated/rice-broken.dim_400x300.png",
-      },
+      { name: "Basmati Rice", imageUrl: riceBasmati },
+      { name: "Sona Masoori", imageUrl: riceSonaMasoori },
+      { name: "IR64 Rice", imageUrl: riceIr64 },
+      { name: "Brown Rice", imageUrl: riceBrown },
+      { name: "Broken Rice", imageUrl: riceBroken },
     ],
   },
   {
@@ -127,20 +152,11 @@ const SEED_PRODUCTS = [
       vitamins: "B1, B2, B3, E",
       minerals: "Iron, Zinc, Magnesium",
     },
-    imageUrl: "/assets/generated/wheat-detail.dim_800x600.png",
+    imageUrl: wheatDetail,
     variants: [
-      {
-        name: "Durum Wheat",
-        imageUrl: "/assets/generated/wheat-durum.dim_400x300.png",
-      },
-      {
-        name: "Whole Wheat",
-        imageUrl: "/assets/generated/wheat-whole.dim_400x300.png",
-      },
-      {
-        name: "Semolina (Suji)",
-        imageUrl: "/assets/generated/wheat-semolina.dim_400x300.png",
-      },
+      { name: "Durum Wheat", imageUrl: wheatDurum },
+      { name: "Whole Wheat", imageUrl: wheatWhole },
+      { name: "Semolina (Suji)", imageUrl: wheatSemolina },
     ],
   },
   {
@@ -167,36 +183,15 @@ const SEED_PRODUCTS = [
       vitamins: "B1, B6, Folate",
       minerals: "Iron, Potassium, Magnesium",
     },
-    imageUrl: "/assets/generated/pulses-detail.dim_800x600.png",
+    imageUrl: pulsesDetail,
     variants: [
-      {
-        name: "Chana Dal",
-        imageUrl: "/assets/generated/pulses-chana-dal.dim_400x300.png",
-      },
-      {
-        name: "Moong Dal",
-        imageUrl: "/assets/generated/pulses-moong-dal.dim_400x300.png",
-      },
-      {
-        name: "Masoor Dal",
-        imageUrl: "/assets/generated/pulses-masoor-dal.dim_400x300.png",
-      },
-      {
-        name: "Urad Dal",
-        imageUrl: "/assets/generated/pulses-urad-dal.dim_400x300.png",
-      },
-      {
-        name: "Toor Dal",
-        imageUrl: "/assets/generated/pulses-toor-dal.dim_400x300.png",
-      },
-      {
-        name: "Rajma",
-        imageUrl: "/assets/generated/pulses-rajma.dim_400x300.png",
-      },
-      {
-        name: "Kabuli Chana",
-        imageUrl: "/assets/generated/pulses-kabuli-chana.dim_400x300.png",
-      },
+      { name: "Chana Dal", imageUrl: pulsesChana },
+      { name: "Moong Dal", imageUrl: pulsesMoong },
+      { name: "Masoor Dal", imageUrl: pulsesMasoor },
+      { name: "Urad Dal", imageUrl: pulsesUrad },
+      { name: "Toor Dal", imageUrl: pulsesToor },
+      { name: "Rajma", imageUrl: pulsesRajma },
+      { name: "Kabuli Chana", imageUrl: pulsesKabuli },
     ],
   },
   {
@@ -223,40 +218,16 @@ const SEED_PRODUCTS = [
       vitamins: "C, B6, K",
       minerals: "Iron, Manganese, Potassium",
     },
-    imageUrl: "/assets/generated/spices-detail.dim_800x600.png",
+    imageUrl: spicesDetail,
     variants: [
-      {
-        name: "Turmeric Powder",
-        imageUrl: "/assets/generated/spices-turmeric.dim_400x400.png",
-      },
-      {
-        name: "Red Chilli Powder",
-        imageUrl: "/assets/generated/spices-red-chilli.dim_400x400.png",
-      },
-      {
-        name: "Coriander Powder",
-        imageUrl: "/assets/generated/spices-coriander.dim_400x400.png",
-      },
-      {
-        name: "Cumin Seeds",
-        imageUrl: "/assets/generated/spices-cumin.dim_400x300.png",
-      },
-      {
-        name: "Black Pepper",
-        imageUrl: "/assets/generated/spices-black-pepper.dim_400x300.png",
-      },
-      {
-        name: "Cardamom",
-        imageUrl: "/assets/generated/spices-cardamom.dim_400x300.png",
-      },
-      {
-        name: "Ginger Powder",
-        imageUrl: "/assets/generated/spices-ginger.dim_400x300.png",
-      },
-      {
-        name: "Fenugreek Seeds",
-        imageUrl: "/assets/generated/spices-fenugreek.dim_400x300.png",
-      },
+      { name: "Turmeric Powder", imageUrl: spicesTurmeric },
+      { name: "Red Chilli Powder", imageUrl: spicesRedChilli },
+      { name: "Coriander Powder", imageUrl: spicesCoriander },
+      { name: "Cumin Seeds", imageUrl: spicesCumin },
+      { name: "Black Pepper", imageUrl: spicesBlackPepper },
+      { name: "Cardamom", imageUrl: spicesCardamom },
+      { name: "Ginger Powder", imageUrl: spicesGinger },
+      { name: "Fenugreek Seeds", imageUrl: spicesFenugreek },
     ],
   },
   {
@@ -283,32 +254,14 @@ const SEED_PRODUCTS = [
       vitamins: "B1, B2, B3",
       minerals: "Iron, Calcium, Phosphorus",
     },
-    imageUrl: "/assets/generated/processed-detail.dim_800x600.png",
+    imageUrl: processedDetail,
     variants: [
-      {
-        name: "Rice Flour",
-        imageUrl: "/assets/generated/processed-rice-flour.dim_400x300.png",
-      },
-      {
-        name: "Wheat Flour (Atta)",
-        imageUrl: "/assets/generated/processed-wheat-flour.dim_400x300.png",
-      },
-      {
-        name: "Besan (Gram Flour)",
-        imageUrl: "/assets/generated/processed-besan.dim_400x300.png",
-      },
-      {
-        name: "Poha (Flattened Rice)",
-        imageUrl: "/assets/generated/processed-poha.dim_400x300.png",
-      },
-      {
-        name: "Roasted Chana",
-        imageUrl: "/assets/generated/processed-roasted-chana.dim_400x300.png",
-      },
-      {
-        name: "Vermicelli",
-        imageUrl: "/assets/generated/processed-vermicelli.dim_400x300.png",
-      },
+      { name: "Rice Flour", imageUrl: processedRiceFlour },
+      { name: "Wheat Flour (Atta)", imageUrl: processedWheatFlour },
+      { name: "Besan (Gram Flour)", imageUrl: processedBesan },
+      { name: "Poha (Flattened Rice)", imageUrl: processedPoha },
+      { name: "Roasted Chana", imageUrl: processedRoastedChana },
+      { name: "Vermicelli", imageUrl: processedVermicelli },
     ],
   },
   {
@@ -335,24 +288,12 @@ const SEED_PRODUCTS = [
       vitamins: "B1, B2",
       minerals: "Calcium, Magnesium, Potassium",
     },
-    imageUrl: "/assets/generated/makhana-detail.dim_800x600.png",
+    imageUrl: makhanaDetail,
     variants: [
-      {
-        name: "Regular Makhana",
-        imageUrl: "/assets/generated/makhana.dim_400x300.png",
-      },
-      {
-        name: "Premium Makhana",
-        imageUrl: "/assets/generated/makhana.dim_400x300.png",
-      },
-      {
-        name: "Roasted Makhana",
-        imageUrl: "/assets/generated/makhana-roasted.dim_400x300.png",
-      },
-      {
-        name: "Makhana Powder",
-        imageUrl: "/assets/generated/makhana-powder.dim_400x300.png",
-      },
+      { name: "Regular Makhana", imageUrl: makhana },
+      { name: "Premium Makhana", imageUrl: makhana },
+      { name: "Roasted Makhana", imageUrl: makhanaRoasted },
+      { name: "Makhana Powder", imageUrl: makhanaPowder },
     ],
   },
 ];

@@ -29,7 +29,13 @@ export default function Navigation() {
               alt="FarmSiddhi"
               className="h-[77px] w-auto object-contain"
               onError={(e) => {
-                (e.target as HTMLImageElement).style.display = "none";
+                // If logo fails to load, show company name as text fallback
+                const el = e.target as HTMLImageElement;
+                el.style.display = "none";
+                const span = document.createElement("span");
+                span.textContent = "FarmSiddhi";
+                span.className = "text-xl font-bold text-primary";
+                el.parentNode?.insertBefore(span, el.nextSibling);
               }}
             />
           </Link>

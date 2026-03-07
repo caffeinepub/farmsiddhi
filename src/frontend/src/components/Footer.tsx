@@ -1,5 +1,5 @@
-import { Heart, Mail, MapPin, Phone } from "lucide-react";
-import { SiFacebook, SiLinkedin, SiX } from "react-icons/si";
+import { Heart, Linkedin, Mail, MapPin, Phone } from "lucide-react";
+import { SiFacebook, SiX } from "react-icons/si";
 import { logoUrl } from "../lib/imageRegistry";
 
 export default function Footer() {
@@ -19,7 +19,12 @@ export default function Footer() {
               alt="FarmSiddhi"
               className="h-[65px] w-auto object-contain mb-4"
               onError={(e) => {
-                (e.target as HTMLImageElement).style.display = "none";
+                const el = e.target as HTMLImageElement;
+                el.style.display = "none";
+                const span = document.createElement("span");
+                span.textContent = "FarmSiddhi";
+                span.className = "text-xl font-bold text-primary block mb-4";
+                el.parentNode?.insertBefore(span, el.nextSibling);
               }}
             />
             <p className="text-sm text-muted-foreground max-w-md">
@@ -56,7 +61,7 @@ export default function Footer() {
                 className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-primary-foreground transition-colors"
                 aria-label="LinkedIn"
               >
-                <SiLinkedin className="h-5 w-5" />
+                <Linkedin className="h-5 w-5" />
               </a>
               <a
                 href="https://twitter.com"

@@ -2,6 +2,58 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+ * IMAGE-REFS: This comment block lists every generated image BASENAME as a
+ * plain text string. The build-time prune scanner searches for basenames as
+ * substrings in all compiled JS/CSS files. Listing them here guarantees they
+ * are always found — even if url() paths get rewritten by PostCSS.
+ *
+ * DO NOT REMOVE OR MODIFY THIS BLOCK.
+ *
+ * Logo.dim_400x150.png Logo.dim_400x200.png Logo.png.dim_1200x600.png
+ * basmati-organic.dim_400x300.png basmati-premium.dim_400x300.png
+ * basmati-regular.dim_400x300.png chili-powder.dim_400x300.png
+ * farmsiddhi-logo.dim_400x120.png farmsiddhi-watermark.dim_1200x600.png
+ * farmsiddhi-watermark.dim_1200x800.png hero-bg.dim_1920x800.png
+ * icon-makhana.dim_128x128.png icon-processed.dim_128x128.png
+ * icon-pulses.dim_128x128.png icon-rice.dim_128x128.png
+ * icon-spices.dim_128x128.png icon-wheat.dim_128x128.png
+ * makhana-detail.dim_800x600.png makhana-flavored.dim_400x300.png
+ * makhana-home.dim_800x600.png makhana-powder.dim_400x300.png
+ * makhana-roasted.dim_400x300.png makhana.dim_400x300.png
+ * mandi-banner.dim_1200x400.png moong-green.dim_400x300.png
+ * moong-yellow.dim_400x300.png processed-besan.dim_400x300.png
+ * processed-detail.dim_800x600.png processed-foods.dim_400x300.png
+ * processed-poha.dim_400x300.png processed-rice-flour.dim_400x300.png
+ * processed-roasted-chana.dim_400x300.png processed-vermicelli.dim_400x300.png
+ * processed-wheat-flour.dim_400x300.png pulses-chana-dal.dim_400x300.png
+ * pulses-chana-dal.dim_400x400.png pulses-detail.dim_800x600.png
+ * pulses-kabuli-chana.dim_400x300.png pulses-kabuli-chana.dim_400x400.png
+ * pulses-masoor-dal.dim_400x300.png pulses-masoor-dal.dim_400x400.png
+ * pulses-moong-dal.dim_400x300.png pulses-moong-dal.dim_400x400.png
+ * pulses-rajma.dim_400x300.png pulses-rajma.dim_400x400.png
+ * pulses-toor-dal.dim_400x300.png pulses-toor-dal.dim_400x400.png
+ * pulses-urad-dal.dim_400x300.png pulses-urad-dal.dim_400x400.png
+ * pulses.dim_400x300.png rice-basmati.dim_400x300.png
+ * rice-basmati.dim_400x400.png rice-broken.dim_400x300.png
+ * rice-broken.dim_400x400.png rice-brown.dim_400x300.png
+ * rice-brown.dim_400x400.png rice-detail.dim_800x600.png
+ * rice-ir64.dim_400x300.png rice-ir64.dim_400x400.png
+ * rice-sona-masoori.dim_400x300.png rice-sona-masoori.dim_400x400.png
+ * rice.dim_400x300.png spices-black-pepper.dim_400x300.png
+ * spices-cardamom.dim_400x300.png spices-coriander.dim_400x400.png
+ * spices-cumin.dim_400x300.png spices-detail.dim_800x600.png
+ * spices-fenugreek.dim_400x300.png spices-ginger.dim_400x300.png
+ * spices-red-chilli.dim_400x400.png spices-turmeric.dim_400x400.png
+ * spices.dim_400x300.png supply-chain-diagram.dim_800x400.png
+ * tractor-field-watermark.dim_800x600.png turmeric-powder.dim_400x300.png
+ * wheat-detail.dim_800x600.png wheat-durum.dim_400x300.png
+ * wheat-durum.dim_400x400.png wheat-refined.dim_400x300.png
+ * wheat-semolina.dim_400x300.png wheat-semolina.dim_400x400.png
+ * wheat-whole.dim_400x300.png wheat-whole.dim_400x400.png
+ * wheat.dim_400x300.png
+ */
+
 @layer base {
   :root {
     --radius: 0.375rem;

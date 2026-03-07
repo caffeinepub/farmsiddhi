@@ -11,7 +11,6 @@ import { Suspense, lazy } from "react";
 import Footer from "./components/Footer";
 import Navigation from "./components/Navigation";
 import { CartProvider } from "./context/CartContext";
-import imageManifest from "./imageManifest.json";
 import { images } from "./lib/imageRegistry";
 
 const Home = lazy(() => import("./pages/Home"));
@@ -37,16 +36,13 @@ const queryClient = new QueryClient({
 });
 
 /**
- * ImageVault — renders every image from the registry AND the static manifest
- * as hidden, zero-size elements. This guarantees that ALL image path strings
- * appear in the compiled JS bundle so the build-time prune scanner never
- * removes a referenced asset.
+ * ImageVault — renders every image from the registry as hidden, zero-size
+ * elements. Since all images are imported via static `import` statements in
+ * imageRegistry.ts, Vite bundles them as real assets so they're never pruned.
+ * This component also pre-loads them into the browser cache at startup.
  */
 function ImageVault() {
-  // Combine registry images with manifest images for maximum coverage
-  const allImages = [...Object.values(images), ...imageManifest.images];
-  // Deduplicate
-  const uniqueImages = [...new Set(allImages)];
+  const allImages = Object.values(images);
 
   return (
     <div
@@ -60,7 +56,7 @@ function ImageVault() {
         pointerEvents: "none",
       }}
     >
-      {uniqueImages.map((src) => (
+      {allImages.map((src) => (
         <img key={src} src={src} alt="" width={1} height={1} />
       ))}
     </div>

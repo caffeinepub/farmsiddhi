@@ -7,7 +7,7 @@ import { Loader2, ShoppingBag } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { useCart } from "../context/CartContext";
-import { usePlaceOrder } from "../hooks/useQueries";
+import { useActor } from "../hooks/useActor";
 
 interface FormData {
   buyerName: string;
@@ -34,9 +34,10 @@ const initialForm: FormData = {
 export default function Checkout() {
   const navigate = useNavigate();
   const { items, cartTotal, clearCart } = useCart();
-  const { mutateAsync: placeOrder, isPending } = usePlaceOrder();
+  const { actor, isFetching: actorLoading } = useActor();
   const [form, setForm] = useState<FormData>(initialForm);
   const [errors, setErrors] = useState<Partial<FormData>>({});
+  const [isPending, setIsPending] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -69,9 +70,22 @@ export default function Checkout() {
       toast.error("Your cart is empty");
       return;
     }
+    if (actorLoading) {
+      toast.error(
+        "Still connecting to backend — please wait a moment and try again.",
+      );
+      return;
+    }
+    if (!actor) {
+      toast.error(
+        "Backend connection unavailable. Please refresh the page and try again.",
+      );
+      return;
+    }
 
+    setIsPending(true);
     try {
-      const order = await placeOrder({
+      const orderInput = {
         buyerName: form.buyerName,
         buyerEmail: form.buyerEmail,
         buyerPhone: form.buyerPhone,
@@ -83,40 +97,87 @@ export default function Checkout() {
           country: form.country,
         },
         items: items.map((item) => ({
-          productId: BigInt(item.productId),
-          productName: item.productName,
-          variantName: item.variantName,
-          quantity: BigInt(item.quantity),
-          unitPrice: BigInt(item.unitPrice),
+          productId: BigInt(Math.max(0, Math.round(item.productId))),
+          productName: String(item.productName),
+          variantName: String(item.variantName),
+          quantity: BigInt(Math.max(1, Math.round(item.quantity))),
+          unitPrice: BigInt(Math.max(0, Math.round(item.unitPrice))),
         })),
-      });
+      };
+
+      // Call placeOrder directly on the actor (bypasses useMutation race condition)
+      const order = await actor.placeOrder(orderInput);
+
+      // Normalise status — Motoko variant comes back as { pending: null } object
+      const rawStatus = order.status as unknown;
+      let statusStr = "pending";
+      if (typeof rawStatus === "string") {
+        // Could be a plain string like "pending"
+        if ((rawStatus as string).startsWith("{")) {
+          try {
+            const parsed = JSON.parse(rawStatus as string) as Record<
+              string,
+              unknown
+            >;
+            statusStr = Object.keys(parsed)[0] ?? "pending";
+          } catch {
+            statusStr = rawStatus as string;
+          }
+        } else {
+          statusStr = rawStatus as string;
+        }
+      } else if (typeof rawStatus === "object" && rawStatus !== null) {
+        statusStr =
+          Object.keys(rawStatus as Record<string, unknown>)[0] ?? "pending";
+      }
 
       // Save order to sessionStorage for confirmation page
-      sessionStorage.setItem(
-        "lastOrder",
-        JSON.stringify({
-          ...order,
-          orderId: order.orderId.toString(),
-          totalAmount: order.totalAmount.toString(),
-          createdAt: order.createdAt.toString(),
-          items: order.items.map((i) => ({
-            ...i,
-            productId: i.productId.toString(),
-            quantity: i.quantity.toString(),
-            unitPrice: i.unitPrice.toString(),
-          })),
-        }),
-      );
+      // All BigInt values must be converted to strings for JSON serialisation
+      const serialisedOrder = {
+        orderId: String(order.orderId),
+        buyerName: String(order.buyerName),
+        buyerEmail: String(order.buyerEmail),
+        buyerPhone: String(order.buyerPhone),
+        shippingAddress: {
+          street: String(order.shippingAddress.street),
+          city: String(order.shippingAddress.city),
+          state: String(order.shippingAddress.state),
+          pincode: String(order.shippingAddress.pincode),
+          country: String(order.shippingAddress.country),
+        },
+        totalAmount: String(order.totalAmount),
+        createdAt: String(order.createdAt),
+        status: statusStr,
+        items: (order.items || []).map((i) => ({
+          productId: String(i.productId),
+          productName: String(i.productName),
+          variantName: String(i.variantName),
+          quantity: String(i.quantity),
+          unitPrice: String(i.unitPrice),
+        })),
+      };
+
+      sessionStorage.setItem("lastOrder", JSON.stringify(serialisedOrder));
 
       clearCart();
       toast.success("Order placed successfully!");
       navigate({
         to: "/order-confirmation/$orderId",
-        params: { orderId: order.orderId.toString() },
+        params: { orderId: String(order.orderId) },
       });
     } catch (error) {
       console.error("Order placement failed:", error);
-      toast.error("Failed to place order. Please try again.");
+      let msg = "Unknown error occurred";
+      if (error instanceof Error) {
+        msg = error.message;
+      } else if (typeof error === "string") {
+        msg = error;
+      } else if (error && typeof error === "object" && "message" in error) {
+        msg = String((error as { message: unknown }).message);
+      }
+      toast.error(`Failed to place order: ${msg}. Please try again.`);
+    } finally {
+      setIsPending(false);
     }
   };
 
@@ -353,13 +414,18 @@ export default function Checkout() {
                   type="submit"
                   size="lg"
                   className="w-full gap-2"
-                  disabled={isPending}
+                  disabled={isPending || actorLoading}
                   data-ocid="checkout.submit_button"
                 >
                   {isPending ? (
                     <>
                       <Loader2 className="h-4 w-4 animate-spin" />
                       Placing Order...
+                    </>
+                  ) : actorLoading ? (
+                    <>
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                      Connecting...
                     </>
                   ) : (
                     "Place Order"

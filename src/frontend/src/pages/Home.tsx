@@ -247,7 +247,9 @@ export default function Home() {
                     alt={product.name}
                     className="w-20 h-20 mx-auto mb-4 object-contain"
                     onError={(e) => {
-                      (e.target as HTMLImageElement).style.opacity = "0.3";
+                      const el = e.target as HTMLImageElement;
+                      el.style.opacity = "0.15";
+                      el.style.filter = "grayscale(1)";
                     }}
                   />
                   <h3 className="font-semibold text-foreground">

@@ -1,5 +1,5 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Target, Lightbulb, Building2 } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Building2, Lightbulb, Target } from "lucide-react";
 
 export default function AboutUs() {
   return (
@@ -7,10 +7,12 @@ export default function AboutUs() {
       {/* Header Section */}
       <section className="bg-muted/30 py-16">
         <div className="section-container text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">About FarmSiddhi</h1>
+          <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
+            About FarmSiddhi
+          </h1>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-            Transforming agricultural supply chains through digital innovation and transparent
-            partnerships
+            Transforming agricultural supply chains through digital innovation
+            and transparent partnerships
           </p>
         </div>
       </section>
@@ -28,9 +30,10 @@ export default function AboutUs() {
             </CardHeader>
             <CardContent>
               <p className="text-muted-foreground leading-relaxed">
-                Building a transparent farm-to-global-market ecosystem that empowers farmers with
-                fair pricing, connects buyers with quality produce, and establishes India as a
-                trusted source for premium agricultural products worldwide.
+                Building a transparent farm-to-global-market ecosystem that
+                empowers farmers with fair pricing, connects buyers with quality
+                produce, and establishes India as a trusted source for premium
+                agricultural products worldwide.
               </p>
             </CardContent>
           </Card>
@@ -45,9 +48,10 @@ export default function AboutUs() {
             </CardHeader>
             <CardContent>
               <p className="text-muted-foreground leading-relaxed">
-                Enable farmers to access fair pricing and global demand by eliminating intermediaries,
-                ensuring quality standards, and providing comprehensive supply chain support from
-                aggregation to international distribution.
+                Enable farmers to access fair pricing and global demand by
+                eliminating intermediaries, ensuring quality standards, and
+                providing comprehensive supply chain support from aggregation to
+                international distribution.
               </p>
             </CardContent>
           </Card>
@@ -62,9 +66,10 @@ export default function AboutUs() {
             </CardHeader>
             <CardContent>
               <p className="text-muted-foreground leading-relaxed">
-                Digital aggregation and supply chain enablement platform that connects farmers
-                directly with bulk buyers and international importers, managing quality control,
-                processing, packaging, and logistics for seamless farm-to-market operations.
+                Digital aggregation and supply chain enablement platform that
+                connects farmers directly with bulk buyers and international
+                importers, managing quality control, processing, packaging, and
+                logistics for seamless farm-to-market operations.
               </p>
             </CardContent>
           </Card>
@@ -80,20 +85,24 @@ export default function AboutUs() {
             </h2>
             <div className="space-y-6 text-muted-foreground leading-relaxed">
               <p className="text-lg">
-                FarmSiddhi represents a new paradigm in agricultural commerce. We leverage digital
-                technology to create direct connections between farmers and markets, eliminating
-                inefficiencies and ensuring fair value distribution across the supply chain.
+                FarmSiddhi represents a new paradigm in agricultural commerce.
+                We leverage digital technology to create direct connections
+                between farmers and markets, eliminating inefficiencies and
+                ensuring fair value distribution across the supply chain.
               </p>
               <p className="text-lg">
-                Our platform provides farmers with access to larger markets and better pricing, while
-                offering buyers and international importers reliable access to high-quality Indian
-                agricultural products. Through rigorous quality control, professional packaging, and
-                efficient logistics, we ensure that every transaction meets international standards.
+                Our platform provides farmers with access to larger markets and
+                better pricing, while offering buyers and international
+                importers reliable access to high-quality Indian agricultural
+                products. Through rigorous quality control, professional
+                packaging, and efficient logistics, we ensure that every
+                transaction meets international standards.
               </p>
               <p className="text-lg">
-                With FarmSiddhi, stakeholders across the agricultural value chain benefit from
-                transparency, efficiency, and trust. We are committed to building long-term
-                partnerships that drive sustainable growth for farmers, buyers, and the broader
+                With FarmSiddhi, stakeholders across the agricultural value
+                chain benefit from transparency, efficiency, and trust. We are
+                committed to building long-term partnerships that drive
+                sustainable growth for farmers, buyers, and the broader
                 agricultural ecosystem.
               </p>
             </div>

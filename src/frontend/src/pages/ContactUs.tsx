@@ -1,54 +1,68 @@
-import { useState } from 'react';
-import { useSubmitContactForm } from '@/hooks/useQueries';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { toast } from 'sonner';
-import { Mail, Phone, MapPin } from 'lucide-react';
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import { useSubmitContactForm } from "@/hooks/useQueries";
+import { Mail, MapPin, Phone } from "lucide-react";
+import { useState } from "react";
+import { toast } from "sonner";
 
 export default function ContactUs() {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phoneNumber: '',
-    message: '',
-    userType: '',
+    name: "",
+    email: "",
+    phoneNumber: "",
+    message: "",
+    userType: "",
   });
 
   const submitMutation = useSubmitContactForm();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.name || !formData.email || !formData.phoneNumber || !formData.message || !formData.userType) {
-      toast.error('Please fill in all fields');
+    if (
+      !formData.name ||
+      !formData.email ||
+      !formData.phoneNumber ||
+      !formData.message ||
+      !formData.userType
+    ) {
+      toast.error("Please fill in all fields");
       return;
     }
-    
+
     submitMutation.mutate(formData, {
       onSuccess: () => {
-        toast.success('Message sent successfully!', {
-          description: 'Your message has been saved. We will get back to you soon.',
+        toast.success("Message sent successfully!", {
+          description:
+            "Your message has been saved. We will get back to you soon.",
         });
         setFormData({
-          name: '',
-          email: '',
-          phoneNumber: '',
-          message: '',
-          userType: '',
+          name: "",
+          email: "",
+          phoneNumber: "",
+          message: "",
+          userType: "",
         });
       },
       onError: (error) => {
-        toast.error('Failed to send message', {
-          description: error instanceof Error ? error.message : 'Please try again later.',
+        toast.error("Failed to send message", {
+          description:
+            error instanceof Error ? error.message : "Please try again later.",
         });
       },
     });
@@ -59,9 +73,12 @@ export default function ContactUs() {
       {/* Header Section */}
       <section className="bg-muted/30 py-16">
         <div className="section-container text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">Contact Us</h1>
+          <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
+            Contact Us
+          </h1>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-            Get in touch with us to explore partnership opportunities or learn more about our services
+            Get in touch with us to explore partnership opportunities or learn
+            more about our services
           </p>
         </div>
       </section>
@@ -85,7 +102,9 @@ export default function ContactUs() {
                   </div>
                   <div>
                     <p className="font-medium text-foreground">Email</p>
-                    <p className="text-sm text-muted-foreground">info@farmsiddhi.com</p>
+                    <p className="text-sm text-muted-foreground">
+                      info@farmsiddhi.com
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
@@ -94,7 +113,9 @@ export default function ContactUs() {
                   </div>
                   <div>
                     <p className="font-medium text-foreground">Phone</p>
-                    <p className="text-sm text-muted-foreground">+91 (000) 000-0000</p>
+                    <p className="text-sm text-muted-foreground">
+                      +91 (000) 000-0000
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
@@ -103,7 +124,9 @@ export default function ContactUs() {
                   </div>
                   <div>
                     <p className="font-medium text-foreground">Office</p>
-                    <p className="text-sm text-muted-foreground">Mumbai, Maharashtra, India</p>
+                    <p className="text-sm text-muted-foreground">
+                      Mumbai, Maharashtra, India
+                    </p>
                   </div>
                 </div>
               </CardContent>
@@ -111,7 +134,9 @@ export default function ContactUs() {
 
             <Card className="border-border bg-gradient-to-br from-primary/5 to-secondary/5">
               <CardContent className="pt-6">
-                <h3 className="font-semibold text-foreground mb-2">Business Hours</h3>
+                <h3 className="font-semibold text-foreground mb-2">
+                  Business Hours
+                </h3>
                 <p className="text-sm text-muted-foreground">
                   Monday - Friday: 9:00 AM - 6:00 PM IST
                   <br />
@@ -129,7 +154,8 @@ export default function ContactUs() {
               <CardHeader>
                 <CardTitle>Send us a Message</CardTitle>
                 <CardDescription>
-                  Fill out the form below and we'll get back to you as soon as possible
+                  Fill out the form below and we'll get back to you as soon as
+                  possible
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -142,7 +168,9 @@ export default function ContactUs() {
                         type="text"
                         placeholder="Your full name"
                         value={formData.name}
-                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        onChange={(e) =>
+                          setFormData({ ...formData, name: e.target.value })
+                        }
                         required
                       />
                     </div>
@@ -153,7 +181,9 @@ export default function ContactUs() {
                         type="email"
                         placeholder="your.email@example.com"
                         value={formData.email}
-                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        onChange={(e) =>
+                          setFormData({ ...formData, email: e.target.value })
+                        }
                         required
                       />
                     </div>
@@ -167,7 +197,12 @@ export default function ContactUs() {
                         type="tel"
                         placeholder="+91 00000 00000"
                         value={formData.phoneNumber}
-                        onChange={(e) => setFormData({ ...formData, phoneNumber: e.target.value })}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            phoneNumber: e.target.value,
+                          })
+                        }
                         required
                       />
                     </div>
@@ -175,7 +210,9 @@ export default function ContactUs() {
                       <Label htmlFor="userType">I am a *</Label>
                       <Select
                         value={formData.userType}
-                        onValueChange={(value) => setFormData({ ...formData, userType: value })}
+                        onValueChange={(value) =>
+                          setFormData({ ...formData, userType: value })
+                        }
                         required
                       >
                         <SelectTrigger id="userType">
@@ -184,7 +221,9 @@ export default function ContactUs() {
                         <SelectContent>
                           <SelectItem value="Farmer">Farmer</SelectItem>
                           <SelectItem value="Buyer">Buyer</SelectItem>
-                          <SelectItem value="Distributor">Distributor</SelectItem>
+                          <SelectItem value="Distributor">
+                            Distributor
+                          </SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
@@ -197,7 +236,9 @@ export default function ContactUs() {
                       placeholder="Tell us about your inquiry or partnership interest..."
                       rows={6}
                       value={formData.message}
-                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({ ...formData, message: e.target.value })
+                      }
                       required
                     />
                   </div>
@@ -208,7 +249,7 @@ export default function ContactUs() {
                     className="w-full md:w-auto"
                     disabled={submitMutation.isPending}
                   >
-                    {submitMutation.isPending ? 'Sending...' : 'Send Message'}
+                    {submitMutation.isPending ? "Sending..." : "Send Message"}
                   </Button>
                 </form>
               </CardContent>

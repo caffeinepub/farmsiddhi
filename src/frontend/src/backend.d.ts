@@ -23,18 +23,26 @@ export interface NutritionData {
     fiber: number;
     carbohydrates: number;
     calories: number;
+    iron: number;
+    zinc: number;
     minerals: string;
     vitamins: string;
     protein: number;
 }
-export interface Specification {
-    key: string;
-    value: string;
+export interface MandiPrice {
+    id: bigint;
+    unit: string;
+    lastUpdated: bigint;
+    maxPrice: number;
+    state: string;
+    category: string;
+    market: string;
+    minPrice: number;
+    commodity: string;
+    variety: string;
+    modalPrice: number;
 }
-export interface ProductVariant {
-    name: string;
-    imageUrl: string;
-}
+export type Time = bigint;
 export interface ContactFormEntry {
     userType: string;
     name: string;
@@ -42,12 +50,86 @@ export interface ContactFormEntry {
     message: string;
     phoneNumber: string;
 }
+export interface Address {
+    street: string;
+    country: string;
+    city: string;
+    state: string;
+    pincode: string;
+}
+export interface OrderItem {
+    variantName: string;
+    productId: bigint;
+    productName: string;
+    quantity: bigint;
+    unitPrice: bigint;
+}
+export interface NewOrderInput {
+    buyerEmail: string;
+    buyerPhone: string;
+    shippingAddress: Address;
+    items: Array<OrderItem>;
+    buyerName: string;
+}
+export interface Order {
+    status: OrderStatus;
+    buyerEmail: string;
+    createdAt: Time;
+    buyerPhone: string;
+    orderId: bigint;
+    totalAmount: bigint;
+    shippingAddress: Address;
+    items: Array<OrderItem>;
+    buyerName: string;
+}
+export interface ProductVariant {
+    name: string;
+    imageUrl: string;
+}
+export interface Specification {
+    key: string;
+    value: string;
+}
+export interface UserProfile {
+    name: string;
+    email: string;
+}
+export enum OrderStatus {
+    shipped = "shipped",
+    cancelled = "cancelled",
+    pending = "pending",
+    delivered = "delivered",
+    confirmed = "confirmed",
+    processing = "processing"
+}
+export enum UserRole {
+    admin = "admin",
+    user = "user",
+    guest = "guest"
+}
 export interface backendInterface {
     addProductDetail(productName: string, category: string, description: string, specifications: Array<Specification>, price: bigint, nutritionData: NutritionData, imageUrl: string, variants: Array<ProductVariant>): Promise<bigint>;
+    assignCallerUserRole(user: Principal, role: UserRole): Promise<void>;
     getAllContactForms(): Promise<Array<ContactFormEntry>>;
+    getAllMandiPrices(): Promise<Array<MandiPrice>>;
+    getAllOrders(): Promise<Array<Order>>;
     getAllProductDetails(): Promise<Array<ProductDetail>>;
+    getCallerUserProfile(): Promise<UserProfile | null>;
+    getCallerUserRole(): Promise<UserRole>;
     getFormEntry(index: bigint): Promise<ContactFormEntry>;
+    getMandiPricesByCategory(category: string): Promise<Array<MandiPrice>>;
+    getMandiPricesByCommodity(commodity: string): Promise<Array<MandiPrice>>;
+    getMandiPricesByMarket(market: string): Promise<Array<MandiPrice>>;
+    getMandiPricesByState(state: string): Promise<Array<MandiPrice>>;
+    getOrderById(orderId: bigint): Promise<Order | null>;
+    getProductByCategory(category: string): Promise<ProductDetail | null>;
     getProductDetail(productId: bigint): Promise<ProductDetail | null>;
     getProductsByCategory(category: string): Promise<Array<ProductDetail>>;
+    getUserProfile(user: Principal): Promise<UserProfile | null>;
+    isCallerAdmin(): Promise<boolean>;
+    placeOrder(input: NewOrderInput): Promise<Order>;
+    saveCallerUserProfile(profile: UserProfile): Promise<void>;
+    seedMandiPrices(): Promise<void>;
     submitContactForm(name: string, email: string, phoneNumber: string, message: string, userType: string): Promise<void>;
+    updateOrderStatus(orderId: bigint, status: OrderStatus): Promise<boolean>;
 }

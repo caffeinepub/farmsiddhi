@@ -10,6 +10,13 @@ import type { ActorMethod } from '@icp-sdk/core/agent';
 import type { IDL } from '@icp-sdk/core/candid';
 import type { Principal } from '@icp-sdk/core/principal';
 
+export interface Address {
+  'street' : string,
+  'country' : string,
+  'city' : string,
+  'state' : string,
+  'pincode' : string,
+}
 export interface ContactFormEntry {
   'userType' : string,
   'name' : string,
@@ -17,15 +24,61 @@ export interface ContactFormEntry {
   'message' : string,
   'phoneNumber' : string,
 }
+export interface MandiPrice {
+  'id' : bigint,
+  'unit' : string,
+  'lastUpdated' : bigint,
+  'maxPrice' : number,
+  'state' : string,
+  'category' : string,
+  'market' : string,
+  'minPrice' : number,
+  'commodity' : string,
+  'variety' : string,
+  'modalPrice' : number,
+}
+export interface NewOrderInput {
+  'buyerEmail' : string,
+  'buyerPhone' : string,
+  'shippingAddress' : Address,
+  'items' : Array<OrderItem>,
+  'buyerName' : string,
+}
 export interface NutritionData {
   'fat' : number,
   'fiber' : number,
   'carbohydrates' : number,
   'calories' : number,
+  'iron' : number,
+  'zinc' : number,
   'minerals' : string,
   'vitamins' : string,
   'protein' : number,
 }
+export interface Order {
+  'status' : OrderStatus,
+  'buyerEmail' : string,
+  'createdAt' : Time,
+  'buyerPhone' : string,
+  'orderId' : bigint,
+  'totalAmount' : bigint,
+  'shippingAddress' : Address,
+  'items' : Array<OrderItem>,
+  'buyerName' : string,
+}
+export interface OrderItem {
+  'variantName' : string,
+  'productId' : bigint,
+  'productName' : string,
+  'quantity' : bigint,
+  'unitPrice' : bigint,
+}
+export type OrderStatus = { 'shipped' : null } |
+  { 'cancelled' : null } |
+  { 'pending' : null } |
+  { 'delivered' : null } |
+  { 'confirmed' : null } |
+  { 'processing' : null };
 export interface ProductDetail {
   'specifications' : Array<Specification>,
   'description' : string,
@@ -39,7 +92,39 @@ export interface ProductDetail {
 }
 export interface ProductVariant { 'name' : string, 'imageUrl' : string }
 export interface Specification { 'key' : string, 'value' : string }
+export type Time = bigint;
+export interface UserProfile { 'name' : string, 'email' : string }
+export type UserRole = { 'admin' : null } |
+  { 'user' : null } |
+  { 'guest' : null };
+export interface _CaffeineStorageCreateCertificateResult {
+  'method' : string,
+  'blob_hash' : string,
+}
+export interface _CaffeineStorageRefillInformation {
+  'proposed_top_up_amount' : [] | [bigint],
+}
+export interface _CaffeineStorageRefillResult {
+  'success' : [] | [boolean],
+  'topped_up_amount' : [] | [bigint],
+}
 export interface _SERVICE {
+  '_caffeineStorageBlobIsLive' : ActorMethod<[Uint8Array], boolean>,
+  '_caffeineStorageBlobsToDelete' : ActorMethod<[], Array<Uint8Array>>,
+  '_caffeineStorageConfirmBlobDeletion' : ActorMethod<
+    [Array<Uint8Array>],
+    undefined
+  >,
+  '_caffeineStorageCreateCertificate' : ActorMethod<
+    [string],
+    _CaffeineStorageCreateCertificateResult
+  >,
+  '_caffeineStorageRefillCashier' : ActorMethod<
+    [[] | [_CaffeineStorageRefillInformation]],
+    _CaffeineStorageRefillResult
+  >,
+  '_caffeineStorageUpdateGatewayPrincipals' : ActorMethod<[], undefined>,
+  '_initializeAccessControlWithSecret' : ActorMethod<[string], undefined>,
   'addProductDetail' : ActorMethod<
     [
       string,
@@ -53,15 +138,32 @@ export interface _SERVICE {
     ],
     bigint
   >,
+  'assignCallerUserRole' : ActorMethod<[Principal, UserRole], undefined>,
   'getAllContactForms' : ActorMethod<[], Array<ContactFormEntry>>,
+  'getAllMandiPrices' : ActorMethod<[], Array<MandiPrice>>,
+  'getAllOrders' : ActorMethod<[], Array<Order>>,
   'getAllProductDetails' : ActorMethod<[], Array<ProductDetail>>,
+  'getCallerUserProfile' : ActorMethod<[], [] | [UserProfile]>,
+  'getCallerUserRole' : ActorMethod<[], UserRole>,
   'getFormEntry' : ActorMethod<[bigint], ContactFormEntry>,
+  'getMandiPricesByCategory' : ActorMethod<[string], Array<MandiPrice>>,
+  'getMandiPricesByCommodity' : ActorMethod<[string], Array<MandiPrice>>,
+  'getMandiPricesByMarket' : ActorMethod<[string], Array<MandiPrice>>,
+  'getMandiPricesByState' : ActorMethod<[string], Array<MandiPrice>>,
+  'getOrderById' : ActorMethod<[bigint], [] | [Order]>,
+  'getProductByCategory' : ActorMethod<[string], [] | [ProductDetail]>,
   'getProductDetail' : ActorMethod<[bigint], [] | [ProductDetail]>,
   'getProductsByCategory' : ActorMethod<[string], Array<ProductDetail>>,
+  'getUserProfile' : ActorMethod<[Principal], [] | [UserProfile]>,
+  'isCallerAdmin' : ActorMethod<[], boolean>,
+  'placeOrder' : ActorMethod<[NewOrderInput], Order>,
+  'saveCallerUserProfile' : ActorMethod<[UserProfile], undefined>,
+  'seedMandiPrices' : ActorMethod<[], undefined>,
   'submitContactForm' : ActorMethod<
     [string, string, string, string, string],
     undefined
   >,
+  'updateOrderStatus' : ActorMethod<[bigint, OrderStatus], boolean>,
 }
 export declare const idlService: IDL.ServiceClass;
 export declare const idlInitArgs: IDL.Type[];

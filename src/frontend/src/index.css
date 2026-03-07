@@ -3,105 +3,106 @@
 @tailwind utilities;
 
 @layer base {
-    :root {
-        --radius: 0.25rem;
-        --background: 1 0 0;
-        --foreground: 0.25 0 0;
-        --card: 0.99 0 0;
-        --card-foreground: 0.25 0 0;
-        --popover: 1 0 0;
-        --popover-foreground: 0.25 0 0;
-        --primary: 0.55 0.08 145;
-        --primary-foreground: 0.99 0 0;
-        --secondary: 0.50 0.06 65;
-        --secondary-foreground: 0.99 0 0;
-        --muted: 0.96 0 0;
-        --muted-foreground: 0.50 0 0;
-        --accent: 0.55 0.08 145;
-        --accent-foreground: 0.99 0 0;
-        --destructive: 0.577 0.245 27.325;
-        --destructive-foreground: 0.985 0 0;
-        --border: 0.90 0 0;
-        --input: 0.90 0 0;
-        --ring: 0.55 0.08 145;
-        --chart-1: 0.55 0.08 145;
-        --chart-2: 0.50 0.06 65;
-        --chart-3: 0.65 0.10 145;
-        --chart-4: 0.45 0.05 65;
-        --chart-5: 0.60 0.07 145;
-        --sidebar: 0.985 0 0;
-        --sidebar-foreground: 0.25 0 0;
-        --sidebar-primary: 0.55 0.08 145;
-        --sidebar-primary-foreground: 0.985 0 0;
-        --sidebar-accent: 0.97 0 0;
-        --sidebar-accent-foreground: 0.25 0 0;
-        --sidebar-border: 0.90 0 0;
-        --sidebar-ring: 0.55 0.08 145;
-    }
+  :root {
+    --radius: 0.25rem;
+    --background: 1 0 0;
+    --foreground: 0.25 0 0;
+    --card: 0.99 0 0;
+    --card-foreground: 0.25 0 0;
+    --popover: 1 0 0;
+    --popover-foreground: 0.25 0 0;
+    --primary: 0.55 0.08 145;
+    --primary-foreground: 0.99 0 0;
+    --secondary: 0.5 0.06 65;
+    --secondary-foreground: 0.99 0 0;
+    --muted: 0.96 0 0;
+    --muted-foreground: 0.5 0 0;
+    --accent: 0.55 0.08 145;
+    --accent-foreground: 0.99 0 0;
+    --destructive: 0.577 0.245 27.325;
+    --destructive-foreground: 0.985 0 0;
+    --border: 0.9 0 0;
+    --input: 0.9 0 0;
+    --ring: 0.55 0.08 145;
+    --chart-1: 0.55 0.08 145;
+    --chart-2: 0.5 0.06 65;
+    --chart-3: 0.65 0.1 145;
+    --chart-4: 0.45 0.05 65;
+    --chart-5: 0.6 0.07 145;
+    --sidebar: 0.985 0 0;
+    --sidebar-foreground: 0.25 0 0;
+    --sidebar-primary: 0.55 0.08 145;
+    --sidebar-primary-foreground: 0.985 0 0;
+    --sidebar-accent: 0.97 0 0;
+    --sidebar-accent-foreground: 0.25 0 0;
+    --sidebar-border: 0.9 0 0;
+    --sidebar-ring: 0.55 0.08 145;
+  }
 
-    .dark {
-        --background: 0.15 0 0;
-        --foreground: 0.95 0 0;
-        --card: 0.20 0 0;
-        --card-foreground: 0.95 0 0;
-        --popover: 0.25 0 0;
-        --popover-foreground: 0.95 0 0;
-        --primary: 0.65 0.10 145;
-        --primary-foreground: 0.15 0 0;
-        --secondary: 0.60 0.08 65;
-        --secondary-foreground: 0.95 0 0;
-        --muted: 0.25 0 0;
-        --muted-foreground: 0.70 0 0;
-        --accent: 0.30 0 0;
-        --accent-foreground: 0.95 0 0;
-        --destructive: 0.704 0.191 22.216;
-        --destructive-foreground: 0.15 0 0;
-        --border: 0.30 0 0;
-        --input: 0.30 0 0;
-        --ring: 0.65 0.10 145;
-        --chart-1: 0.65 0.10 145;
-        --chart-2: 0.60 0.08 65;
-        --chart-3: 0.70 0.12 145;
-        --chart-4: 0.55 0.07 65;
-        --chart-5: 0.60 0.09 145;
-        --sidebar: 0.20 0 0;
-        --sidebar-foreground: 0.95 0 0;
-        --sidebar-primary: 0.65 0.10 145;
-        --sidebar-primary-foreground: 0.95 0 0;
-        --sidebar-accent: 0.25 0 0;
-        --sidebar-accent-foreground: 0.95 0 0;
-        --sidebar-border: 0.30 0 0;
-        --sidebar-ring: 0.65 0.10 145;
-    }
+  .dark {
+    --background: 0.15 0 0;
+    --foreground: 0.95 0 0;
+    --card: 0.2 0 0;
+    --card-foreground: 0.95 0 0;
+    --popover: 0.25 0 0;
+    --popover-foreground: 0.95 0 0;
+    --primary: 0.65 0.1 145;
+    --primary-foreground: 0.15 0 0;
+    --secondary: 0.6 0.08 65;
+    --secondary-foreground: 0.95 0 0;
+    --muted: 0.25 0 0;
+    --muted-foreground: 0.7 0 0;
+    --accent: 0.3 0 0;
+    --accent-foreground: 0.95 0 0;
+    --destructive: 0.704 0.191 22.216;
+    --destructive-foreground: 0.15 0 0;
+    --border: 0.3 0 0;
+    --input: 0.3 0 0;
+    --ring: 0.65 0.1 145;
+    --chart-1: 0.65 0.1 145;
+    --chart-2: 0.6 0.08 65;
+    --chart-3: 0.7 0.12 145;
+    --chart-4: 0.55 0.07 65;
+    --chart-5: 0.6 0.09 145;
+    --sidebar: 0.2 0 0;
+    --sidebar-foreground: 0.95 0 0;
+    --sidebar-primary: 0.65 0.1 145;
+    --sidebar-primary-foreground: 0.95 0 0;
+    --sidebar-accent: 0.25 0 0;
+    --sidebar-accent-foreground: 0.95 0 0;
+    --sidebar-border: 0.3 0 0;
+    --sidebar-ring: 0.65 0.1 145;
+  }
 
-    * {
-        @apply border-border;
-    }
-    body {
-        @apply bg-background text-foreground;
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
-    }
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+      "Roboto", "Oxygen", "Ubuntu", "Cantarell", sans-serif;
+  }
 }
 
 @layer components {
-    .section-container {
-        @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
-    }
-    
-    .section-padding {
-        @apply py-16 md:py-24;
-    }
+  .section-container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
 
-    .watermark-container {
-        @apply fixed inset-0 z-0 pointer-events-none;
-        background-image: url('/assets/generated/farmsiddhi-watermark.dim_1200x600.png');
-        background-repeat: no-repeat;
-        background-position: center center;
-        background-size: 60%;
-        opacity: 0.18;
-    }
+  .section-padding {
+    @apply py-16 md:py-24;
+  }
 
-    .dark .watermark-container {
-        opacity: 0.1125;
-    }
+  .watermark-container {
+    @apply fixed inset-0 z-0 pointer-events-none;
+    background-image: url("/assets/generated/Logo.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 60%;
+    opacity: 0.18;
+  }
+
+  .dark .watermark-container {
+    opacity: 0.1125;
+  }
 }
